@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Exam Schedule - Suprapa High School</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Find the latest examination schedules for all classes at Suprapa High School." />
+    <meta name="author" content="Suprapa High Administration" />
+    <meta name="keywords" content="Suprapa High, exam schedule, examination routine, school exams" />
+    <!-- Bootstrap Core CSS -->
+    <link href="UserMasterPages/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="UserMasterPages/css/Mycss.css" rel="stylesheet" />
+    <link href="UserMasterPages/css/accessibility.css" rel="stylesheet" />
+    <link href="UserMasterPages/css/enhanced-features.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            padding-top: 0;
+            background-color: #f8f9fa;
+        }
+
+        /* Branding Override */
+        .school-name {
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Exam Schedule Specific Styles */
+        .exam-header-container {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 40px 0;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .exam-header-title {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .exam-header-subtitle {
+            font-size: 1.2em;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        .exam-card {
+            background: white;
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .exam-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .exam-card-header {
+            background-color: #f1f3f5;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .exam-card-header h3 {
+            margin: 0;
+            color: #495057;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-upcoming {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .status-ongoing {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .table-responsive {
+            padding: 20px;
+        }
+
+        .exam-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .exam-table th {
+            background-color: #f8f9fa;
+            color: #495057;
+            font-weight: 600;
+            padding: 12px;
+            border-bottom: 2px solid #dee2e6;
+            text-align: center;
+        }
+
+        .exam-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e9ecef;
+            color: #212529;
+            text-align: center;
+        }
+
+        .exam-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .exam-table tr:hover td {
+            background-color: #f8f9fa;
+        }
+
+        .subject-cell {
+            font-weight: 500;
+        }
+
+        .important-note {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px;
+            border-left: 5px solid #ffc107;
+        }
+
+        /* Dark Mode Overrides */
+        .dark-mode .exam-card {
+            background: #2d2d2d;
+            color: #eee;
+        }
+
+        .dark-mode .exam-card-header {
+            background: #383838;
+            border-bottom-color: #444;
+        }
+
+        .dark-mode .exam-card-header h3 {
+            color: #eee;
+        }
+
+        .dark-mode .exam-table th {
+            background: #383838;
+            color: #ddd;
+            border-bottom-color: #555;
+        }
+
+        .dark-mode .exam-table td {
+            color: #ccc;
+            border-bottom-color: #444;
+        }
+
+        .dark-mode .exam-table tr:hover td {
+            background: #3a3a3a;
+        }
+
+        .dark-mode .important-note {
+            background: #3e3322;
+            color: #ffda6a;
+            border-left-color: #ffc107;
+        }
+
+        .dark-mode body {
+            background-color: #1a1a1a;
+        }
+    </style>
+    <link rel="icon" href="images/logo2.png" sizes="any" type="image/png">
+    <script>
+        (function () {
+            try {
+                const isDarkMode = localStorage.getItem('darkMode') === 'true';
+                if (isDarkMode) document.documentElement.classList.add('dark-mode');
+            } catch (e) { console.error(e); }
+        })();
+    </script>
+</head>
+
+<body>
+    <!-- Top Branding Bar -->
+    <div class="top-branding-bar">
+        <div class="container">
+            <a href="Homepage2.html" class="branding-link">
+                <img src="images/logo.png" alt="Suprapa High Logo" class="school-logo"> </a>
+            <span class="school-name">Exam Schedule</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Chatbot trigger (Standard) -->
+    <div class="chatbot-trigger">
+        <button aria-label="Open Chat Assistant">💬</button>
+    </div>
+    <div class="chatbot-container">
+        <!-- Content filled dynamically or by fallback -->
+        <div class="chatbot-header">
+            <h3>School Assistant</h3>
+            <button class="chatbot-close" aria-label="Close Chat">&times;</button>
+        </div>
+        <div class="chatbot-messages"></div>
+        <div class="chatbot-input">
+            <input type="text" placeholder="Ask me anything...">
+            <button aria-label="Send Message">➤</button>
+        </div>
+    </div>
+
+    <!-- Header Menu (Standard) -->
+    <div class="container">
+        <nav class="navbar navbar-expand-lg main-navbar" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="Homepage2.html">SHS</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="level1 nav navbar-nav StaticMenuStyleMainMenu">
+                        <li class="dropdown">
+                            <a class="popout level1 StaticMenuItemStyleMainMenu dropdown-toggle mnnhs-link" href="#"
+                                data-toggle="dropdown">SHS PORTAL</a>
+                            <ul class="level2 dropdown-menu">
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="Homepage2.html">School Home</a>
+                                </li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="Notice.html">School Notices</a>
+                                </li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu"
+                                        href="academic-structure.html">Academic Structure</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="exam-schedule.html">Exam
+                                        Schedule</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="book-list.html">Book List
+                                        2025-26</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="student-portal.html">Student
+                                        Portal</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="popout level1 StaticMenuItemStyleMainMenu dropdown-toggle games-hub-link" href="#"
+                                data-toggle="dropdown">FUN & GAMES 🎮</a>
+                            <ul class="level2 dropdown-menu">
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="fun-learning-games.html">All
+                                        Games</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu"
+                                        href="fun-learning-games.html#brain-games">Brain Games</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu"
+                                        href="fun-learning-games.html#puzzle-games">Puzzle Games</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu"
+                                        href="fun-learning-games.html#educational-games">Educational Games</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="popout level1 StaticMenuItemStyleMainMenu dropdown-toggle study-hub-link" href="#"
+                                data-toggle="dropdown">STUDY HUB</a>
+                            <ul class="level2 dropdown-menu">
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="free-resources.html">Free Study
+                                        Resources</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="https://ndl.iitkgp.ac.in/"
+                                        target="_blank">National Digital Library</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="https://swayam.gov.in/"
+                                        target="_blank">SWAYAM Courses</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="https://diksha.gov.in/"
+                                        target="_blank">DIKSHA Portal</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="popout level1 StaticMenuItemStyleMainMenu dropdown-toggle all-students-link"
+                                href="#" data-toggle="dropdown">COMPETITIVE EXAMS</a>
+                            <ul class="level2 dropdown-menu">
+                                <li><a class="level2 StaticMenuItemStyleMainMenu"
+                                        href="free-resources.html#jee-section">JEE Resources</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu"
+                                        href="free-resources.html#neet-section">NEET Resources</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="https://jeemain.nta.nic.in/"
+                                        target="_blank">JEE Main Portal</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="https://neet.nta.nic.in/"
+                                        target="_blank">NEET Portal</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="popout level1 StaticMenuItemStyleMainMenu dropdown-toggle quick-links-link"
+                                href="#" data-toggle="dropdown">QUICK LINKS</a>
+                            <ul class="level2 dropdown-menu">
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="Gallery.html">Gallery</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="contact-us.html">Contact Us</a>
+                                </li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="about.html">About School</a>
+                                </li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="virtual-tour.html">Virtual
+                                        Tour</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="sitemap.html">Sitemap</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="popout level1 StaticMenuItemStyleMainMenu dropdown-toggle all-students-link"
+                                href="login.html">LOGIN SECTION</a>
+                        </li>
+                        <li><button id="dark-mode-toggle" type="button" aria-label="Toggle Dark Mode"
+                                class="btn btn-outline-light ms-2">🌙</button></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="exam-header-container">
+            <h1 class="exam-header-title">Examination Center</h1>
+            <div class="exam-header-subtitle">Academic Session <span id="sessionYear">2025-26</span></div>
+        </div>
+
+        <!-- Dynamic Content Area -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div id="examScheduleContainer">
+                    <!-- Dynamic Tables will be rendered here -->
+                </div>
+
+                <!-- Board Exam Info -->
+                <div class="exam-card">
+                    <div class="exam-card-header">
+                        <h3>Board Examinations</h3>
+                        <span class="status-badge" style="background:#fff3e0; color:#e65100;">Information</span>
+                    </div>
+                    <div class="table-responsive" style="padding: 20px;">
+                        <p>For Board Examinations (Madhyamik and Uccha Madhyamik), please refer to the official board
+                            websites for authoritative schedules.</p>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li style="margin-bottom: 10px;">
+                                <a href="https://wbbse.wb.gov.in/" target="_blank"
+                                    class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-external-link-alt"></i> WBBSE (Class X)
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://wbchse.wb.gov.in/" target="_blank"
+                                    class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-external-link-alt"></i> WBCHSE (Class XII)
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-2 col-md-4 col-sm-6 footer-section">
+                    <h4>Awards & Recognition</h4>
+                    <div class="awards-badges text-based-awards">
+                        <span>🏆 Best School Award 2023</span>
+                        <span>🏅 Top Academic Performance</span>
+                        <span>🌟 Excellence in Arts</span>
+                        <span>✨ Community Service Award</span>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6 footer-section">
+                    <h4>Quick Facts</h4>
+                    <ul class="footer-links">
+                        <li>Established: 1884</li>
+                        <li>Affiliation: WBBSE & WBCHSE</li>
+                        <li>Students: 1500+</li>
+                        <li>Faculty: 50+</li>
+                    </ul>
+                </div>
+                <!-- Contact Information -->
+                <div class="col-lg-2 col-md-4 col-sm-6 footer-section">
+                    <h4>Contact Us</h4>
+                    <address>
+                        Suprapa Nagar Road,<br>
+                        Suprapa Nagar, Generic City, 73XXXX<br>
+                        <i class="fas fa-phone"></i> <a href="tel:+91XXXXXXXXXX">+91-XXXXXXXXXX</a><br>
+                        <i class="fas fa-envelope"></i> <a href="mailto:info@suprapahigh.com">info@suprapahigh.com</a>
+                    </address>
+                </div>
+                <!-- Site Navigation -->
+                <div class="col-lg-2 col-md-6 col-sm-6 footer-section">
+                    <h4>Site Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="Homepage2.html">Home</a></li>
+                        <li><a href="about.html">About School</a></li>
+                        <li><a href="academic-structure.html">Academics</a></li>
+                        <li><a href="Notice.html">Notices</a></li>
+                        <li><a href="Gallery.html">Gallery</a></li>
+                        <li><a href="contact-us.html">Contact</a></li>
+                        <li><a href="sitemap.html">Sitemap</a></li>
+                        <li><a href="alumni.html">Alumni</a></li>
+                        <li><a href="ourfaculty.html">Our Faculty</a></li>
+                    </ul>
+                </div>
+                <!-- Accessibility & Events -->
+                <div class="col-lg-2 col-md-6 col-sm-6 footer-section">
+                    <h4>Accessibility Help</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" id="openAccessibilityPanelLinkFooter">Open Settings</a></li>
+                        <li>
+                            <button type="button" id="translateInfoBtn" class="translate-btn-style"
+                                aria-label="Get translation instructions">
+                                <span style="margin-right: 5px; vertical-align: middle;">🌐</span>
+                                Translate
+                            </button>
+                        </li>
+                    </ul>
+                    <h4>Upcoming Events</h4>
+                    <ul class="footer-links">
+                        <li><a href="Notice.html#event1">Annual Sports Day - <span class="event-date">Dec 15</span></a>
+                        </li>
+                        <li><a href="Notice.html#event2">Science Fair - <span class="event-date">Jan 20</span></a></li>
+                        <li><a href="Notice.html#event3">Cultural Fest - <span class="event-date">Feb 10</span></a></li>
+                    </ul>
+                </div>
+                <!-- Weather & Emergency Section -->
+                <div class="col-lg-2 col-md-6 col-sm-6 footer-section">
+                    <h4>Weather</h4>
+                    <div class="footer-weather small-weather">
+                        Loading...
+                    </div>
+                    <h4 style="margin-top: 15px;">Emergency</h4>
+                    <div class="emergency-contact">
+                        <span>🚨 <a href="tel:+911234567890">Emergency Line</a></span>
+                    </div>
+                </div>
+            </div>
+            <hr style="margin-top:0px; margin-bottom:0px;">
+            <div class="row footer-bottom">
+                <div class="col-md-4 copyright-text">
+                    <span id="currentYear">2026</span> Suprapa High School. All Rights Reserved.
+                    <span id="lastUpdated" class="footer-last-updated" style="display: block; margin-top: 5px;"></span>
+                </div>
+                <div class="col-md-4 text-center visitor-counter donation-button-container-bottom">
+                    <span>Visitor Count: <span id="visitorCount">Loading...</span> | Online: <span
+                            id="onlineCount">1</span></span>
+                    <a href="payment.html" class="donation-button" style="margin-left: 33%;">Support Our School</a>
+                </div>
+                <div class="col-md-4 utility-links">
+                    <a href="privacy-policy.html">Privacy Policy</a> | <a href="terms-of-service.html">Terms</a>
+                    <a href="#top" class="back-to-top" aria-label="Back to top">⬆️</a>
+                </div>
+            </div>
+        </div>
+        <div id="cookieConsent" class="cookie-consent">
+            <p>We use cookies to enhance your experience. <a href="privacy-policy.html#cookies">Learn more</a>.</p>
+            <button id="acceptCookies">Accept</button>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="UserMasterPages/js/jquery.js"></script>
+    <script src="UserMasterPages/js/bootstrap.min.js"></script>
+    <script src="UserMasterPages/js/accessibility.js"></script>
+    <script src="UserMasterPages/js/weather.js"></script>
+
+    <!-- Page Specific Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // === Dynamic Date Logic for Exams ===
+            const today = new Date();
+            const currentYear = today.getFullYear();
+            const nextYear = currentYear + 1;
+
+            // Simple logic: If we are past July, focus on Mid Terms and Annuals of next year.
+            // If we are before July, focus on Annuals of current year or Unit Tests.
+
+            // Dynamic "Session" display
+            document.getElementById('sessionYear').textContent = `${currentYear}-${(currentYear + 1).toString().slice(-2)}`;
+
+            const generateExamSchedule = () => {
+                const container = document.getElementById('examScheduleContainer');
+
+                // Helper to format date relative to today + days
+                const futureDate = (days) => {
+                    const d = new Date();
+                    d.setDate(d.getDate() + days);
+                    return d.toLocaleDateString('en-GB'); // DD/MM/YYYY
+                };
+
+                // Helper to get day name
+                const getDayName = (days) => {
+                    const d = new Date();
+                    d.setDate(d.getDate() + days);
+                    return d.toLocaleDateString('en-US', { weekday: 'long' });
+                };
+
+                // Define Exams
+                const exams = [
+                    {
+                        title: "Mid-Term Examination",
+                        classes: "VI - IX",
+                        status: "Upcoming",
+                        startDateOffset: 20, // starts in 20 days
+                        schedule: [
+                            { dayOffset: 20, subjectVI: "English", subjectVII: "Maths", subjectVIII: "Science", subjectIX: "History" },
+                            { dayOffset: 22, subjectVI: "Maths", subjectVII: "Science", subjectVIII: "English", subjectIX: "Geography" },
+                            { dayOffset: 24, subjectVI: "Science", subjectVII: "History", subjectVIII: "Maths", subjectIX: "Physical Sc." },
+                            { dayOffset: 27, subjectVI: "History", subjectVII: "English", subjectVIII: "Geography", subjectIX: "Life Sc." },
+                            { dayOffset: 29, subjectVI: "Geography", subjectVII: "Bengali", subjectVIII: "History", subjectIX: "Maths" }
+                        ]
+                    },
+                    {
+                        title: "Unit Test II",
+                        classes: "X & XII",
+                        status: "Upcoming",
+                        startDateOffset: 10,
+                        schedule: [
+                            { dayOffset: 10, subjectX: "Physical Science", subjectXII: "Physics / Acct / Pol Sc" },
+                            { dayOffset: 11, subjectX: "Life Science", subjectXII: "Chemistry / Business / History" },
+                            { dayOffset: 12, subjectX: "Mathematics", subjectXII: "Maths / Psychology" }
+                        ]
+                    }
+                ];
+
+                exams.forEach(exam => {
+                    const card = document.createElement('div');
+                    card.className = 'exam-card';
+
+                    let tableHeaders = '';
+                    let tableRows = '';
+
+                    if (exam.classes === "VI - IX") {
+                        tableHeaders = `<th>Date</th><th>Day</th><th>Class VI</th><th>Class VII</th><th>Class VIII</th><th>Class IX</th>`;
+                        exam.schedule.forEach(day => {
+                            tableRows += `
+                                <tr>
+                                    <td>${futureDate(day.dayOffset)}</td>
+                                    <td>${getDayName(day.dayOffset)}</td>
+                                    <td class="subject-cell">${day.subjectVI}</td>
+                                    <td class="subject-cell">${day.subjectVII}</td>
+                                    <td class="subject-cell">${day.subjectVIII}</td>
+                                    <td class="subject-cell">${day.subjectIX}</td>
+                                </tr>
+                            `;
+                        });
+                    } else {
+                        tableHeaders = `<th>Date</th><th>Day</th><th>Class X</th><th>Class XII</th>`;
+                        exam.schedule.forEach(day => {
+                            tableRows += `
+                                <tr>
+                                    <td>${futureDate(day.dayOffset)}</td>
+                                    <td>${getDayName(day.dayOffset)}</td>
+                                    <td class="subject-cell">${day.subjectX}</td>
+                                    <td class="subject-cell">${day.subjectXII}</td>
+                                </tr>
+                            `;
+                        });
+                    }
+
+                    card.innerHTML = `
+                         <div class="exam-card-header">
+                            <h3>${exam.title} <small>(${exam.classes})</small></h3>
+                            <span class="status-badge status-upcoming">${exam.status}</span>
+                        </div>
+                        <div class="important-note">
+                            <i class="fas fa-exclamation-circle"></i> <strong>Note:</strong> Students must be in exam hall 15 minutes before start time (10:00 AM).
+                        </div>
+                        <div class="table-responsive">
+                            <table class="exam-table">
+                                <thead>
+                                    <tr>${tableHeaders}</tr>
+                                </thead>
+                                <tbody>${tableRows}</tbody>
+                            </table>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            };
+
+            generateExamSchedule();
+        });
+    </script>
+    <div class="accessibility-floating-btn" id="accessibilityBtn">
+        <button aria-label="Accessibility Options">♿</button>
+    </div>
+    <div id="accessibilityPanel" class="accessibility-panel">
+    </div>
+    <div id="readingGuide"></div>
+</body>
+
+</html>

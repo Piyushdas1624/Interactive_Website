@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Examination Information - Suprapa High School</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="General information about examinations, grading system, and promotion policies at Suprapa High School." />
+    <meta name="author" content="Suprapa High Administration" />
+    <meta name="keywords"
+        content="Suprapa High, examination, exam info, grading system, promotion policy, assessment" />
+    <!-- Bootstrap Core CSS -->
+    <link href="UserMasterPages/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="UserMasterPages/css/responsive-fixes.css" rel="stylesheet" />
+    <link href="UserMasterPages/css/Mycss.css" rel="stylesheet" />
+    <link href="UserMasterPages/css/accessibility.css" rel="stylesheet" />
+    <link href="UserMasterPages/css/enhanced-features.css" rel="stylesheet" />
+
+    <style>
+        body {
+            padding-top: 0;
+        }
+    </style>
+    <link rel="icon" href="images/logo2.png" sizes="any" type="image/png">
+</head>
+
+<body>
+    <script>
+        // Direct Early Dark Mode Application
+        (function () {
+            try {
+                const savedMode = localStorage.getItem('darkMode');
+                // Apply directly to HTML element for consistency
+                if (savedMode === 'true') {
+                    document.documentElement.classList.add('dark-mode');
+                } else {
+                    // Ensure it's removed if not explicitly set to true
+                    document.documentElement.classList.remove('dark-mode');
+                }
+            } catch (e) {
+                console.error('Error applying early dark mode setting:', e);
+            }
+        })();
+    </script>
+
+    <!-- Chatbot -->
+    <div class="chatbot-trigger">
+        <button aria-label="Open Chat Assistant">💬</button>
+    </div>
+
+    <div class="chatbot-container">
+        <div class="chatbot-header">
+            <h3>School Assistant</h3>
+            <button class="chatbot-close" aria-label="Close Chat">&times;</button>
+        </div>
+        <div class="chatbot-messages"></div>
+        <div class="chatbot-input">
+            <input type="text" placeholder="Ask me anything...">
+            <button aria-label="Send Message">➤</button>
+        </div>
+    </div>
+
+
+    <!-- Top Branding Bar -->
+    <div class="top-branding-bar">
+        <div class="container">
+            <a href="Homepage2.html" class="branding-link">
+                <img src="images/Logo.png" alt="Suprapa High Logo" class="school-logo"> </a>
+            <span class="school-name">Examination Info</span>
+        </div>
+    </div>
+    <!-- header menu section -->
+    <div class="container">
+        <nav class="navbar navbar-expand-lg main-navbar" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="Homepage2.html">SHS</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="level1 nav navbar-nav StaticMenuStyleMainMenu">
+                        <!-- FOR MNNHS STUDENTS Section -->
+                        <li class="dropdown">
+                            <a class="popout level1 StaticMenuItemStyleMainMenu dropdown-toggle mnnhs-link" href="#"
+                                data-toggle="dropdown">SHS PORTAL</a>
+                            <ul class="level2 dropdown-menu">
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="Homepage2.html">School Home</a>
+                                </li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="Notice.html">School Notices</a>
+                                </li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu"
+                                        href="academic-structure.html">Academic Structure</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="exam-schedule.html">Exam
+                                        Schedule</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="book-list.html">Book List
+                                        2025-26</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="student-portal.html">Student
+                                        Portal</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Fun Learning Games -->
+                        <li class="dropdown">
+                            <a class="popout level1 StaticMenuItemStyleMainMenu dropdown-toggle games-hub-link" href="#"
+                                data-toggle="dropdown">FUN & GAMES 🎮</a>
+                            <ul class="level2 dropdown-menu">
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="fun-learning-games.html">All
+                                        Games</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu"
+                                        href="fun-learning-games.html#brain-games">Brain Games</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu"
+                                        href="fun-learning-games.html#puzzle-games">Puzzle Games</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu"
+                                        href="fun-learning-games.html#educational-games">Educational Games</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Study Resources -->
+                        <li class="dropdown">
+                            <a class="popout level1 StaticMenuItemStyleMainMenu dropdown-toggle study-hub-link" href="#"
+                                data-toggle="dropdown">STUDY HUB</a>
+                            <ul class="level2 dropdown-menu">
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="free-resources.html">Free Study
+                                        Resources</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="https://ndl.iitkgp.ac.in/"
+                                        target="_blank">National Digital Library</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="https://swayam.gov.in/"
+                                        target="_blank">SWAYAM Courses</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="https://diksha.gov.in/"
+                                        target="_blank">DIKSHA Portal</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Competitive Exams -->
+                        <li class="dropdown">
+                            <a class="popout level1 StaticMenuItemStyleMainMenu dropdown-toggle all-students-link"
+                                href="#" data-toggle="dropdown">COMPETITIVE EXAMS</a>
+                            <ul class="level2 dropdown-menu">
+                                <li><a class="level2 StaticMenuItemStyleMainMenu"
+                                        href="free-resources.html#jee-section">JEE Resources</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu"
+                                        href="free-resources.html#neet-section">NEET Resources</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="https://jeemain.nta.nic.in/"
+                                        target="_blank">JEE Main Portal</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="https://neet.nta.nic.in/"
+                                        target="_blank">NEET Portal</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Quick Links -->
+                        <li class="dropdown">
+                            <a class="popout level1 StaticMenuItemStyleMainMenu dropdown-toggle quick-links-link"
+                                href="#" data-toggle="dropdown">QUICK LINKS</a>
+                            <ul class="level2 dropdown-menu">
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="Gallery.html">Gallery</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="contact-us.html">Contact Us</a>
+                                </li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="about.html">About School</a>
+                                </li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="virtual-tour.html">Virtual
+                                        Tour</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="sitemap.html">Sitemap</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Login Section -->
+                        <li>
+                            <a class="popout level1 StaticMenuItemStyleMainMenu dropdown-toggle all-students-link"
+                                href="login.html">LOGIN SECTION</a>
+                        </li>
+
+                        <!-- Dark mode toggle -->
+                        <li><button id="dark-mode-toggle" type="button" aria-label="Toggle Dark Mode"
+                                class="btn btn-outline-light ms-2">🌙</button></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page Specific Content Goes Here -->
+        <div class="row">
+            <div class="box">
+                <div class="col-lg-12">
+                    <div id="wrapper" class="wrapper">
+                        <div class="content" style="padding: 20px;">
+                            <h1>Examination Information</h1>
+                            <hr>
+                            <p>Suprapa High School conducts regular assessments and examinations to evaluate student
+                                progress and understanding. Here is general information regarding our examination
+                                system.</p>
+
+                            <h2>Types of Assessments</h2>
+                            <ul>
+                                <li><strong>Formative Assessments:</strong> Class tests, quizzes, projects, assignments,
+                                    and practical work conducted throughout the academic year to monitor learning.</li>
+                                <li><strong>Summative Assessments:</strong> Mid-Term and Annual Examinations conducted
+                                    at the end of specific terms to evaluate overall performance.</li>
+                                <li><strong>Board Examinations:</strong> Madhyamik Pariksha (Class X) conducted by WBBSE
+                                    and Uccha Madhyamik Examination (Class XII) conducted by WBCHSE.</li>
+                            </ul>
+
+                            <h2>Grading System</h2>
+                            <p>The school follows the grading system prescribed by the respective boards (WBBSE and
+                                WBCHSE) for Classes IX-XII. For other classes, a comprehensive grading scale is used,
+                                details of which are provided in the student diary and report cards.</p>
+                            <p><em>(Detailed grading scale information will be uploaded soon.)</em></p>
+
+                            <h2>Promotion Policy</h2>
+                            <p>Student promotion to the next class is based on their overall performance throughout the
+                                academic year, including formative and summative assessments, attendance, and
+                                participation in co-curricular activities. Specific criteria for promotion are
+                                communicated to parents at the beginning of the session.</p>
+                            <p>Minimum attendance requirements must be met as per board regulations.</p>
+
+                            <h2>Examination Rules & Regulations</h2>
+                            <ul>
+                                <li>Students must arrive at the examination hall at least 15 minutes before the
+                                    scheduled time.</li>
+                                <li>Admit cards (where applicable) and school ID cards are mandatory.</li>
+                                <li>Unfair means during examinations are strictly prohibited and will lead to
+                                    disciplinary action.</li>
+                                <li>Electronic devices are not allowed in the examination hall.</li>
+                            </ul>
+
+                            <p>For specific examination schedules, please visit the <a href="exam-schedule.html">Exam
+                                    Schedule page</a>.</p>
+                            <p>For results, please check the <a href="Notice.html">Notices page</a> or the <a
+                                    href="student-portal.html">Student Portal</a> after declaration.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <footer class="site-footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-2 col-md-4 col-sm-6 footer-section">
+                        <h4>Awards & Recognition</h4>
+                        <div class="awards-badges text-based-awards">
+                            <span>🏆 Best School Award 2023</span>
+                            <span>🏅 Top Academic Performance</span>
+                            <span>🌟 Excellence in Arts</span>
+                            <span>✨ Community Service Award</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 footer-section">
+                        <h4>Quick Facts</h4>
+                        <ul class="footer-links">
+                            <li>Established: 1884</li>
+                            <li>Affiliation: WBBSE & WBCHSE</li>
+                            <li>Students: 1500+</li>
+                            <li>Faculty: 50+</li>
+                        </ul>
+                    </div>
+                    <!-- Contact Information -->
+                    <div class="col-lg-2 col-md-4 col-sm-6 footer-section">
+                        <h4>Contact Us</h4>
+                        <address>
+                            Suprapa Nagar Road,<br>
+                            Suprapa Nagar, Generic City, 73XXXX<br>
+                            <i class="fas fa-phone"></i> <a href="tel:+91XXXXXXXXXX">+91-XXXXXXXXXX</a><br>
+                            <i class="fas fa-envelope"></i> <a
+                                href="mailto:info@suprapahigh.com">info@suprapahigh.com</a>
+                        </address>
+                    </div>
+                    <!-- Site Navigation -->
+                    <div class="col-lg-2 col-md-6 col-sm-6 footer-section">
+                        <h4>Site Navigation</h4>
+                        <ul class="footer-links">
+                            <li><a href="Homepage2.html">Home</a></li>
+                            <li><a href="about.html">About School</a></li>
+                            <li><a href="academic-structure.html">Academics</a></li>
+                            <li><a href="Notice.html">Notices</a></li>
+                            <li><a href="Gallery.html">Gallery</a></li>
+                            <li><a href="contact-us.html">Contact</a></li>
+                            <li><a href="sitemap.html">Sitemap</a></li>
+                            <li><a href="alumni.html">Alumni</a></li>
+                            <li><a href="ourfaculty.html">Our Faculty</a></li>
+                        </ul>
+                    </div>
+                    <!-- Accessibility & Events -->
+                    <div class="col-lg-2 col-md-6 col-sm-6 footer-section">
+                        <h4>Accessibility Help</h4>
+                        <ul class="footer-links">
+                            <li><a href="#" id="openAccessibilityPanelLinkFooter">Open Settings</a></li>
+                            <li>
+                                <button type="button" id="translateInfoBtn" class="translate-btn-style"
+                                    aria-label="Get translation instructions">
+                                    <span style="margin-right: 5px; vertical-align: middle;">🌐</span>
+                                    Translate
+                                </button>
+                            </li>
+                        </ul>
+                        <h4>Upcoming Events</h4>
+                        <ul class="footer-links">
+                            <li><a href="Notice.html#event1">Annual Sports Day - <span class="event-date">Dec
+                                        15</span></a>
+                            </li>
+                            <li><a href="Notice.html#event2">Science Fair - <span class="event-date">Jan 20</span></a>
+                            </li>
+                            <li><a href="Notice.html#event3">Cultural Fest - <span class="event-date">Feb 10</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Weather & Emergency Section -->
+                    <div class="col-lg-2 col-md-6 col-sm-6 footer-section">
+                        <h4>Weather</h4>
+                        <div class="footer-weather small-weather">
+                            Loading...
+                        </div>
+                        <h4 style="margin-top: 15px;">Emergency</h4>
+                        <div class="emergency-contact">
+                            <span>🚨 <a href="tel:+911234567890">Emergency Line</a></span>
+                        </div>
+                    </div>
+                </div>
+                <hr style="margin-top:0px; margin-bottom:0px;">
+                <div class="row footer-bottom">
+                    <div class="col-md-4 copyright-text">
+                        <span id="currentYear">2026</span> Suprapa High School. All Rights Reserved.
+                        <span id="lastUpdated" class="footer-last-updated"
+                            style="display: block; margin-top: 5px;"></span>
+                    </div>
+                    <div class="col-md-4 text-center visitor-counter donation-button-container-bottom">
+                        <span>Visitor Count: <span id="visitorCount">Loading...</span> | Online: <span
+                                id="onlineCount">1</span></span>
+                        <a href="payment.html" class="donation-button" style="margin-left: 33%;">Support Our School</a>
+                    </div>
+                    <div class="col-md-4 utility-links">
+                        <a href="privacy-policy.html">Privacy Policy</a> | <a href="terms-of-service.html">Terms</a>
+                        <a href="#top" class="back-to-top" aria-label="Back to top">⬆️</a>
+                    </div>
+                </div>
+            </div>
+            <div id="cookieConsent" class="cookie-consent">
+                <p>We use cookies to enhance your experience. <a href="privacy-policy.html#cookies">Learn more</a>.</p>
+                <button id="acceptCookies">Accept</button>
+            </div>
+        </footer>
+
+        <!-- Scripts -->
+        <script src="UserMasterPages/js/jquery.js"></script>
+        <script src="UserMasterPages/js/bootstrap.min.js"></script>
+        <script src="UserMasterPages/js/accessibility.js"></script>
+        <script src="UserMasterPages/js/weather.js"></script>
+
+
+        <style>
+            @media (min-width:1214px) {
+                .container {
+                    width: 1214px
+                }
+            }
+        </style>
+
+        <!-- Core JS Files -->
+        <script src="UserMasterPages/js/jquery.js"></script>
+        <script src="UserMasterPages/js/bootstrap.min.js"></script>
+        <!-- Main Accessibility Logic -->
+        <script src="UserMasterPages/js/accessibility.js"></script>
+
+        <!-- Accessibility Panel Structure -->
+        <div class="accessibility-floating-btn" id="accessibilityBtn">
+            <button aria-label="Accessibility Options">♿</button>
+        </div>
+        <div id="accessibilityPanel" class="accessibility-panel">
+            <!-- Panel content will be generated by JS -->
+        </div>
+        <div id="readingGuide"></div> <!-- Reading Guide Element -->
+</body>
+
+</html>

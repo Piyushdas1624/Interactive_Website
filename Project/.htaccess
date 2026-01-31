@@ -1,0 +1,12 @@
+RewriteEngine On
+# Redirect any request ending with .html to the extensionless URL
+RewriteCond %{THE_REQUEST} \s([^\s]+)\.html [NC]
+RewriteRule ^ %1 [R=301,L]
+# Internally rewrite extensionless URLs to .html files if they exist
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.*)$ $1.html [L]
+# Prevent directory listing (hides your files)
+Options -Indexes
+# Set Homepage (change Homepage2.html to your actual homepage)
+DirectoryIndex Homepage2.html 

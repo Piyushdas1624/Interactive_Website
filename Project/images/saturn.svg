@@ -1,0 +1,23 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="saturnBody" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#e0c3fc" />
+      <stop offset="20%" stop-color="#8ec5fc" />
+      <stop offset="50%" stop-color="#a18cd1" />
+      <stop offset="100%" stop-color="#6a11cb" />
+    </linearGradient>
+  </defs>
+
+  <g transform="rotate(-25 100 100)">
+    <path d="M20,100 A80,20 0 0,1 180,100" fill="none" stroke="#a0a0ff" stroke-width="12" stroke-opacity="0.6"/>
+    <path d="M25,100 A75,15 0 0,1 175,100" fill="none" stroke="#5050a0" stroke-width="2"/>
+
+    <circle cx="100" cy="100" r="60" fill="url(#saturnBody)" stroke="#4b0082" stroke-width="1"/>
+    
+    <path d="M45,80 Q100,100 155,80" fill="none" stroke="#8a2be2" stroke-width="5" opacity="0.5"/>
+    <path d="M42,110 Q100,130 158,110" fill="none" stroke="#4b0082" stroke-width="8" opacity="0.3"/>
+
+    <path d="M20,100 A80,20 0 0,0 180,100" fill="none" stroke="#c0c0ff" stroke-width="12" stroke-opacity="0.8"/>
+    <path d="M25,100 A75,15 0 0,0 175,100" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.5"/>
+  </g>
+</svg>

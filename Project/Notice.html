@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Notices - Suprapa High School</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Latest notices and announcements from Suprapa High School." />
+    <meta name="author" content="Suprapa High Administration" />
+    <meta name="keywords" content="Suprapa High, notices, announcements, school news" />
+    <!-- Bootstrap Core CSS -->
+    <link href="UserMasterPages/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="UserMasterPages/css/Mycss.css" rel="stylesheet" />
+    <link href="UserMasterPages/css/accessibility.css" rel="stylesheet" />
+    <link href="UserMasterPages/css/enhanced-features.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            padding-top: 0;
+            background-color: #f4f6f9;
+        }
+
+        /* Top Branding Override for this page */
+        .school-name {
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Marquee Styles */
+        .notice-marquee-container {
+            background: linear-gradient(90deg, #8929F7 0%, #6a1db0 100%);
+            color: white;
+            padding: 10px 0;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            white-space: nowrap;
+            animation: scroll-left 30s linear infinite;
+        }
+
+        .marquee-item {
+            display: inline-block;
+            margin-right: 50px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .marquee-item:hover {
+            color: #ffe600;
+            text-decoration: underline;
+            transform: scale(1.02);
+        }
+
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(100%);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        /* Notice Cards - Aesthetic Improvements */
+        .notice-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            padding-bottom: 40px;
+        }
+
+        .notice-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            border-left: 5px solid #8929F7;
+            border-top: 1px solid #eee;
+            border-right: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .notice-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(137, 41, 247, 0.15);
+        }
+
+        .notice-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .notice-date-badge {
+            background-color: #f0e6ff;
+            color: #8929F7;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .new-badge {
+            background-color: #ff4757;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7em;
+            font-weight: bold;
+            margin-left: 10px;
+            animation: pulse 2s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+                box-shadow: 0 0 0 0 rgba(255, 71, 87, 0.7);
+            }
+
+            70% {
+                opacity: 1;
+                box-shadow: 0 0 0 6px rgba(255, 71, 87, 0);
+            }
+
+            100% {
+                opacity: 1;
+                box-shadow: 0 0 0 0 rgba(255, 71, 87, 0);
+            }
+        }
+
+        .notice-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #333;
+            margin: 10px 0;
+            line-height: 1.4;
+        }
+
+        .notice-preview {
+            color: #666;
+            flex-grow: 1;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .read-more-btn {
+            align-self: flex-start;
+            background-color: transparent;
+            color: #8929F7;
+            border: 2px solid #8929F7;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .read-more-btn:hover {
+            background-color: #8929F7;
+            color: white;
+        }
+
+        /* Modal Styles */
+        .notice-modal-backdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 9999;
+            backdrop-filter: blur(3px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .notice-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background: white;
+            width: 90%;
+            max-width: 700px;
+            max-height: 85vh;
+            border-radius: 15px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            z-index: 10000;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .notice-modal.active {
+            display: flex;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .notice-modal-backdrop.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .modal-header {
+            background: #8929F7;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2em;
+            cursor: pointer;
+            line-height: 0.8;
+            padding: 0;
+        }
+
+        .modal-body {
+            padding: 30px;
+            overflow-y: auto;
+            font-size: 1.1em;
+            color: #333;
+            line-height: 1.8;
+        }
+
+        .modal-footer {
+            padding: 15px 30px;
+            border-top: 1px solid #eee;
+            background: #f9f9f9;
+            text-align: right;
+        }
+
+        .modal-date {
+            display: block;
+            margin-bottom: 20px;
+            color: #777;
+            font-style: italic;
+        }
+
+        /* Dark Mode Overrides */
+        .dark-mode .notice-card {
+            background: #2d2d2d;
+            border-color: #444;
+            color: #eee;
+        }
+
+        .dark-mode .notice-title {
+            color: #fff;
+        }
+
+        .dark-mode .notice-preview {
+            color: #bbb;
+        }
+
+        .dark-mode .notice-date-badge {
+            background: #444;
+            color: #a064f7;
+        }
+
+        .dark-mode .notice-modal {
+            background: #2d2d2d;
+            color: #eee;
+        }
+
+        .dark-mode .modal-body {
+            color: #ddd;
+        }
+
+        .dark-mode .modal-footer {
+            background: #333;
+            border-top-color: #444;
+        }
+
+        .dark-mode body {
+            background-color: #1a1a1a;
+        }
+    </style>
+    <link rel="icon" href="images/logo2.png" sizes="any" type="image/png">
+    <script>
+        (function () {
+            try {
+                const isDarkMode = localStorage.getItem('darkMode') === 'true';
+                if (isDarkMode) document.documentElement.classList.add('dark-mode');
+            } catch (e) { console.error(e); }
+        })();
+    </script>
+</head>
+
+<body>
+    <!-- Top Branding Bar -->
+    <div class="top-branding-bar">
+        <div class="container">
+            <a href="Homepage2.html" class="branding-link">
+                <img src="images/logo.png" alt="Suprapa High Logo" class="school-logo"> </a>
+            <span class="school-name">School Notices</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Chatbot -->
+    <div class="chatbot-trigger">
+        <button aria-label="Open Chat Assistant">💬</button>
+    </div>
+    <div class="chatbot-container">
+        <div class="chatbot-header">
+            <h3>School Assistant</h3>
+            <button class="chatbot-close" aria-label="Close Chat">&times;</button>
+        </div>
+        <div class="chatbot-messages"></div>
+        <div class="chatbot-input">
+            <input type="text" placeholder="Ask me anything...">
+            <button aria-label="Send Message">➤</button>
+        </div>
+    </div>
+
+    <!-- Header Menu (Consistently copied from Homepage2.html) -->
+    <div class="container">
+        <nav class="navbar navbar-expand-lg main-navbar" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="Homepage2.html">SHS</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="level1 nav navbar-nav StaticMenuStyleMainMenu">
+                        <!-- SHS PORTAL -->
+                        <li class="dropdown">
+                            <a class="popout level1 StaticMenuItemStyleMainMenu dropdown-toggle mnnhs-link" href="#"
+                                data-toggle="dropdown">SHS PORTAL</a>
+                            <ul class="level2 dropdown-menu">
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="Homepage2.html">School Home</a>
+                                </li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="Notice.html">School Notices</a>
+                                </li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu"
+                                        href="academic-structure.html">Academic Structure</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="exam-schedule.html">Exam
+                                        Schedule</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="book-list.html">Book List
+                                        2025-26</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="student-portal.html">Student
+                                        Portal</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- FUN & GAMES -->
+                        <li class="dropdown">
+                            <a class="popout level1 StaticMenuItemStyleMainMenu dropdown-toggle games-hub-link" href="#"
+                                data-toggle="dropdown">FUN & GAMES 🎮</a>
+                            <ul class="level2 dropdown-menu">
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="fun-learning-games.html">All
+                                        Games</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu"
+                                        href="fun-learning-games.html#brain-games">Brain Games</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu"
+                                        href="fun-learning-games.html#puzzle-games">Puzzle Games</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu"
+                                        href="fun-learning-games.html#educational-games">Educational Games</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- STUDY HUB -->
+                        <li class="dropdown">
+                            <a class="popout level1 StaticMenuItemStyleMainMenu dropdown-toggle study-hub-link" href="#"
+                                data-toggle="dropdown">STUDY HUB</a>
+                            <ul class="level2 dropdown-menu">
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="free-resources.html">Free Study
+                                        Resources</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="https://ndl.iitkgp.ac.in/"
+                                        target="_blank">National Digital Library</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="https://swayam.gov.in/"
+                                        target="_blank">SWAYAM Courses</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="https://diksha.gov.in/"
+                                        target="_blank">DIKSHA Portal</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- COMPETITIVE EXAMS -->
+                        <li class="dropdown">
+                            <a class="popout level1 StaticMenuItemStyleMainMenu dropdown-toggle all-students-link"
+                                href="#" data-toggle="dropdown">COMPETITIVE EXAMS</a>
+                            <ul class="level2 dropdown-menu">
+                                <li><a class="level2 StaticMenuItemStyleMainMenu"
+                                        href="free-resources.html#jee-section">JEE Resources</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu"
+                                        href="free-resources.html#neet-section">NEET Resources</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="https://jeemain.nta.nic.in/"
+                                        target="_blank">JEE Main Portal</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="https://neet.nta.nic.in/"
+                                        target="_blank">NEET Portal</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- QUICK LINKS -->
+                        <li class="dropdown">
+                            <a class="popout level1 StaticMenuItemStyleMainMenu dropdown-toggle quick-links-link"
+                                href="#" data-toggle="dropdown">QUICK LINKS</a>
+                            <ul class="level2 dropdown-menu">
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="Gallery.html">Gallery</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="contact-us.html">Contact Us</a>
+                                </li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="about.html">About School</a>
+                                </li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="virtual-tour.html">Virtual
+                                        Tour</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="sitemap.html">Sitemap</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- LOGIN SECTION -->
+                        <li>
+                            <a class="popout level1 StaticMenuItemStyleMainMenu dropdown-toggle all-students-link"
+                                href="login.html">LOGIN SECTION</a>
+                        </li>
+
+                        <!-- Dark mode toggle -->
+                        <li><button id="dark-mode-toggle" type="button" aria-label="Toggle Dark Mode"
+                                class="btn btn-outline-light ms-2">🌙</button></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- NEW: Marquee Section -->
+    <div class="row">
+        <div class="box">
+            <div class="col-lg-12">
+                <div class="notice-marquee-container">
+                    <div class="container">
+                        <div class="marquee-content" id="marqueeContent">
+                            <!-- Dynamic Content Loading... -->
+                            <span>Loading Notices...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="text-center" style="margin-bottom: 40px; font-weight: 700; color: #444;">Latest Announcements
+                </h1>
+                <!-- Notices Grid -->
+                <div id="noticeGrid" class="notice-grid">
+                    <!-- Dynamic Cards will appear here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Full Notice -->
+    <div class="notice-modal-backdrop" id="modalBackdrop"></div>
+    <div class="notice-modal" id="noticeModal">
+        <div class="modal-header">
+            <h3 id="modalTitle">Notice Title</h3>
+            <button class="close-modal" id="closeModalBtn">&times;</button>
+        </div>
+        <div class="modal-body">
+            <span id="modalDate" class="modal-date">Date here</span>
+            <div id="modalContent">
+                <!-- Content -->
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" id="closeModalFooterBtn">Close</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container-fluid">
+            <!-- Main Footer Columns -->
+            <div class="row">
+                <!-- Awards Section -->
+                <div class="col-lg-2 col-md-4 col-sm-6 footer-section">
+                    <h4>Awards & Recognition</h4>
+                    <div class="awards-badges text-based-awards">
+                        <span>🏆 Best School Award 2023</span>
+                        <span>🏅 Top Academic Performance</span>
+                        <span>🌟 Excellence in Arts</span>
+                        <span>✨ Community Service Award</span>
+                    </div>
+                </div>
+
+                <!-- Quick Facts -->
+                <div class="col-lg-2 col-md-4 col-sm-6 footer-section">
+                    <h4>Quick Facts</h4>
+                    <ul class="footer-links">
+                        <li>Established: 1884</li>
+                        <li>Affiliation: WBBSE & WBCHSE</li>
+                        <li>Students: 1500+</li>
+                        <li>Faculty: 50+</li>
+                    </ul>
+                </div>
+                <!-- Contact Information -->
+                <div class="col-lg-2 col-md-4 col-sm-6 footer-section">
+                    <h4>Contact Us</h4>
+                    <address>
+                        Suprapa Nagar Road,<br>
+                        Suprapa Nagar, Generic City, 73XXXX<br>
+                        <i class="fas fa-phone"></i> <a href="tel:+91XXXXXXXXXX">+91-XXXXXXXXXX</a><br>
+                        <i class="fas fa-envelope"></i> <a href="mailto:info@suprapahigh.com">info@suprapahigh.com</a>
+                    </address>
+                </div>
+                <!-- Site Navigation -->
+                <div class="col-lg-2 col-md-6 col-sm-6 footer-section">
+                    <h4>Site Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="Homepage2.html">Home</a></li>
+                        <li><a href="about.html">About School</a></li>
+                        <li><a href="academic-structure.html">Academics</a></li>
+                        <li><a href="Notice.html">Notices</a></li>
+                        <li><a href="Gallery.html">Gallery</a></li>
+                        <li><a href="contact-us.html">Contact</a></li>
+                        <li><a href="sitemap.html">Sitemap</a></li>
+                        <li><a href="alumni.html">Alumni</a></li>
+                        <li><a href="ourfaculty.html">Our Faculty</a></li>
+                    </ul>
+                </div>
+
+                <!-- Accessibility & Events -->
+                <div class="col-lg-2 col-md-6 col-sm-6 footer-section">
+                    <h4>Accessibility Help</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" id="openAccessibilityPanelLinkFooter">Open Settings</a></li>
+                        <li>
+                            <button type="button" id="translateInfoBtn" class="translate-btn-style"
+                                aria-label="Get translation instructions">
+                                <span style="margin-right: 5px; vertical-align: middle;">🌐</span>
+                                Translate
+                            </button>
+                        </li>
+                    </ul>
+                    <h4>Upcoming Events</h4>
+                    <ul class="footer-links">
+                        <li><a href="Notice.html#event1">Annual Sports Day - <span class="event-date">Dec 15</span></a>
+                        </li>
+                        <li><a href="Notice.html#event2">Science Fair - <span class="event-date">Jan 20</span></a></li>
+                        <li><a href="Notice.html#event3">Cultural Fest - <span class="event-date">Feb 10</span></a></li>
+                    </ul>
+                </div>
+
+                <!-- Weather & Emergency Section -->
+                <div class="col-lg-2 col-md-6 col-sm-6 footer-section">
+                    <h4>Weather</h4>
+                    <div class="footer-weather small-weather">
+                        <!-- Content managed by weather.js -->
+                        Loading weather...
+                    </div>
+                    <h4 style="margin-top: 15px;">Emergency</h4>
+                    <div class="emergency-contact">
+                        <span>🚨 <a href="tel:+911234567890">Emergency Line</a></span>
+                    </div>
+                </div>
+            </div>
+            <hr style="margin-top:0px; margin-bottom:0px;">
+
+            <!-- Footer Bottom -->
+            <div class="row footer-bottom">
+                <div class="col-md-4 copyright-text">
+                    <span id="currentYear">2026</span> Suprapa High School. All Rights Reserved.
+                    <span id="lastUpdated" class="footer-last-updated" style="display: block; margin-top: 5px;"></span>
+                </div>
+                <div class="col-md-4 text-center visitor-counter donation-button-container-bottom">
+                    <span>Visitor Count: <span id="visitorCount">Loading...</span> | Online: <span
+                            id="onlineCount">1</span></span>
+                    <a href="payment.html" class="donation-button" style="margin-left: 33%;">Support Our School</a>
+                </div>
+                <div class="col-md-4 utility-links">
+                    <a href="privacy-policy.html">Privacy Policy</a> | <a href="terms-of-service.html">Terms</a>
+                    <a href="#top" class="back-to-top" aria-label="Back to top">⬆️</a>
+                </div>
+            </div>
+        </div>
+        <div id="cookieConsent" class="cookie-consent">
+            <p>We use cookies to enhance your experience. <a href="privacy-policy.html#cookies">Learn more</a>.</p>
+            <button id="acceptCookies">Accept</button>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="UserMasterPages/js/jquery.js"></script>
+    <script src="UserMasterPages/js/bootstrap.min.js"></script>
+    <script src="UserMasterPages/js/accessibility.js"></script>
+    <script src="UserMasterPages/js/weather.js"></script>
+
+    <!-- Page Specific Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // === Data Generation ===
+            const today = new Date();
+            const formatDate = (date) => date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+
+            // Helper to get relative date
+            const getRelativeDate = (daysOffset) => {
+                const d = new Date();
+                d.setDate(d.getDate() + daysOffset); // + for future, - for past
+                return d;
+            };
+
+            const notices = [
+                {
+                    id: 101,
+                    title: "Admissions Open for 2026-27 Session",
+                    date: getRelativeDate(-2), // 2 days ago
+                    summary: "Admissions for Classes I to IX are now open. Provisional admission for Class XI is also available.",
+                    content: `
+                        <p>We are pleased to announce that the admission process for the academic session 2026-27 is now open for Classes I through IX.</p>
+                        <h4>Key Dates:</h4>
+                        <ul>
+                            <li><strong>Form Distribution:</strong> Starts ${formatDate(getRelativeDate(0))}</li>
+                            <li><strong>Submission Deadline:</strong> ${formatDate(getRelativeDate(30))}</li>
+                        </ul>
+                        <p>Parents are requested to collect the admission forms from the school office between 9:00 AM and 2:00 PM on working days. Entrance test dates will be communicated upon submission.</p>
+                        <p><strong>Class XI Provisional Admission:</strong> Students awaiting Class X results can apply for provisional admission to the Science, Commerce, or Humanities streams.</p>
+                    `,
+                    isNew: true
+                },
+                {
+                    id: 102,
+                    title: "Annual Sports Day Rescheduled",
+                    date: getRelativeDate(-5),
+                    summary: "Due to changing weather conditions, the Annual Sports Day has been moved to next Friday.",
+                    content: `
+                        <p>Dear Students and Parents,</p>
+                        <p>Please be informed that the Annual Sports Day, originally scheduled for this week, has been rescheduled due to predicted poor weather conditions.</p>
+                        <p><strong>New Date:</strong> ${formatDate(getRelativeDate(5))}<br>
+                        <strong>Time:</strong> 9:30 AM Onwards<br>
+                        <strong>Venue:</strong> School Main Playground</p>
+                        <p>All participants are requested to report to their respective house masters by 8:30 AM on the new date. We apologize for the inconvenience and look forward to your enthusiastic participation.</p>
+                    `,
+                    isNew: true
+                },
+                {
+                    id: 103,
+                    title: "Science Exhibition Winners",
+                    date: getRelativeDate(-12),
+                    summary: "Congratulations to our students for creating the 'Best Eco-Friendly Village Model' at the District Level.",
+                    content: `
+                        <p>It is a moment of great pride for Suprapa High School!</p>
+                        <p>Our team of students from Class IX and X has secured the <strong>First Prize</strong> at the District Level Science Exhibition held last week. Their project, "Sustainable Eco-Village 2030," was highly appreciated by the judges for its innovation and practicality.</p>
+                        <p>The principal and staff extend their heartiest congratulations to the winning team and their mentor teachers. The project will now represent our district at the State Level Competition.</p>
+                    `,
+                    isNew: false
+                },
+                {
+                    id: 104,
+                    title: "Mid-Term Examination Schedule",
+                    date: getRelativeDate(-15),
+                    summary: "The routine for the upcoming Mid-Term Examinations for Classes VI to XII has been published.",
+                    content: `
+                        <p>The Mid-Term Examinations will commence from ${formatDate(getRelativeDate(20))}.</p>
+                        <p>Students must collect their admit cards from their respective class teachers by ${formatDate(getRelativeDate(18))}. Strict disciplinary action will be taken against students found using unfair means during the examination.</p>
+                        <p>Please check the <a href='exam-schedule.html'>Exam Schedule Page</a> for the detailed routine.</p>
+                    `,
+                    isNew: false
+                },
+                {
+                    id: 105,
+                    title: "Winter Uniform Guidelines",
+                    date: getRelativeDate(-30),
+                    summary: "Mandatory winter uniform policy effective from November 1st.",
+                    content: `
+                        <p>As winter approaches, all students are reminded to wear the prescribed winter uniform starting from November 1st.</p>
+                        <ul>
+                            <li><strong>Boys:</strong> Navy blue blazer with school crest, grey trousers, white shirt, and school tie.</li>
+                            <li><strong>Girls:</strong> Navy blue blazer/cardigan, grey skirt/trousers, and white shirt.</li>
+                        </ul>
+                        <p>Students not in proper uniform will not be allowed to attend assembly.</p>
+                    `,
+                    isNew: false
+                }
+            ];
+
+            // === Logic ===
+            const marqueeContainer = document.getElementById('marqueeContent');
+            const gridContainer = document.getElementById('noticeGrid');
+            const readNotices = JSON.parse(localStorage.getItem('readNotices') || '[]');
+
+            function render() {
+                // Clear containers
+                marqueeContainer.innerHTML = '';
+                gridContainer.innerHTML = '';
+
+                // 1. Render Marquee (Only New and Unread)
+                const marqueeItems = notices.filter(n => n.isNew && !readNotices.includes(n.id));
+                if (marqueeItems.length > 0) {
+                    marqueeItems.forEach(n => {
+                        const span = document.createElement('span');
+                        span.className = 'marquee-item';
+                        span.innerHTML = `<strong>(NEW)</strong> ${n.title}`;
+                        span.onclick = () => openNotice(n.id);
+                        marqueeContainer.appendChild(span);
+                    });
+                } else {
+                    const span = document.createElement('span');
+                    span.className = 'marquee-item';
+                    span.textContent = "Welcome to Suprapa High School Official Notice Board. Check below for all announcements.";
+                    marqueeContainer.appendChild(span);
+                }
+
+                // 2. Render Grid
+                notices.forEach(n => {
+                    const isRead = readNotices.includes(n.id);
+                    const showNewBadge = n.isNew && !isRead;
+
+                    const card = document.createElement('div');
+                    card.className = 'notice-card';
+                    card.innerHTML = `
+                        <div class="notice-header">
+                            <span class="notice-date-badge">📅 ${formatDate(n.date)}</span>
+                            ${showNewBadge ? '<span class="new-badge">NEW</span>' : ''}
+                        </div>
+                        <h3 class="notice-title">${n.title}</h3>
+                        <p class="notice-preview">${n.summary}</p>
+                        <button class="read-more-btn" onclick="openNotice(${n.id})">Read Full Notice</button>
+                    `;
+                    gridContainer.appendChild(card);
+                });
+            }
+
+            // === Modal Logic ===
+            window.openNotice = function (id) {
+                const notice = notices.find(n => n.id === id);
+                if (!notice) return;
+
+                // Populate Modal
+                document.getElementById('modalTitle').textContent = notice.title;
+                document.getElementById('modalDate').textContent = `Published on ${formatDate(notice.date)}`;
+                document.getElementById('modalContent').innerHTML = notice.content;
+
+                // Show Modal
+                const modal = document.getElementById('noticeModal');
+                const backdrop = document.getElementById('modalBackdrop');
+                modal.classList.add('active');
+                backdrop.classList.add('active');
+
+                // Mark as read if it was new
+                if (notice.isNew) {
+                    if (!readNotices.includes(id)) {
+                        readNotices.push(id);
+                        localStorage.setItem('readNotices', JSON.stringify(readNotices));
+                        // Re-render UI when modal closes to update 'New' tags
+                        // actually, we can just remove the NEW tag from the DOM behind the modal immediately or wait
+                    }
+                }
+            };
+
+            function closeModal() {
+                const modal = document.getElementById('noticeModal');
+                const backdrop = document.getElementById('modalBackdrop');
+                modal.classList.remove('active');
+                backdrop.classList.remove('active');
+                render(); // Re-render to update the "New" tags (remove them if read)
+            }
+
+            document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+            document.getElementById('closeModalFooterBtn').addEventListener('click', closeModal);
+            document.getElementById('modalBackdrop').addEventListener('click', closeModal);
+
+            // Initial Render
+            render();
+
+            // Populate Accessibility Panel Code if absent (handled by accessibility.js usually, but ensuring structure exists)
+        });
+    </script>
+    <div class="accessibility-floating-btn" id="accessibilityBtn">
+        <button aria-label="Accessibility Options">♿</button>
+    </div>
+    <div id="accessibilityPanel" class="accessibility-panel">
+        <!-- Panel content generated by JS -->
+    </div>
+    <div id="readingGuide"></div>
+</body>
+
+</html>

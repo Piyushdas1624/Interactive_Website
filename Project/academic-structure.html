@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Academic Structure - Suprapa High School</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="Details about the academic structure, curriculum, and sections at Suprapa High School." />
+    <meta name="author" content="Suprapa High Administration" />
+    <meta name="keywords"
+        content="Suprapa High, academic structure, school curriculum, secondary section, higher secondary section" />
+    <!-- Bootstrap Core CSS -->
+    <link href="UserMasterPages/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="UserMasterPages/css/Mycss.css" rel="stylesheet" />
+    <link href="UserMasterPages/css/accessibility.css" rel="stylesheet" />
+    <link href="UserMasterPages/css/enhanced-features.css" rel="stylesheet" />
+    <style>
+        body {
+            padding-top: 0;
+        }
+    </style>
+    <link rel="icon" href="images/logo2.png" sizes="any" type="image/png">
+</head>
+
+<body>
+    <script>
+        // Direct Early Dark Mode Application
+        (function () {
+            try {
+                const savedMode = localStorage.getItem('darkMode');
+                // Apply directly to HTML element for consistency
+                if (savedMode === 'true') {
+                    document.documentElement.classList.add('dark-mode');
+                } else {
+                    // Ensure it's removed if not explicitly set to true
+                    document.documentElement.classList.remove('dark-mode');
+                }
+            } catch (e) {
+                console.error('Error applying early dark mode setting:', e);
+            }
+        })();
+    </script>
+    <!-- Top Branding Bar -->
+    <div class="top-branding-bar">
+        <div class="container">
+            <a href="Homepage2.html" class="branding-link">
+                <img src="images/Logo.png" alt="Suprapa High Logo" class="school-logo"> </a>
+            <span class="school-name">Academic Structure</span>
+        </div>
+    </div>
+
+    <!-- Chatbot -->
+    <div class="chatbot-trigger">
+        <button aria-label="Open Chat Assistant">💬</button>
+    </div>
+
+    <div class="chatbot-container">
+        <div class="chatbot-header">
+            <h3>School Assistant</h3>
+            <button class="chatbot-close" aria-label="Close Chat">&times;</button>
+        </div>
+        <div class="chatbot-messages"></div>
+        <div class="chatbot-input">
+            <input type="text" placeholder="Ask me anything...">
+            <button aria-label="Send Message">➤</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Restructured header navigation using Bootstrap standard classes -->
+        <!-- Add navbar-expand-lg for collapsing on medium/small screens -->
+        <!-- Removed navbar-dark bg-dark, added custom class main-navbar -->
+        <nav class="navbar navbar-expand-lg main-navbar" role="navigation">
+            <!-- Use container-fluid for full width within the parent container -->
+            <div class="container-fluid">
+                <!-- mobile display toggle button -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <!-- Updated navbar-brand -->
+                    <a class="navbar-brand" href="Homepage2.html">SHS</a>
+                </div>
+
+                <!-- Collect the nav links - Moved the UL here -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <!-- Moved the original menu list here -->
+                    <ul class="level1 nav navbar-nav StaticMenuStyleMainMenu">
+                        <!-- FOR MNNHS STUDENTS Section -->
+                        <li class="dropdown">
+                            <a class="popout level1 StaticMenuItemStyleMainMenu dropdown-toggle mnnhs-link" href="#"
+                                data-toggle="dropdown">SHS PORTAL</a>
+                            <ul class="level2 dropdown-menu">
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="Homepage2.html">School Home</a>
+                                </li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="Notice.html">School Notices</a>
+                                </li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu"
+                                        href="academic-structure.html">Academic Structure</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="exam-schedule.html">Exam
+                                        Schedule</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="book-list.html">Book List
+                                        2025-26</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="student-portal.html">Student
+                                        Portal</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Fun Learning Games -->
+                        <li class="dropdown">
+                            <a class="popout level1 StaticMenuItemStyleMainMenu dropdown-toggle games-hub-link" href="#"
+                                data-toggle="dropdown">FUN & GAMES 🎮</a>
+                            <ul class="level2 dropdown-menu">
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="fun-learning-games.html">All
+                                        Games</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu"
+                                        href="fun-learning-games.html#brain-games">Brain Games</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu"
+                                        href="fun-learning-games.html#puzzle-games">Puzzle Games</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu"
+                                        href="fun-learning-games.html#educational-games">Educational Games</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Study Resources -->
+                        <li class="dropdown">
+                            <a class="popout level1 StaticMenuItemStyleMainMenu dropdown-toggle study-hub-link" href="#"
+                                data-toggle="dropdown">STUDY HUB</a>
+                            <ul class="level2 dropdown-menu">
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="free-resources.html">Free Study
+                                        Resources</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="https://ndl.iitkgp.ac.in/"
+                                        target="_blank">National Digital Library</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="https://swayam.gov.in/"
+                                        target="_blank">SWAYAM Courses</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="https://diksha.gov.in/"
+                                        target="_blank">DIKSHA Portal</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Competitive Exams -->
+                        <li class="dropdown">
+                            <a class="popout level1 StaticMenuItemStyleMainMenu dropdown-toggle all-students-link"
+                                href="#" data-toggle="dropdown">COMPETITIVE EXAMS</a>
+                            <ul class="level2 dropdown-menu">
+                                <li><a class="level2 StaticMenuItemStyleMainMenu"
+                                        href="free-resources.html#jee-section">JEE Resources</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu"
+                                        href="free-resources.html#neet-section">NEET Resources</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="https://jeemain.nta.nic.in/"
+                                        target="_blank">JEE Main Portal</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="https://neet.nta.nic.in/"
+                                        target="_blank">NEET Portal</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Quick Links -->
+                        <li class="dropdown">
+                            <a class="popout level1 StaticMenuItemStyleMainMenu dropdown-toggle quick-links-link"
+                                href="#" data-toggle="dropdown">QUICK LINKS</a>
+                            <ul class="level2 dropdown-menu">
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="Gallery.html">Gallery</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="contact-us.html">Contact Us</a>
+                                </li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="about.html">About School</a>
+                                </li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="virtual-tour.html">Virtual
+                                        Tour</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="sitemap.html">Sitemap</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Add new Login Section -->
+                        <li>
+                            <!-- Removed inline style, rely on navbar-dark -->
+                            <a class="popout level1 StaticMenuItemStyleMainMenu dropdown-toggle all-students-link"
+                                href="login.html">LOGIN SECTION</a>
+                        </li>
+
+                        <!-- Dark mode toggle -->
+                        <li><button id="dark-mode-toggle" type="button" aria-label="Toggle Dark Mode"
+                                class="btn btn-outline-light ms-2">🌙</button></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page Specific Content Goes Here -->
+        <div class="row">
+            <div class="box">
+                <div class="col-lg-12">
+                    <div id="wrapper" class="wrapper">
+                        <div class="content" style="padding: 20px;">
+                            <h1>Academic Structure</h1>
+                            <hr>
+                            <p>Suprapa High School offers a comprehensive academic structure designed to cater to the
+                                diverse learning needs of students from primary through higher secondary levels. Our
+                                curriculum adheres to the guidelines set by the West Bengal Board of Secondary Education
+                                (WBBSE) and the West Bengal Council of Higher Secondary Education (WBCHSE).</p>
+
+                            <h2>Sections</h2>
+                            <div class="courses-section" style="padding: 0;">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="courses-wrapper">
+                                            <div class="course-category">
+                                                <h4>Primary Section (Classes I-V)</h4>
+                                                <ul>
+                                                    <li>Focuses on foundational literacy and numeracy skills.</li>
+                                                    <li>Introduction to Environmental Studies, English, Bengali, and
+                                                        Mathematics.</li>
+                                                    <li>Incorporates activity-based learning and co-curricular
+                                                        activities.</li>
+                                                </ul>
+                                            </div>
+                                            <div class="course-category">
+                                                <h4>Upper Primary Section (Classes VI-VIII)</h4>
+                                                <ul>
+                                                    <li>Subjects include Languages (English, Bengali, Hindi/Sanskrit),
+                                                        Mathematics, Science (Physics, Chemistry, Biology), and Social
+                                                        Science (History, Geography).</li>
+                                                    <li>Introduction to Computer Science.</li>
+                                                    <li>Emphasis is placed on conceptual understanding and application.
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="course-category">
+                                                <h4>Secondary Section (Classes IX-X)</h4>
+                                                <ul>
+                                                    <li>Prepares students for the Madhyamik Pariksha (WBBSE).</li>
+                                                    <li>Compulsory subjects: First Language, Second Language,
+                                                        Mathematics, Physical Science, Life Science, History, and
+                                                        Geography.</li>
+                                                    <li>Optional Elective subjects are available.</li>
+                                                    <li>Focuses on board examination patterns and comprehensive
+                                                        learning.</li>
+                                                </ul>
+                                            </div>
+                                            <div class="course-category">
+                                                <h4>Higher Secondary (Classes XI-XII)</h4>
+                                                <ul>
+                                                    <li>Prepares students for the Uccha Madhyamik Examination (WBCHSE).
+                                                    </li>
+                                                    <li>Streams Offered: Science (PCM, PCB), Commerce, and Humanities.
+                                                    </li>
+                                                    <li>Detailed subject combinations are available in the admission
+                                                        brochure.</li>
+                                                    <li>Provides career counseling and guidance for future studies.</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h2>Teaching Methodology</h2>
+                            <p>We employ a blend of traditional and modern teaching methodologies, including smart
+                                classroom technology, project-based learning, group discussions, and practical
+                                laboratory work, to ensure effective learning outcomes.</p>
+
+                            <p><em>Detailed curriculum outlines for each class will be available soon.</em></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- /.container -->
+
+    <style>
+        @media (min-width:1214px) {
+            .container {
+                width: 1214px
+            }
+        }
+    </style>
+
+        <footer class="site-footer">
+        <div class="container-fluid">
+            <!-- Main Footer Columns -->
+            <div class="row">
+                <!-- Awards Section -->
+                <div class="col-lg-2 col-md-4 col-sm-6 footer-section">
+                    <h4>Awards & Recognition</h4>
+                    <div class="awards-badges text-based-awards">
+                        <span>🏆 Best School Award 2023</span>
+                        <span>🏅 Top Academic Performance</span>
+                        <span>🌟 Excellence in Arts</span>
+                        <span>✨ Community Service Award</span>
+                    </div>
+                </div>
+
+                <!-- Quick Facts -->
+                <div class="col-lg-2 col-md-4 col-sm-6 footer-section">
+                    <h4>Quick Facts</h4>
+                    <ul class="footer-links">
+                        <li>Established: 1884</li>
+                        <li>Affiliation: WBBSE & WBCHSE</li>
+                        <li>Students: 1500+</li>
+                        <li>Faculty: 50+</li>
+                    </ul>
+                </div>
+                <!-- Contact Information -->
+                <div class="col-lg-2 col-md-4 col-sm-6 footer-section">
+                    <h4>Contact Us</h4>
+                    <address>
+                        Suprapa Nagar Road,<br>
+                        Suprapa Nagar, Generic City, 73XXXX<br>
+                        <i class="fas fa-phone"></i> <a href="tel:+91XXXXXXXXXX">+91-XXXXXXXXXX</a><br>
+                        <i class="fas fa-envelope"></i> <a href="mailto:info@suprapahigh.com">info@suprapahigh.com</a>
+                    </address>
+                </div>
+                <!-- Site Navigation -->
+                <div class="col-lg-2 col-md-6 col-sm-6 footer-section">
+                    <h4>Site Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="Homepage2.html">Home</a></li>
+                        <li><a href="about.html">About School</a></li>
+                        <li><a href="academic-structure.html">Academics</a></li>
+                        <li><a href="Notice.html">Notices</a></li>
+                        <li><a href="Gallery.html">Gallery</a></li>
+                        <li><a href="contact-us.html">Contact</a></li>
+                        <li><a href="sitemap.html">Sitemap</a></li>
+                        <li><a href="alumni.html">Alumni</a></li>
+                        <li><a href="ourfaculty.html">Our Faculty</a></li>
+                    </ul>
+                </div>
+
+                <!-- Accessibility & Events -->
+                <div class="col-lg-2 col-md-6 col-sm-6 footer-section">
+                    <h4>Accessibility Help</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" id="openAccessibilityPanelLinkFooter">Open Settings</a></li>
+                        <li>
+                            <button type="button" id="translateInfoBtn" class="translate-btn-style"
+                                aria-label="Get translation instructions">
+                                <span style="margin-right: 5px; vertical-align: middle;">🌐</span>
+                                Translate
+                            </button>
+                        </li>
+                    </ul>
+                    <h4>Upcoming Events</h4>
+                    <ul class="footer-links">
+                        <li><a href="Notice.html#event1">Annual Sports Day - <span class="event-date">Dec 15</span></a>
+                        </li>
+                        <li><a href="Notice.html#event2">Science Fair - <span class="event-date">Jan 20</span></a></li>
+                        <li><a href="Notice.html#event3">Cultural Fest - <span class="event-date">Feb 10</span></a></li>
+                    </ul>
+                </div>
+
+                <!-- Weather & Emergency Section -->
+                <div class="col-lg-2 col-md-6 col-sm-6 footer-section">
+                    <h4>Weather</h4>
+                    <div class="footer-weather small-weather">
+                        <span class="weather-icon">🌦️</span>
+                        <div class="weather-details">
+                            <span class="weather-location">Coochbehar</span>
+                            <span class="weather-temp">28°C</span>
+                        </div>
+                        <span class="weather-update">Loading...</span>
+                    </div>
+                    <h4 style="margin-top: 15px;">Emergency</h4>
+                    <div class="emergency-contact">
+                        <span>🚨 <a href="tel:+911234567890">Emergency Line</a></span>
+                    </div>
+                </div>
+            </div>
+            <hr style="margin-top:0px; margin-bottom:0px;">
+
+            <!-- Stay Updated Section -->
+            <div class="footer-section stay-updated-section text-center">
+                <!-- Container for Stay Updated -->
+                <div class="newsletter-container">
+                    <h4>Stay Updated</h4>
+                    <form action="#" method="post" class="newsletter-signup-footer">
+                        <label for="newsletterEmailFooter" class="sr-only">Email for Newsletter</label>
+                        <input type="email" id="newsletterEmailFooter" name="email" placeholder="Enter your email"
+                            required>
+                        <button type="submit">Subscribe</button>
+                    </form>
+                </div>
+                <!-- Container for Connect With Us -->
+                <div class="connect-container">
+                    <h4 style="margin-top: 15px;">Connect With Us</h4>
+                    <div class="social-icons">
+                        <!-- SVG Icons -->
+                        <a href="#" aria-label="Facebook">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
+                                <path fill="currentColor"
+                                    d="M80 299.3V512H196V299.3h86.5l18-97.8H196V166.9c0-51.7 20.3-71.5 72.7-71.5c16.3 0 29.4 .4 37 1.2V7.9C291.4 4 256.4 0 236.2 0C129.3 0 80 50.5 80 159.4v42.1H14v97.8H80z" />
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                                <path fill="currentColor"
+                                    d="M459.37 151.716c.325 4.548 .325 9.097 .325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447 .974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498 .974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.214 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z" />
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="Instagram">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
+                                <path fill="currentColor"
+                                    d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z" />
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="YouTube">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
+                                <path fill="currentColor"
+                                    d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row footer-bottom">
+                <!-- Copyright -->
+                <div class="col-md-4 copyright-text">
+                    <span id="currentYear">2026</span> Suprapa High School. All Rights Reserved.
+                    <span id="lastUpdated" class="footer-last-updated">Loading Date...</span>
+                    <span class="designer-credit">Designed By Polytechnic students group (10)</span>
+                </div>
+                <!-- Visitor Counter & Donate Button -->
+                <div class="col-md-4 text-center donation-button-container-bottom">
+                    <div class="visitor-counter">
+                        <span class="mb-0 text-left">Visitor Count: <span id="visitorCount">Loading...</span> | Online:
+                            <span id="onlineCount">1</span></span>
+                        <a href="payment.html" class="donation-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em"
+                                fill="currentColor" style="margin-right: 8px; vertical-align: middle;">
+                                <path
+                                    d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z" />
+                            </svg>
+                            Support Our School
+                        </a>
+                    </div>
+                </div>
+                <!-- Utility Links -->
+                <div class="col-md-4 utility-links">
+                    <a href="privacy-policy.html">Privacy Policy</a> <span class="separator">|</span>
+                    <a href="terms-of-service.html">Terms</a>
+                    <a href="#top" class="back-to-top" aria-label="Back to top">
+                        ⬆️
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (typeof initializeAccessibility === 'function') {
+                initializeAccessibility();
+            }
+        });
+    </script>
+
+    <script src="UserMasterPages/js/jquery.js"></script>
+    <script src="UserMasterPages/js/bootstrap.min.js"></script>
+    <script src="UserMasterPages/js/accessibility.js"></script>
+    <script src="UserMasterPages/js/weather.js"></script>
+    <!-- Accessibility Panel Structure -->
+    <div class="accessibility-floating-btn" id="accessibilityBtn">
+        <button aria-label="Accessibility Options">♿</button>
+    </div>
+    <div id="accessibilityPanel" class="accessibility-panel">
+        <!-- Panel content will be generated by JS -->
+    </div>
+    <div id="readingGuide"></div> <!-- Reading Guide Element -->
+</body>
+
+</html>

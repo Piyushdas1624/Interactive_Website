@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Admin Dashboard - SHS</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="images/logo2.png" sizes="any" type="image/png">
+    <link href="UserMasterPages/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="UserMasterPages/css/responsive-fixes.css" rel="stylesheet" />
+    <link href="UserMasterPages/css/Mycss.css" rel="stylesheet" />
+    <link href="UserMasterPages/css/admin-dashboard.css" rel="stylesheet">
+    <link href="UserMasterPages/css/accessibility.css" rel="stylesheet" />
+    <link href="UserMasterPages/css/enhanced-features.css" rel="stylesheet" />
+
+
+    <style>
+        .save-btn {
+            background: linear-gradient(45deg, #2563eb, #1d4ed8);
+            margin-right: 10px;
+            color: white;
+        }
+    </style>
+
+    <script>
+        //  Dark Mode Application
+        (function () {
+            try {
+                const savedMode = localStorage.getItem('darkMode');
+                if (savedMode === 'true') {
+                    document.documentElement.classList.add('dark-mode');
+                } else {
+                    document.documentElement.classList.remove('dark-mode');
+                }
+            } catch (e) {
+                console.error('Error applying early dark mode setting:', e);
+            }
+        })();
+    </script>
+</head>
+
+<body>
+    <!-- Top Branding Bar -->
+    <div class="top-branding-bar">
+        <div class="container">
+            <a href="Homepage2.html" class="branding-link">
+                <img src="images/Logo.png" alt="Suprapa High Logo" class="school-logo"> </a>
+            <span class="school-name">Admin Dashboard</span>
+            <div style="float: right; margin-right: 20%;">
+                <button id="dark-mode-toggle" type="button" aria-label="Toggle Dark Mode"
+                    class="btn btn-outline-light">🌙</button>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- Admin Dashboard Content -->
+    <div class="row">
+        <div class="col-md-8">
+            <h2>Admin Dashboard</h2>
+            <p>Manage Students and School Data</p>
+        </div>
+        <div class="col-md-4 text-right">
+            <button class="action-btn save-btn" onclick="saveToFiles()">Save to Files</button>
+            <button class="action-btn edit-btn" onclick="exportData()" style="margin-right: 10px;">Export Data</button>
+            <button class="action-btn delete-btn" onclick="logout()">Logout</button>
+        </div>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="row">
+        <div class="col-md-3">
+            <div class="stats-card">
+                <h4>Total Students</h4>
+                <div class="stats-number" id="studentsCount">0</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-card" style="background: linear-gradient(45deg, #059669, #047857);">
+                <h4>Class Average Marks</h4>
+                <div class="stats-number overall-avg">0%</div>
+                <select id="classFilter" class="form-control mt-2" onchange="updateClassStats()">
+                    <option value="all">All Classes</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-card" style="background: linear-gradient(45deg, #7c3aed, #6d28d9);">
+                <h4>Subject Averages</h4>
+                <div class="subject-stats">
+                    <div>Math: <span class="math-avg">0%</span></div>
+                    <div>Science: <span class="science-avg">0%</span></div>
+                    <div>English: <span class="english-avg">0%</span></div>
+                    <div>Social: <span class="social-avg">0%</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-card" style="background: linear-gradient(45deg, #dc2626, #b91c1c);">
+                <h4>Teachers</h4>
+                <div class="stats-number" id="teachersCount">0</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Student Management -->
+    <div class="dashboard-card">
+        <h3>Person Management</h3>
+        <div class="mb-3">
+            <button class="action-btn edit-btn" onclick="showAddPersonModal()">Add New Person</button>
+        </div>
+        <input type="text" class="search-box" placeholder="Search by name, ID, or class..."
+            oninput="searchStudents(this.value)">
+
+        <table class="student-table">
+            <thead>
+                <tr>
+                    <th>ID/Username</th>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Class/Department</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="studentTableBody">
+                <!-- Rows will be populated here -->
+            </tbody>
+        </table>
+    </div>
+    </div>
+
+    <!-- Student Edit Modal -->
+    <div id="studentModal" class="student-modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h3>Edit Student Details</h3>
+            <form id="studentForm">
+                <div class="form-group">
+                    <label>Student ID</label>
+                    <input type="text" class="form-control" id="editStudentId" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" id="editName">
+                </div>
+                <div class="form-group">
+                    <label>Class</label>
+                    <input type="text" class="form-control" id="editClass">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control" id="editPassword">
+                </div>
+                <button type="submit" class="action-btn edit-btn">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Marks Modal -->
+    <div id="marksModal" class="student-modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeMarksModal()">&times;</span>
+            <h3>Student Marks</h3>
+            <form id="marksForm">
+                <div class="form-group">
+                    <label>Mathematics</label>
+                    <input type="number" class="form-control" id="mathMarks" min="0" max="100">
+                </div>
+                <div class="form-group">
+                    <label>Science</label>
+                    <input type="number" class="form-control" id="scienceMarks" min="0" max="100">
+                </div>
+                <div class="form-group">
+                    <label>English</label>
+                    <input type="number" class="form-control" id="englishMarks" min="0" max="100">
+                </div>
+                <div class="form-group">
+                    <label>Social Studies</label>
+                    <input type="number" class="form-control" id="socialMarks" min="0" max="100">
+                </div>
+                <button type="submit" class="action-btn marks-btn">Save Marks</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add this new modal for adding students -->
+    <div id="addStudentModal" class="student-modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeAddModal()">&times;</span>
+            <h3>Add New Student</h3>
+            <form id="addStudentForm">
+                <div class="form-group">
+                    <label>Student ID</label>
+                    <input type="text" class="form-control" id="newStudentId" required>
+                </div>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" id="newName" required>
+                </div>
+                <div class="form-group">
+                    <label>Class</label>
+                    <input type="text" class="form-control" id="newClass" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control" id="newPassword" required>
+                </div>
+                <button type="submit" class="action-btn edit-btn">Add Student</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add this new modal for adding people -->
+    <div id="addPersonModal" class="student-modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeAddModal()">&times;</span>
+            <h3>Add New Person</h3>
+            <form id="addPersonForm">
+                <div class="form-group">
+                    <label>Role</label>
+                    <select class="form-control" id="personRole" required onchange="handleRoleChange()">
+                        <option value="student">Student</option>
+                        <option value="teacher">Teacher</option>
+                        <option value="administrator">Administrator</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label id="idLabel">Student ID</label>
+                    <input type="text" class="form-control" id="personId" required>
+                </div>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" id="personName" required>
+                </div>
+                <div class="form-group" id="classGroup">
+                    <label>Class</label>
+                    <input type="text" class="form-control" id="personClass">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control" id="personPassword" required>
+                </div>
+                <button type="submit" class="action-btn edit-btn">Add Person</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="UserMasterPages/js/jquery.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="UserMasterPages/js/bootstrap.min.js"></script>
+
+    <script src="UserMasterPages/js/accessibility.js"></script>
+    <script src="UserMasterPages/js/dropdown-handler.js"></script>
+    <script src="UserMasterPages/js/admin-dashboard.js"></script>
+
+    <script>
+        // Initialize data arrays and load from localStorage
+        let students = [];
+        let teachers = [];
+        let admins = [];
+        let classes = new Set();
+        let studentMarks = new Map();
+
+        // Save data to localStorage
+        function saveData() {
+            localStorage.setItem('students', JSON.stringify(students));
+            localStorage.setItem('teachers', JSON.stringify(teachers));
+            localStorage.setItem('admins', JSON.stringify(admins));
+            localStorage.setItem('classes', JSON.stringify([...classes]));
+            localStorage.setItem('studentMarks', JSON.stringify([...studentMarks]));
+        }
+
+        // Clear all data
+        function clearAllData() {
+            students = [];
+            teachers = [];
+            admins = [];
+            classes = new Set();
+            studentMarks = new Map();
+            localStorage.removeItem('students');
+            localStorage.removeItem('teachers');
+            localStorage.removeItem('admins');
+            localStorage.removeItem('classes');
+            localStorage.removeItem('studentMarks');
+        }
+
+        // Load all data
+        async function loadAllData() {
+            try {
+                // Clear all existing data first
+                clearAllData();
+
+                // Try to load from text files
+                await loadFromFiles();
+
+                // If no data loaded from files, try localStorage
+                if (students.length === 0 && teachers.length === 0 && admins.length === 0) {
+                    students = JSON.parse(localStorage.getItem('students') || '[]');
+                    teachers = JSON.parse(localStorage.getItem('teachers') || '[]');
+                    admins = JSON.parse(localStorage.getItem('admins') || '[]');
+                    classes = new Set(JSON.parse(localStorage.getItem('classes') || '[]'));
+                    studentMarks = new Map(JSON.parse(localStorage.getItem('studentMarks') || '[]'));
+                }
+
+                // Update UI
+                updateStats();
+                populateTable();
+            } catch (error) {
+                console.error('Error loading data:', error);
+                alert('Error loading data. Please check the console for details.');
+            }
+        }
+
+        // Load from text files
+        async function loadFromFiles() {
+            try {
+                const credResponse = await fetch('credentials.txt');
+                const credData = await credResponse.text();
+
+                if (!credData || credData.trim() === '') {
+                    return; // Use empty arrays if no file data
+                }
+
+                const credLines = credData.split('\n');
+                let currentSection = '';
+
+                // Clear existing arrays
+                students = [];
+                teachers = [];
+                admins = [];
+                classes = new Set();
+
+                // Parse credentials
+                credLines.forEach(line => {
+                    line = line.trim();
+
+                    if (line.startsWith('#')) {
+                        if (line.includes('Student')) currentSection = 'student';
+                        else if (line.includes('Admin')) currentSection = 'admin';
+                        return;
+                    }
+
+                    if (!line || line.startsWith('# Format:')) return;
+
+                    const parts = line.split(':');
+
+                    if (currentSection === 'student' && parts.length === 4) {
+                        const [id, password, name, className] = parts;
+                        if (id && id.trim()) { // Only add if ID exists
+                            students.push({
+                                id: id.trim(),
+                                password: password.trim() || '',
+                                name: name.trim() || '',
+                                class: className.trim() || '',
+                                role: 'student'
+                            });
+                            if (className && className.trim()) {
+                                classes.add(className.trim());
+                            }
+                        }
+                    } else if (currentSection === 'admin' && parts.length >= 3) {
+                        const [username, password, role, name] = parts;  // Now handling optional name field
+                        if (username && username.trim()) { // Only add if username exists
+                            const trimmedRole = role.trim().toLowerCase(); // Convert role to lowercase
+                            if (trimmedRole === 'teacher') {
+                                teachers.push({
+                                    id: username.trim(),
+                                    name: (name && name.trim()) || username.trim(), // Use name if provided, otherwise use username
+                                    role: 'teacher',
+                                    password: password.trim() || ''
+                                });
+                            } else if (trimmedRole === 'administrator') {
+                                admins.push({
+                                    id: username.trim(),
+                                    name: (name && name.trim()) || username.trim(), // Use name if provided, otherwise use username
+                                    role: 'administrator',
+                                    password: password.trim() || ''
+                                });
+                            }
+                        }
+                    }
+                });
+
+                console.log('Loaded teachers:', teachers); // Debug log
+
+                // Try to load marks
+                try {
+                    const marksResponse = await fetch('marks.txt');
+                    const marksData = await marksResponse.text();
+                    const marksLines = marksData.split('\n');
+
+                    // Clear existing marks
+                    studentMarks = new Map();
+
+                    marksLines.forEach(line => {
+                        line = line.trim();
+                        if (line.startsWith('#') || !line) return;
+
+                        const [studentId, math, science, english, social] = line.split(':');
+                        if (studentId && studentId.trim()) {
+                            studentMarks.set(studentId.trim(), {
+                                math: parseInt(math) || 0,
+                                science: parseInt(science) || 0,
+                                english: parseInt(english) || 0,
+                                social: parseInt(social) || 0
+                            });
+                        }
+                    });
+                } catch (marksError) {
+                    console.warn('Error loading marks:', marksError);
+                }
+
+                // Save to localStorage
+                saveData();
+
+                // Update UI
+                updateStats();
+                populateTable();
+            } catch (error) {
+                console.error('Error loading from files:', error);
+            }
+        }
+
+        // Update statistics with error handling
+        function updateStats() {
+            try {
+                // Update total students count
+                const studentsCountElement = document.getElementById('studentsCount');
+                if (studentsCountElement) {
+                    studentsCountElement.textContent = students.length;
+                }
+
+                // Update teachers count
+                const teachersCountElement = document.getElementById('teachersCount');
+                if (teachersCountElement) {
+                    teachersCountElement.textContent = teachers.length;
+                    console.log('Updated teachers count:', teachers.length); // Debug log
+                }
+
+                // Update class filter
+                updateClassFilter();
+
+                // Calculate and display averages for selected class
+                const selectedClass = document.getElementById('classFilter').value;
+                const averages = calculateAverages(selectedClass);
+
+                const overallAvgElement = document.querySelector('.overall-avg');
+                const mathAvgElement = document.querySelector('.math-avg');
+                const scienceAvgElement = document.querySelector('.science-avg');
+                const englishAvgElement = document.querySelector('.english-avg');
+                const socialAvgElement = document.querySelector('.social-avg');
+
+                if (overallAvgElement) overallAvgElement.textContent = averages.overall.toFixed(1) + '%';
+                if (mathAvgElement) mathAvgElement.textContent = averages.math.toFixed(1) + '%';
+                if (scienceAvgElement) scienceAvgElement.textContent = averages.science.toFixed(1) + '%';
+                if (englishAvgElement) englishAvgElement.textContent = averages.english.toFixed(1) + '%';
+                if (socialAvgElement) socialAvgElement.textContent = averages.social.toFixed(1) + '%';
+            } catch (error) {
+                console.error('Error updating stats:', error);
+            }
+        }
+
+        function calculateAverages(selectedClass = 'all') {
+            let filteredStudents = selectedClass === 'all' ?
+                students :
+                students.filter(s => s.class === selectedClass);
+
+            let totalStudents = filteredStudents.length;
+            if (totalStudents === 0) return { math: 0, science: 0, english: 0, social: 0, overall: 0 };
+
+            let sums = { math: 0, science: 0, english: 0, social: 0 };
+            let count = 0;
+
+            filteredStudents.forEach(student => {
+                const marks = studentMarks.get(student.id);
+                if (marks) {
+                    sums.math += marks.math;
+                    sums.science += marks.science;
+                    sums.english += marks.english;
+                    sums.social += marks.social;
+                    count++;
+                }
+            });
+
+            if (count === 0) return { math: 0, science: 0, english: 0, social: 0, overall: 0 };
+
+            let averages = {
+                math: sums.math / count,
+                science: sums.science / count,
+                english: sums.english / count,
+                social: sums.social / count
+            };
+
+            averages.overall = (averages.math + averages.science + averages.english + averages.social) / 4;
+            return averages;
+        }
+
+        // Update marks in marks.txt
+        async function updateMarks(studentId, newMarks) {
+            try {
+                // Update marks in the Map
+                studentMarks.set(studentId, newMarks);
+
+                // Save to localStorage
+                saveData();
+
+                // Update UI
+                updateStats();
+                return true;
+            } catch (error) {
+                console.error('Error updating marks:', error);
+                throw error;
+            }
+        }
+
+        // Handle marks form submission
+        document.getElementById('marksForm').onsubmit = async function (e) {
+            e.preventDefault();
+            const studentId = document.getElementById('editStudentId').value;
+
+            try {
+                const newMarks = {
+                    math: parseInt(document.getElementById('mathMarks').value) || 0,
+                    science: parseInt(document.getElementById('scienceMarks').value) || 0,
+                    english: parseInt(document.getElementById('englishMarks').value) || 0,
+                    social: parseInt(document.getElementById('socialMarks').value) || 0
+                };
+
+                await updateMarks(studentId, newMarks);
+                closeMarksModal();
+                alert('Marks updated successfully!');
+            } catch (error) {
+                console.error('Error updating marks:', error);
+                alert('Failed to update marks: ' + error.message);
+            }
+        };
+
+        // Populate table with all people
+        function populateTable(searchQuery = '') {
+            const tbody = document.getElementById('studentTableBody');
+            tbody.innerHTML = '';
+
+            const allPeople = [...students, ...teachers, ...admins];
+            let filtered = allPeople;
+
+            if (typeof searchQuery === 'string' && searchQuery) {
+                // Text search
+                filtered = allPeople.filter(person =>
+                    person.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    person.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    (person.class || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    person.role.toLowerCase().includes(searchQuery.toLowerCase())
+                );
+            } else if (searchQuery && searchQuery !== 'all') {
+                // Class filter
+                filtered = allPeople.filter(person => person.class === searchQuery);
+            }
+
+            filtered.forEach(person => {
+                const row = `
+                    <tr>
+                        <td>${person.id}</td>
+                        <td>${person.name}</td>
+                        <td>${person.role}</td>
+                        <td>${person.class || '-'}</td>
+                        <td>
+                            <button class="action-btn edit-btn" onclick="editPerson('${person.id}')">Edit</button>
+                            ${person.role === 'student' ? `<button class="action-btn marks-btn" onclick="editMarks('${person.id}')">Marks</button>` : ''}
+                            <button class="action-btn delete-btn" onclick="deletePerson('${person.id}')">Delete</button>
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        }
+
+        // Search functionality
+        function searchStudents(query) {
+            populateTable(query);
+        }
+
+        // Delete person
+        async function deletePerson(id) {
+            if (!confirm('Are you sure you want to delete this person?')) return;
+
+            try {
+                const person = [...students, ...teachers, ...admins].find(p => p.id === id);
+                if (!person) {
+                    throw new Error('Person not found');
+                }
+
+                // Remove from appropriate array
+                if (person.role === 'student') {
+                    students = students.filter(s => s.id !== id);
+                    studentMarks.delete(id);
+                } else if (person.role === 'teacher') {
+                    teachers = teachers.filter(t => t.id !== id);
+                } else if (person.role === 'administrator') {
+                    admins = admins.filter(a => a.id !== id);
+                }
+
+                // Save changes
+                saveData();
+
+                // Update UI
+                updateStats();
+                populateTable();
+                alert('Person deleted successfully!');
+            } catch (error) {
+                console.error('Error deleting person:', error);
+                alert('Error deleting person: ' + error.message);
+            }
+        }
+
+        // Update credentials file with better error handling
+        async function updateCredentialsFile(person) {
+            try {
+                // Save to localStorage only
+                saveData();
+                updateStats();
+                populateTable();
+                return true;
+            } catch (error) {
+                console.error('Error updating data:', error);
+                throw error;
+            }
+        }
+
+        // Handle adding new person
+        document.getElementById('addPersonForm').onsubmit = async function (e) {
+            e.preventDefault();
+            try {
+                const role = document.getElementById('personRole').value;
+                const personId = document.getElementById('personId').value.trim();
+                const name = document.getElementById('personName').value.trim();
+                const password = document.getElementById('personPassword').value.trim();
+                const classValue = document.getElementById('personClass').value.trim();
+
+                if (!personId || !password || !name) {
+                    throw new Error('ID, Password and Name are required');
+                }
+
+                if (role === 'student' && !classValue) {
+                    throw new Error('Class is required for students');
+                }
+
+                // Create new person object with proper format
+                const newPerson = {
+                    id: personId,
+                    name: name,  // Use the entered name instead of ID
+                    password: password,
+                    role: role,
+                    class: role === 'student' ? classValue : ''
+                };
+
+                // Check if person with this ID already exists
+                const existingPerson = [...students, ...teachers, ...admins].find(p => p.id === personId);
+                if (existingPerson) {
+                    throw new Error('A person with this ID already exists');
+                }
+
+                // Add to appropriate array
+                if (role === 'student') {
+                    students.push(newPerson);
+                    if (classValue) {
+                        classes.add(classValue);
+                    }
+                    // Initialize marks for student
+                    studentMarks.set(personId, {
+                        math: 0,
+                        science: 0,
+                        english: 0,
+                        social: 0
+                    });
+                } else if (role === 'teacher') {
+                    teachers.push(newPerson);  // This will now include the proper name
+                } else if (role === 'administrator') {
+                    admins.push(newPerson);  // This will now include the proper name
+                }
+
+                // Save to localStorage
+                saveData();
+
+                // Update UI
+                updateStats();
+                populateTable();
+
+                // Clear form
+                document.getElementById('personId').value = '';
+                document.getElementById('personPassword').value = '';
+                document.getElementById('personName').value = '';
+                document.getElementById('personClass').value = '';
+
+                // Close modal and show success message
+                closeAddModal();
+                alert('Person added successfully!');
+            } catch (error) {
+                console.error('Error adding person:', error);
+                alert('Error adding person: ' + error.message);
+            }
+        };
+
+        // Handle role change in add person form
+        function handleRoleChange() {
+            const role = document.getElementById('personRole').value;
+            const classGroup = document.getElementById('classGroup');
+            const idLabel = document.getElementById('idLabel');
+
+            if (role === 'student') {
+                classGroup.style.display = 'block';
+                idLabel.textContent = 'Student ID';
+            } else {
+                classGroup.style.display = 'none';
+                idLabel.textContent = 'Username';
+            }
+        }
+
+        function showAddPersonModal() {
+            document.getElementById('addPersonModal').style.display = 'block';
+            handleRoleChange(); // Initialize form based on default role
+        }
+
+        // Edit student
+        function editPerson(personId) {
+            const person = students.find(s => s.id === personId) || teachers.find(t => t.id === personId) || admins.find(a => a.id === personId);
+            if (person) {
+                document.getElementById('editStudentId').value = person.id;
+                document.getElementById('editName').value = person.name;
+                document.getElementById('editClass').value = person.class;
+                document.getElementById('studentModal').style.display = 'block';
+            }
+        }
+
+        // Edit marks
+        function editMarks(personId) {
+            const marks = studentMarks.get(personId) || { math: 0, science: 0, english: 0, social: 0 };
+            document.getElementById('editStudentId').value = personId;
+            document.getElementById('mathMarks').value = marks.math;
+            document.getElementById('scienceMarks').value = marks.science;
+            document.getElementById('englishMarks').value = marks.english;
+            document.getElementById('socialMarks').value = marks.social;
+            document.getElementById('marksModal').style.display = 'block';
+        }
+
+        // Close modals
+        function closeModal() {
+            document.getElementById('studentModal').style.display = 'none';
+        }
+
+        function closeMarksModal() {
+            document.getElementById('marksModal').style.display = 'none';
+        }
+
+        // Form submissions
+        document.getElementById('studentForm').onsubmit = function (e) {
+            e.preventDefault();
+            const studentId = document.getElementById('editStudentId').value;
+            const person = students.find(s => s.id === studentId) || teachers.find(t => t.id === studentId) || admins.find(a => a.id === studentId);
+            if (person) {
+                person.name = document.getElementById('editName').value;
+                person.class = document.getElementById('editClass').value;
+                const newPassword = document.getElementById('editPassword').value;
+                if (newPassword) {
+                    person.password = newPassword;
+                    updateCredentialsFile(person);
+                }
+                populateTable();
+                closeModal();
+            }
+        };
+
+        function updateClassStats() {
+            const selectedClass = document.getElementById('classFilter').value;
+
+            // Update averages for selected class
+            const averages = calculateAverages(selectedClass);
+            document.querySelector('.overall-avg').textContent = averages.overall.toFixed(1) + '%';
+            document.querySelector('.math-avg').textContent = averages.math.toFixed(1) + '%';
+            document.querySelector('.science-avg').textContent = averages.science.toFixed(1) + '%';
+            document.querySelector('.english-avg').textContent = averages.english.toFixed(1) + '%';
+            document.querySelector('.social-avg').textContent = averages.social.toFixed(1) + '%';
+
+            // Filter table to show only selected class
+            if (selectedClass === 'all') {
+                populateTable();
+            } else {
+                populateTable(selectedClass);
+            }
+        }
+
+        // Add export functionality
+        function exportData() {
+            try {
+                // First, ensure all required fields are present
+                students.forEach(s => {
+                    s.id = s.id || '';
+                    s.password = s.password || '';
+                    s.name = s.name || '';
+                    s.class = s.class || '';
+                });
+
+                teachers.forEach(t => {
+                    t.id = t.id || '';
+                    t.password = t.password || '';
+                    t.name = t.name || t.id; // Use ID as fallback if name is missing
+                });
+
+                admins.forEach(a => {
+                    a.id = a.id || '';
+                    a.password = a.password || '';
+                    a.name = a.name || a.id; // Use ID as fallback if name is missing
+                });
+
+                const credentialsContent = [
+                    '# Student Credentials',
+                    '# Format: studentId:password:name:class',
+                    ...students.map(s => `${s.id}:${s.password}:${s.name}:${s.class}`),
+                    '',
+                    '# Admin Credentials',
+                    '# Format: username:password:role:name',
+                    ...teachers.map(t => `${t.id}:${t.password}:teacher:${t.name}`), // Always use lowercase 'teacher'
+                    ...admins.map(a => `${a.id}:${a.password}:administrator:${a.name}`)
+                ].join('\n');
+
+                const marksContent = [
+                    '# Student Marks',
+                    '# Format: studentId:math:science:english:social',
+                    ...[...studentMarks].map(([id, marks]) =>
+                        `${id}:${marks.math || 0}:${marks.science || 0}:${marks.english || 0}:${marks.social || 0}`
+                    )
+                ].join('\n');
+
+                // Create download links
+                downloadFile('credentials.txt', credentialsContent);
+                downloadFile('marks.txt', marksContent);
+            } catch (error) {
+                console.error('Error exporting data:', error);
+                alert('Error exporting data: ' + error.message);
+            }
+        }
+
+        function downloadFile(filename, content) {
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            // Load data after DOM is ready
+            loadAllData();
+        });
+
+        function logout() {
+            // Clear any stored admin session data
+            localStorage.removeItem('adminUsername');
+
+            // Redirect to login page
+            window.location.href = 'login.html';
+        }
+
+        function showAddStudentModal() {
+            document.getElementById('addStudentModal').style.display = 'block';
+        }
+
+        function closeAddModal() {
+            document.getElementById('addPersonModal').style.display = 'none';
+            document.getElementById('addStudentModal').style.display = 'none';
+        }
+
+        // Handle adding new student
+        document.getElementById('addStudentForm').onsubmit = function (e) {
+            e.preventDefault();
+            try {
+                const studentId = document.getElementById('newStudentId').value.trim();
+                const password = document.getElementById('newPassword').value.trim();
+                const name = document.getElementById('newName').value.trim();
+                const className = document.getElementById('newClass').value.trim();
+
+                if (!studentId || !password || !name || !className) {
+                    throw new Error('All fields are required');
+                }
+
+                // Create new student object with proper format
+                const newStudent = {
+                    id: studentId,
+                    password: password,
+                    name: name,
+                    class: className,
+                    role: 'student'
+                };
+
+                // Check if student with this ID already exists
+                const existingStudent = students.find(s => s.id === studentId);
+                if (existingStudent) {
+                    throw new Error('A student with this ID already exists');
+                }
+
+                // Add to students array
+                students.push(newStudent);
+
+                // Add class to classes set if not exists
+                if (className) {
+                    classes.add(className);
+                }
+
+                // Initialize marks
+                studentMarks.set(studentId, {
+                    math: 0,
+                    science: 0,
+                    english: 0,
+                    social: 0
+                });
+
+                // Save all data
+                saveData();
+
+                // Update UI
+                updateStats();
+                populateTable();
+
+                // Clear form
+                document.getElementById('newStudentId').value = '';
+                document.getElementById('newPassword').value = '';
+                document.getElementById('newName').value = '';
+                document.getElementById('newClass').value = '';
+
+                // Close modal and show success message
+                closeAddModal();
+                alert('Student added successfully!');
+            } catch (error) {
+                console.error('Error adding student:', error);
+                alert('Error adding student: ' + error.message);
+            }
+        };
+
+        // Update class filter options
+        function updateClassFilter() {
+            const classFilter = document.getElementById('classFilter');
+            if (!classFilter) return;
+
+            // Clear existing options
+            classFilter.innerHTML = '<option value="all">All Classes</option>';
+
+            // Add sorted class options
+            Array.from(classes).sort().forEach(className => {
+                if (className && className.trim()) {
+                    classFilter.innerHTML += `<option value="${className}">${className}</option>`;
+                }
+            });
+        }
+
+        // Add new save functionality
+        async function saveToFiles() {
+            try {
+                // First prepare the content (same as exportData function)
+                students.forEach(s => {
+                    s.id = s.id || '';
+                    s.password = s.password || '';
+                    s.name = s.name || '';
+                    s.class = s.class || '';
+                });
+
+                teachers.forEach(t => {
+                    t.id = t.id || '';
+                    t.password = t.password || '';
+                    t.name = t.name || t.id;
+                });
+
+                admins.forEach(a => {
+                    a.id = a.id || '';
+                    a.password = a.password || '';
+                    a.name = a.name || a.id;
+                });
+
+                const credentialsContent = [
+                    '# Student Credentials',
+                    '# Format: studentId:password:name:class',
+                    ...students.map(s => `${s.id}:${s.password}:${s.name}:${s.class}`),
+                    '',
+                    '# Admin Credentials',
+                    '# Format: username:password:role:name',
+                    ...teachers.map(t => `${t.id}:${t.password}:teacher:${t.name}`),
+                    ...admins.map(a => `${a.id}:${a.password}:administrator:${a.name}`)
+                ].join('\n');
+
+                const marksContent = [
+                    '# Student Marks',
+                    '# Format: studentId:math:science:english:social',
+                    ...[...studentMarks].map(([id, marks]) =>
+                        `${id}:${marks.math || 0}:${marks.science || 0}:${marks.english || 0}:${marks.social || 0}`
+                    )
+                ].join('\n');
+
+                // Get directory handle first
+                const dirHandle = await window.showDirectoryPicker();
+
+                // Get file handles for credentials.txt and marks.txt
+                const credentialsHandle = await dirHandle.getFileHandle('credentials.txt', { create: true });
+                const marksHandle = await dirHandle.getFileHandle('marks.txt', { create: true });
+
+                // Write to files
+                const credentialsWritable = await credentialsHandle.createWritable();
+                await credentialsWritable.write(credentialsContent);
+                await credentialsWritable.close();
+
+                const marksWritable = await marksHandle.createWritable();
+                await marksWritable.write(marksContent);
+                await marksWritable.close();
+
+                alert('Files saved successfully to original location!');
+            } catch (error) {
+                console.error('Error saving files:', error);
+                alert('Error saving files: ' + error.message);
+            }
+        }
+    </script>
+</body>
+
+</html>

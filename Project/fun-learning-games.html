@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>🎮 Fun Learning Games Hub</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Fun educational games and brain training activities" />
+    <meta name="author" content="" />
+    <link rel="icon" href="images/logo2.png" sizes="any" type="image/png">
+    <link href="UserMasterPages/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="UserMasterPages/css/Mycss.css" rel="stylesheet" />
+    <link href="UserMasterPages/css/games.css" rel="stylesheet" />
+    <link href="UserMasterPages/css/new-games.css" rel="stylesheet" />
+    <link href="UserMasterPages/css/new-games-extra.css" rel="stylesheet" />
+    <link href="UserMasterPages/css/responsive-fixes.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        body {
+            /* Very light blue background - 70% white, 30% blue */
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.85) 0%,
+                    rgba(240, 248, 255, 0.9) 25%,
+                    rgba(224, 240, 255, 0.85) 50%,
+                    rgba(210, 235, 255, 0.8) 75%,
+                    rgba(200, 230, 255, 0.85) 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        /* Removed conflicting animation */
+
+        /* Removed conflicting game-container styles */
+
+
+        .game-container:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-header {
+            font-family: 'Press Start 2P', cursive;
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-header h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .game-controls button {
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .game-controls button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #4ECDC4, #FF6B6B);
+        }
+
+        .dark-mode {
+            background: linear-gradient(135deg, #0F2027, #203A43, #2C5364);
+        }
+
+        .dark-mode .game-container {
+            background: rgba(45, 52, 54, 0.9);
+            border-color: #4ECDC4;
+        }
+
+        .dark-mode .section-header {
+            background: linear-gradient(45deg, #4b6cb7, #182848);
+        }
+
+        /* Floating Game Icons */
+        .floating-icons {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .floating-icon {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .floating-icon:hover {
+            transform: scale(1.1);
+        }
+
+        /* Game Category Labels */
+        .game-category {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #FF6B6B;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Achievement Badges */
+        .achievements {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            justify-content: center;
+        }
+
+        .badge {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: gold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Top Branding Bar -->
+    <div class="top-branding-bar">
+        <div class="container">
+            <a href="Homepage2.html" class="branding-link">
+                <img src="images/Logo.png" alt="Suprapa High Logo" class="school-logo">
+                <span class="school-name">Suprapa High School</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="container content-below-simple-header">
+        <!-- Banner section -->
+        <div class="row">
+            <div class="col-lg-12"
+                style="background-color:#7C8BBF;background-image:url(images/banner.png);background-size: 50%;">
+                <!-- Banner content -->
+            </div>
+        </div>
+
+        <!-- Floating Game Icons -->
+        <div class="floating-icons">
+            <div class="floating-icon" onclick="scrollToSection('brain-games')">🧠</div>
+            <div class="floating-icon" onclick="scrollToSection('puzzle-games')">🧩</div>
+            <div class="floating-icon" onclick="scrollToSection('educational-games')">📚</div>
+            <div class="floating-icon" onclick="scrollToSection('arcade-games')">🎮</div>
+        </div>
+
+        <div class="row">
+            <div class="box">
+                <div class="col-lg-12">
+                    <div class="section-header">
+                        <h1>Fun Learning Games Hub</h1>
+                        <p>Take a break, have fun, and keep your mind sharp! 🎮 🧠</p>
+                        <div class="achievements">
+                            <div class="badge" title="Brain Master">🧠</div>
+                            <div class="badge" title="Puzzle Solver">🏆</div>
+                            <div class="badge" title="Quick Thinker">⚡</div>
+                        </div>
+                    </div>
+
+                    <!-- Brain Games Section -->
+                    <div id="brain-games" class="game-section">
+                        <h2 class="text-center">🧠 Brain Games</h2>
+                        <div class="modern-game-grid">
+                            <!-- Memory Game -->
+                            <div class="modern-game-card">
+                                <div class="game-category">Memory</div>
+                                <h3>Memory Match</h3>
+                                <p>Test your memory! Match pairs of cards.</p>
+                                <div class="memory-board" id="memoryBoard"></div>
+                                <div class="game-controls">
+                                    <div class="score">Moves: <span id="memoryMoves">0</span></div>
+                                    <button onclick="initializeMemoryGame(document.getElementById('memoryBoard'))">New
+                                        Game</button>
+                                </div>
+                                <div class="achievements">
+                                    <div class="badge" title="Memory Master">🎯</div>
+                                </div>
+                            </div>
+
+                            <!-- Word Scramble -->
+                            <div class="modern-game-card">
+                                <div class="game-category">Vocabulary</div>
+                                <h3>Word Scramble</h3>
+                                <p>Unscramble the words to test your vocabulary!</p>
+                                <div class="word-scramble">
+                                    <div class="scrambled-word" id="scrambledWord"></div>
+                                    <input type="text" id="wordGuess" placeholder="Your answer">
+                                    <div class="game-controls">
+                                        <div class="score">Score: <span id="wordScore">0</span></div>
+                                        <div class="hints">Hints Left: <span id="hintsLeft">3</span></div>
+                                        <button onclick="initializeWordScramble()">New Game</button>
+                                        <button onclick="checkWord()">Submit</button>
+                                        <button onclick="getHint()">Get Hint</button>
+                                    </div>
+                                </div>
+                                <div class="achievements">
+                                    <div class="badge" title="Word Wizard">📚</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Puzzle Games Section -->
+                    <div id="puzzle-games" class="game-section">
+                        <h2 class="text-center">🧩 Puzzle Games</h2>
+                        <div class="modern-game-grid">
+                            <!-- Tic Tac Toe -->
+                            <div class="modern-game-card">
+                                <div class="game-category">Strategy</div>
+                                <h3>Tic Tac Toe</h3>
+                                <p>Classic game of X's and O's. Play against a friend!</p>
+                                <div id="tic-tac-toe" class="game-board">
+                                    <div class="cell"></div>
+                                    <div class="cell"></div>
+                                    <div class="cell"></div>
+                                    <div class="cell"></div>
+                                    <div class="cell"></div>
+                                    <div class="cell"></div>
+                                    <div class="cell"></div>
+                                    <div class="cell"></div>
+                                    <div class="cell"></div>
+                                </div>
+                                <div class="game-controls">
+                                    <div class="current-player">Current Player: <span id="currentPlayer">X</span></div>
+                                    <button onclick="initializeTicTacToe(document.getElementById('tic-tac-toe'))">New
+                                        Game</button>
+                                </div>
+                                <div class="achievements">
+                                    <div class="badge" title="Strategy Master">🎲</div>
+                                </div>
+                            </div>
+
+                            <!-- Snake Game -->
+                            <div class="modern-game-card">
+                                <div class="game-category">Arcade</div>
+                                <h3>Snake Game</h3>
+                                <p>Classic snake game! Use arrow keys to control.</p>
+                                <canvas id="snakeCanvas" class="snake-game" width="400" height="400"></canvas>
+                                <div class="game-controls">
+                                    <div class="score">Score: <span id="snakeScore">0</span></div>
+                                    <button onclick="startSnake()">Start Game</button>
+                                </div>
+                                <div class="achievements">
+                                    <div class="badge" title="Snake Charmer">🐍</div>
+                                </div>
+                            </div>
+
+                            <!-- 2048 Game -->
+                            <div class="modern-game-card">
+                                <div class="game-category">Puzzle</div>
+                                <h3>2048</h3>
+                                <p>Combine the numbers to reach 2048!</p>
+                                <div class="game2048-container">
+                                    <div class="game2048-grid" id="game2048-grid"></div>
+                                    <div class="game-info">
+                                        <div>Score: <span id="game2048-score">0</span></div>
+                                    </div>
+                                    <div class="game-controls">
+                                        <button onclick="start2048()">New Game</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Whack-a-Mole -->
+                            <div class="modern-game-card">
+                                <div class="game-category">Arcade</div>
+                                <h3>Whack-a-Mole</h3>
+                                <p>Whack the moles as they appear!</p>
+                                <div class="whack-a-mole-container">
+                                    <div class="whack-a-mole-grid" id="whack-a-mole-grid"></div>
+                                    <div class="game-info">
+                                        <div>Score: <span id="mole-score">0</span></div>
+                                        <div>Time: <span id="mole-timer">30</span>s</div>
+                                    </div>
+                                    <div class="game-controls">
+                                        <button onclick="startWhackAMole()">Start Game</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Sudoku -->
+                            <div class="modern-game-card">
+                                <div class="game-category">Puzzle</div>
+                                <h3>Sudoku</h3>
+                                <p>Fill the grid with numbers 1-9!</p>
+                                <div class="game-controls">
+                                    <button onclick="startSudoku()">New Game</button>
+                                    <button onclick="resetSudoku()">Reset</button>
+                                    <button onclick="getSudokuHint()">Hint 💡</button>
+                                </div>
+                                <div class="sudoku-container" id="sudoku-container">
+                                    <div id="sudoku-board" class="sudoku-board"></div>
+                                </div>
+                            </div>
+
+                            <!-- Minesweeper -->
+                            <div class="modern-game-card">
+                                <div class="game-category">Puzzle</div>
+                                <h3>Minesweeper</h3>
+                                <p>Uncover squares without hitting the mines!</p>
+                                <div id="minesweeper-board" class="minesweeper-board"></div>
+                                <div class="game-controls">
+                                    <button onclick="startMinesweeper()">New Game</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Educational Games Section -->
+                    <div id="educational-games" class="game-section">
+                        <h2 class="text-center">📚 Educational Games</h2>
+                        <div class="modern-game-grid">
+                            <!-- Math Quiz -->
+                            <div class="modern-game-card">
+                                <div class="game-category">Mathematics</div>
+                                <h3>Quick Maths</h3>
+                                <p>Test your mental math skills! Choose your difficulty level.</p>
+                                <div id="math-quiz" class="game-section">
+                                    <div class="math-quiz-container">
+                                        <div class="difficulty-selector">
+                                            <select id="mathDifficulty" class="game-select">
+                                                <option value="easy">Easy</option>
+                                                <option value="medium">Medium</option>
+                                                <option value="hard">Hard</option>
+                                            </select>
+                                        </div>
+                                        <div class="math-card">
+                                            <div id="question" class="math-question">Ready?</div>
+                                        </div>
+                                        <div class="math-answer-section">
+                                            <input type="number" id="answer" placeholder="?" autocomplete="off">
+                                            <button onclick="checkAnswer()" class="btn-check">Submit</button>
+                                        </div>
+                                        <div class="game-controls">
+                                            <div class="score-display">Score: <span id="mathScore">0</span></div>
+                                            <button onclick="startMathQuiz()" class="btn-start">Start Quiz</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="achievements">
+                                    <div class="badge" title="Math Genius">🔢</div>
+                                </div>
+                            </div>
+
+                            <!-- Breakout Game -->
+                            <div class="modern-game-card">
+                                <div class="game-category">Arcade</div>
+                                <h3>Breakout</h3>
+                                <p>Break all the blocks with the bouncing ball!</p>
+                                <canvas id="breakoutCanvas"></canvas>
+                                <div class="game-controls">
+                                    <div class="score">Score: <span id="breakoutScore">0</span></div>
+                                    <button onclick="startBreakout()">Start Game</button>
+                                </div>
+                                <div class="achievements">
+                                    <div class="badge" title="Block Breaker">🏆</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- New Arcade Games Section -->
+                    <div id="arcade-games" class="game-section">
+                        <h2 class="text-center">🎮 Arcade Games</h2>
+                        <div class="modern-game-grid">
+                            <!-- Typing Speed Game -->
+                            <div class="modern-game-card">
+                                <div class="game-category">Typing</div>
+                                <h3>Speed Typer</h3>
+                                <p>Test your typing speed and accuracy!</p>
+                                <div id="typing-game" class="game-section">
+                                    <div class="typing-container">
+                                        <div class="typing-stats">
+                                            <div class="stat-box">WPM: <span id="typing-wpm">0</span></div>
+                                            <div class="stat-box">Accuracy: <span id="typing-accuracy">100%</span></div>
+                                            <div class="stat-box">Time: <span id="typing-timer">60s</span></div>
+                                        </div>
+                                        <div id="typing-text-display" class="typing-text-display">
+                                            Click Start to begin typing...
+                                        </div>
+                                        <textarea id="typing-input" class="typing-input-area" disabled
+                                            placeholder="Start typing here..."></textarea>
+                                        <div class="game-controls">
+                                            <button onclick="startTypingGame()" class="btn-start">Start Test</button>
+                                            <button onclick="restartTypingGame()" class="btn-reset"
+                                                style="display:none;" id="typing-restart-btn">Restart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="achievements">
+                                    <div class="badge" title="Speed Typer">⌨️</div>
+                                </div>
+                            </div>
+
+                            <!-- Color Match Game -->
+                            <div class="modern-game-card">
+                                <div class="game-category">Reaction</div>
+                                <h3>Color Match</h3>
+                                <p>Remember and repeat the color sequence!</p>
+                                <div id="color-display"></div>
+                                <div class="color-buttons">
+                                    <button class="color-btn" data-color="red"></button>
+                                    <button class="color-btn" data-color="blue"></button>
+                                    <button class="color-btn" data-color="green"></button>
+                                    <button class="color-btn" data-color="yellow"></button>
+                                </div>
+                                <div class="game-controls">
+                                    <div class="score">Score: <span id="color-score">0</span></div>
+                                    <div class="level">Level: <span id="color-level">1</span></div>
+                                    <button onclick="startColorGame()">Start Game</button>
+                                </div>
+                                <div class="achievements">
+                                    <div class="badge" title="Memory Master">🧠</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Classic Logic & Strategy Games -->
+                    <div id="strategy-games" class="game-section">
+                        <h2 class="text-center">🧠 Classic Logic & Strategy Games</h2>
+                        <div class="modern-game-grid">
+                            <!-- Connect Four -->
+                            <div class="modern-game-card">
+                                <div class="game-category">Strategy</div>
+                                <h3>Connect Four</h3>
+                                <p>Connect 4 discs of your color to win!</p>
+                                <div id="connect4-board" class="connect4-board"></div>
+                                <div class="game-controls">
+                                    <div class="turn-indicator" id="c4-turn">Player's Turn</div>
+                                    <button onclick="startConnectFour()">New Game</button>
+                                </div>
+                            </div>
+
+                            <!-- Dots and Boxes -->
+                            <div class="modern-game-card">
+                                <div class="game-category">Strategy</div>
+                                <h3>Dots and Boxes</h3>
+                                <p>Connect dots to form squares and claim territory.</p>
+                                <div id="dots-board" class="dots-board"></div>
+                                <div class="game-controls">
+                                    <div class="turn-indicator" id="dots-turn">Player 1's Turn</div>
+                                    <div class="score">P1 (Red): <span id="dots-p1">0</span> | P2 (Blue): <span
+                                            id="dots-p2">0</span></div>
+                                    <button onclick="startDotsGame()">New Game</button>
+                                </div>
+                            </div>
+
+                            <!-- Battleship -->
+                            <div class="modern-game-card modern-game-card-wide">
+                                <div class="game-category">Strategy</div>
+                                <h3>Battleship</h3>
+                                <p>Sink the opponent's fleet!</p>
+                                <div id="battleship-grids" class="battleship-grids">
+                                    <div class="grid-section">
+                                        <h4>Your Fleet</h4>
+                                        <div id="player-fleet-grid" class="battleship-grid"></div>
+                                    </div>
+                                    <div class="grid-section">
+                                        <h4>Enemy Waters</h4>
+                                        <div id="enemy-fleet-grid" class="battleship-grid"></div>
+                                    </div>
+                                </div>
+                                <div class="game-controls">
+                                    <div class="turn-indicator" id="bs-turn">Setup Phase</div>
+                                    <div id="battleship-status">Place your ships</div>
+                                    <div class="bs-buttons">
+                                        <button onclick="rotateShip()" id="btn-rotate">Rotate: Horizontal</button>
+                                        <button onclick="startBattleship()" id="btn-bs-start">Reset Game</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Othello -->
+                            <div class="modern-game-card">
+                                <div class="game-category">Strategy</div>
+                                <h3>Othello</h3>
+                                <p>Flip opponent's discs to your color.</p>
+                                <div id="othello-board" class="othello-board"></div>
+                                <div class="game-controls">
+                                    <div class="score">Black: <span id="othello-black">2</span> | White: <span
+                                            id="othello-white">2</span></div>
+                                    <button onclick="startOthello()">New Game</button>
+                                </div>
+                            </div>
+
+                            <!-- Tower of Hanoi -->
+                            <div class="modern-game-card">
+                                <div class="game-category">Logic</div>
+                                <h3>Tower of Hanoi</h3>
+                                <p>Move the stack to the last rod.</p>
+                                <div id="hanoi-game" class="hanoi-game">
+                                    <div class="rod" onclick="hanoiMove(0)"></div>
+                                    <div class="rod" onclick="hanoiMove(1)"></div>
+                                    <div class="rod" onclick="hanoiMove(2)"></div>
+                                </div>
+                                <div class="game-controls">
+                                    <div class="score">Moves: <span id="hanoi-moves">0</span></div>
+                                    <button onclick="startHanoi()">Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Language & Word Puzzles -->
+                    <div id="word-games" class="game-section">
+                        <h2 class="text-center">🔡 Language & Word Puzzles</h2>
+                        <div class="modern-game-grid">
+                            <!-- Cryptograms -->
+                            <div class="modern-game-card">
+                                <div class="game-category">Word Puzzle</div>
+                                <h3>Cryptogram</h3>
+                                <p>Decipher the encrypted message.</p>
+                                <div id="crypto-container" class="crypto-container">
+                                    <div id="crypto-puzzle" class="crypto-puzzle"></div>
+                                    <div class="game-controls">
+                                        <button onclick="startCryptogram()">New Puzzle</button>
+                                        <button onclick="cryptogramHint()" class="btn-hint">💡 Hint</button>
+                                        <button onclick="checkCryptogram()">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Math & Science Mind Games -->
+                    <div id="science-games" class="game-section">
+                        <h2 class="text-center">🧪 Math & Science Mind Games</h2>
+                        <div class="modern-game-grid">
+                            <!-- Food Chain Challenge -->
+                            <div class="modern-game-card modern-game-card-wide">
+                                <div class="game-category">Science</div>
+                                <h3>🔗 Food Chain</h3>
+                                <p>Arrange the ecosystem correctly. Drag items to reorder them!</p>
+                                <div id="food-chain-area" class="food-chain-area"></div>
+                                <div class="game-controls">
+                                    <button onclick="checkFoodChain()">Check Chain</button>
+                                    <button onclick="startFoodChain()">New Chain</button>
+                                </div>
+                            </div>
+
+                            <!-- Periodic Table Element Match -->
+                            <div class="modern-game-card">
+                                <div class="game-category">Chemistry</div>
+                                <h3>🧪 Element Match</h3>
+                                <p>Match chemical symbols to their names!</p>
+                                <div class="element-match-container">
+                                    <div class="element-info" id="element-info">
+                                        <span class="element-symbol" id="current-element">Fe</span>
+                                        <div class="element-details" id="element-details"></div>
+                                    </div>
+                                    <div class="element-options" id="element-options"></div>
+                                    <div class="game-info">
+                                        <div>Score: <span id="element-score">0</span></div>
+                                        <div>Round: <span id="element-round">1</span>/10</div>
+                                    </div>
+                                    <div class="game-controls">
+                                        <button onclick="startElementMatch()">New Game</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Solar System Explorer -->
+                            <div class="modern-game-card modern-game-card-wide">
+                                <div class="game-category">Astronomy</div>
+                                <h3>🔭 Solar System Explorer</h3>
+                                <p>Arrange planets in order from the Sun!</p>
+                                <div class="solar-system-container">
+                                    <div class="sun-icon"><img src="images/sun.svg" alt="Sun"
+                                            style="width:50px;height:50px;"></div>
+                                    <div class="planet-slots" id="planet-slots"></div>
+                                    <div class="planet-bank" id="planet-bank"></div>
+                                    <div id="planet-fact" class="planet-fact"></div>
+                                    <div class="game-info">
+                                        <div>Score: <span id="solar-score">0</span></div>
+                                    </div>
+                                    <div class="game-controls">
+                                        <button onclick="checkSolarOrder()">Check Order</button>
+                                        <button onclick="startSolarSystem()">New Game</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Eco-Sorter -->
+                            <div class="modern-game-card">
+                                <div class="game-category">Environment</div>
+                                <h3>♻️ Eco-Sorter</h3>
+                                <p>Sort waste into the correct bins!</p>
+                                <div class="eco-sorter-container">
+                                    <div class="falling-item" id="falling-item">🍌</div>
+                                    <div class="eco-bins">
+                                        <div class="eco-bin biodegradable" onclick="sortWaste('bio')">
+                                            <span>🌱</span>
+                                            <small>Bio</small>
+                                        </div>
+                                        <div class="eco-bin recyclable" onclick="sortWaste('recycle')">
+                                            <span>♻️</span>
+                                            <small>Recycle</small>
+                                        </div>
+                                        <div class="eco-bin non-biodegradable" onclick="sortWaste('nonbio')">
+                                            <span>🚫</span>
+                                            <small>Non-Bio</small>
+                                        </div>
+                                    </div>
+                                    <div class="game-info">
+                                        <div>Score: <span id="eco-score">0</span></div>
+                                        <div>Time: <span id="eco-timer">30</span>s</div>
+                                    </div>
+                                    <div class="game-controls">
+                                        <button onclick="startEcoSorter()">Start Game</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Geography Games -->
+                    <div id="geography-games" class="game-section">
+                        <h2 class="text-center">🗺️ Geography Games</h2>
+                        <div class="modern-game-grid">
+                            <!-- Geography Map Master -->
+                            <div class="modern-game-card modern-game-card-wide">
+                                <div class="game-category">Geography</div>
+                                <h3>🇮🇳 India Map Master</h3>
+                                <p>Click the correct state or district!</p>
+                                <div class="map-master-container">
+                                    <div class="map-question" id="map-question">Click "Start" to begin!</div>
+                                    <div class="map-grid" id="india-map-grid"></div>
+                                    <div id="map-fact" class="map-fact"></div>
+                                    <div class="game-info">
+                                        <div>Score: <span id="map-score">0</span></div>
+                                        <div>Round: <span id="map-round">0</span>/10</div>
+                                    </div>
+                                    <div class="game-controls">
+                                        <button onclick="startMapMaster()">Start Game</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Memory & Coding Puzzles -->
+                    <div id="coding-games" class="game-section">
+                        <h2 class="text-center">💻 Memory & Coding Puzzles</h2>
+                        <div class="modern-game-grid">
+                            <!-- Maze Navigator -->
+                            <div class="modern-game-card">
+                                <div class="game-category">Coding</div>
+                                <h3>Maze Navigator</h3>
+                                <p>Program the bot to reach the goal.</p>
+                                <div class="maze-header">
+                                    <span>Level: <span id="maze-level">1</span></span>
+                                </div>
+                                <div class="maze-wrapper">
+                                    <div id="maze-grid" class="maze-grid"></div>
+                                    <div class="coding-area">
+                                        <div id="code-blocks" class="code-blocks">
+                                            <button onclick="addCommand('up')">⬆️</button>
+                                            <button onclick="addCommand('down')">⬇️</button>
+                                            <button onclick="addCommand('left')">⬅️</button>
+                                            <button onclick="addCommand('right')">➡️</button>
+                                        </div>
+                                        <div id="program-display" class="program-display"></div>
+                                    </div>
+                                </div>
+                                <div class="game-controls">
+                                    <button onclick="runMazeProgram()">Run Program</button>
+                                    <button onclick="resetMaze()">Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- New Games Section -->
+                <div id="new-games" class="game-section">
+                    <h2 class="text-center">🎮 More Fun Games</h2>
+                    <div class="modern-game-grid">
+                        <!-- Checkers -->
+                        <div class="modern-game-card">
+                            <div class="game-category">Strategy</div>
+                            <h3>Checkers</h3>
+                            <p>Classic board game of strategy and skill!</p>
+                            <div class="checkers-container">
+                                <div class="checkers-board" id="checkers-board"></div>
+                                <div class="game-info">
+                                    <div>Current Player: <span id="checkersPlayer">RED</span></div>
+                                </div>
+                                <div class="game-controls">
+                                    <button onclick="startCheckers()">New Game</button>
+                                </div>
+                            </div>
+                            <div class="achievements">
+                                <div class="badge" title="Strategy Master">♟️</div>
+                            </div>
+                        </div>
+
+                        <!-- 15 Puzzle -->
+                        <div class="modern-game-card">
+                            <div class="game-category">Puzzle</div>
+                            <h3>15 Puzzle</h3>
+                            <p>Slide the tiles to arrange them in order!</p>
+                            <div class="puzzle-container">
+                                <div class="puzzle-board" id="puzzle-board"></div>
+                                <div class="game-info">
+                                    <div>Moves: <span id="puzzleMoves">0</span></div>
+                                </div>
+                                <div class="game-controls">
+                                    <button onclick="startPuzzle()">New Game</button>
+                                </div>
+                            </div>
+                            <div class="achievements">
+                                <div class="badge" title="Puzzle Master">🧩</div>
+                            </div>
+                        </div>
+
+                        <!-- Hangman -->
+                        <div class="modern-game-card">
+                            <div class="game-category">Word Game</div>
+                            <h3>Hangman</h3>
+                            <p>Guess the word before the hangman is complete!</p>
+                            <canvas id="hangmanCanvas" width="200" height="200"></canvas>
+                            <div id="word-display"></div>
+                            <div class="game-info">
+                                <div>Guesses Left: <span id="guessesLeft">6</span></div>
+                            </div>
+                            <div class="letter-buttons" id="letter-buttons"></div>
+                            <div class="game-controls">
+                                <button onclick="startHangman()">New Game</button>
+                            </div>
+                        </div>
+
+                        <!-- Bubble Pop -->
+                        <div class="modern-game-card">
+                            <div class="game-category">Arcade</div>
+                            <h3>Bubble Pop</h3>
+                            <p>Pop the bubbles to score points!</p>
+                            <div class="bubble-container">
+                                <canvas id="bubbleCanvas" width="320" height="480"></canvas>
+                                <div class="game-info">
+                                    <div>Score: <span id="bubbleScore">0</span></div>
+                                    <div>Level: <span id="bubbleLevel">1</span></div>
+                                    <div>Time: <span id="bubbleTimer">15s</span></div>
+                                </div>
+                                <div class="game-controls">
+                                    <button onclick="startBubblePop()">Start Game</button>
+                                </div>
+                            </div>
+                            <div class="achievements">
+                                <div class="badge" title="Bubble Master">🎯</div>
+                            </div>
+                        </div>
+
+                        <!-- Rock, Paper, Scissors -->
+                        <div class="modern-game-card">
+                            <div class="game-category">Classic</div>
+                            <h3>Rock, Paper, Scissors</h3>
+                            <p>Choose your weapon!</p>
+                            <div class="rps-container">
+                                <div class="rps-controls" style="text-align: center; margin-bottom: 15px;">
+                                    <button onclick="startRPS()" class="btn-primary">Start Round 🏁</button>
+                                </div>
+                                <div class="rps-buttons">
+                                    <button onclick="playRPS('rock')" title="Rock">🪨</button>
+                                    <button onclick="playRPS('paper')" title="Paper">📄</button>
+                                    <button onclick="playRPS('scissors')" title="Scissors">✂️</button>
+                                </div>
+                                <div class="rps-info">
+                                    <div>Your Choice: <span id="playerChoice">-</span></div>
+                                    <div>Computer Choice: <span id="computerChoice">-</span></div>
+                                    <div id="rpsResult" style="font-size: 1.2em; font-weight: bold; margin-top: 10px;">
+                                        Click Start
+                                        Round!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="UserMasterPages/js/jquery.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="UserMasterPages/js/bootstrap.min.js"></script>
+    <!-- Games JavaScript -->
+    <script src="UserMasterPages/js/games.js"></script>
+
+    <script src="UserMasterPages/js/new-games.js"></script>
+    <script src="UserMasterPages/js/extra-games.js"></script>
+    <script>
+        // Scroll functionality
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Initialize games after DOM loads
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('Initializing games and scroll functionality...');
+
+            // Initialize floating icons
+            const floatingIcons = document.querySelectorAll('.floating-icon');
+            floatingIcons.forEach(icon => {
+                icon.addEventListener('click', function () {
+                    const sectionId = this.getAttribute('onclick').match(/'([^']+)'/)[1];
+                    scrollToSection(sectionId);
+                });
+            });
+
+            // Initialize Memory Match
+            initializeMemoryGame(document.getElementById('memoryBoard'));
+
+            // Initialize Word Scramble
+            initializeWordScramble();
+
+            // Initialize Tic Tac Toe
+            initializeTicTacToe(document.getElementById('tic-tac-toe'));
+
+            // Initialize Breakout
+            initializeBreakout(document.getElementById('breakoutCanvas'));
+
+            // Initialize dark mode
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+            if (darkModeToggle) {
+                const isDarkMode = localStorage.getItem('darkMode') === 'true';
+                if (isDarkMode) {
+                    document.body.classList.add('dark-mode');
+                    darkModeToggle.textContent = '☀️';
+                    updateGameColors(true);
+                }
+
+                darkModeToggle.onclick = function () {
+                    document.body.classList.toggle('dark-mode');
+                    this.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+                    localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+                    updateGameColors(document.body.classList.contains('dark-mode'));
+                };
+            }
+        });
+    </script>
+
+</body>
+
+</html>

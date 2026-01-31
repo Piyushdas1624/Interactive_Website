@@ -1,0 +1,23 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="neptuneGrad" cx="30%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#4da6ff" />
+      <stop offset="100%" stop-color="#003399" />
+    </radialGradient>
+    <clipPath id="neptuneClip">
+      <circle cx="100" cy="100" r="65" />
+    </clipPath>
+  </defs>
+
+  <circle cx="100" cy="100" r="65" fill="url(#neptuneGrad)" stroke="#002266" stroke-width="1"/>
+
+  <g clip-path="url(#neptuneClip)">
+    <path d="M20,70 Q60,90 100,70 T180,70" fill="none" stroke="#80ccff" stroke-width="8" opacity="0.4"/>
+    <path d="M20,100 Q60,120 100,100 T180,100" fill="none" stroke="#99d6ff" stroke-width="5" opacity="0.3"/>
+    <path d="M20,130 Q60,110 100,130 T180,130" fill="none" stroke="#004080" stroke-width="8" opacity="0.5"/>
+    
+    <ellipse cx="140" cy="120" rx="12" ry="6" fill="#002266" opacity="0.6"/>
+  </g>
+
+  <ellipse cx="70" cy="60" rx="25" ry="12" fill="white" fill-opacity="0.2" transform="rotate(-20 70 60)"/>
+</svg>

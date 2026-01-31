@@ -1,0 +1,6 @@
+# Student Marks
+# Format: studentId:math:science:english:social
+STU001:85:78:90:88
+STU002:92:85:88:90
+sad:0:0:0:0
+ss:79:88:66:4

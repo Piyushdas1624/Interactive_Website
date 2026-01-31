@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Student Dashboard - SHS</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="images/logo2.png" sizes="any" type="image/png">
+    <link href="UserMasterPages/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="UserMasterPages/css/Mycss.css" rel="stylesheet" />
+    <link href="UserMasterPages/css/accessibility.css" rel="stylesheet" />
+
+    <!-- Early Dark Mode Application Script -->
+    <script>
+        (function () {
+            try {
+                const isDarkMode = localStorage.getItem('darkMode') === 'true';
+                if (isDarkMode) {
+                    document.documentElement.classList.add('dark-mode');
+                }
+            } catch (e) { console.error('Error applying dark mode early:', e); }
+        })();
+    </script>
+
+    <style>
+        .dashboard-container {
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .welcome-section {
+            background: linear-gradient(45deg, #2563eb, #1d4ed8);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .dark-mode .dashboard-card {
+            background: #2d2d2d;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-title {
+            color: #2563eb;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .dark-mode .card-title {
+            color: #60a5fa;
+        }
+
+        .logout-btn {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary {
+            color: #f8fffd;
+            background-color: #ff1414;
+            border-color: #b51e3c;
+        }
+
+        .logout-btn:hover {
+            background: #b91c1c;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Restructured header navigation using Bootstrap standard classes -->
+        <!-- Add navbar-expand-lg for collapsing on medium/small screens -->
+        <!-- Removed navbar-dark bg-dark, added custom class main-navbar -->
+        <nav class="navbar navbar-expand-lg main-navbar" role="navigation">
+            <!-- Use container-fluid for full width within the parent container -->
+            <div class="container-fluid">
+                <!-- mobile display toggle button -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <!-- Updated navbar-brand -->
+                    <a class="navbar-brand" href="Homepage2.html">SHS</a>
+                </div>
+
+                <!-- Collect the nav links - Moved the UL here -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <!-- Moved the original menu list here -->
+                    <ul class="level1 nav navbar-nav StaticMenuStyleMainMenu">
+                        <!-- FOR MNNHS STUDENTS Section -->
+                        <li class="dropdown">
+                            <a class="popout level1 StaticMenuItemStyleMainMenu dropdown-toggle mnnhs-link" href="#"
+                                data-toggle="dropdown">SHS PORTAL</a>
+                            <ul class="level2 dropdown-menu">
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="Homepage2.html">School Home</a>
+                                </li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="Notice.html">School Notices</a>
+                                </li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu"
+                                        href="academic-structure.html">Academic Structure</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="exam-schedule.html">Exam
+                                        Schedule</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="book-list.html">Book List
+                                        2025-26</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="student-portal.html">Student
+                                        Portal</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Fun Learning Games -->
+                        <li class="dropdown">
+                            <a class="popout level1 StaticMenuItemStyleMainMenu dropdown-toggle games-hub-link" href="#"
+                                data-toggle="dropdown">FUN & GAMES 🎮</a>
+                            <ul class="level2 dropdown-menu">
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="fun-learning-games.html">All
+                                        Games</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu"
+                                        href="fun-learning-games.html#brain-games">Brain Games</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu"
+                                        href="fun-learning-games.html#puzzle-games">Puzzle Games</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu"
+                                        href="fun-learning-games.html#educational-games">Educational Games</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Study Resources -->
+                        <li class="dropdown">
+                            <a class="popout level1 StaticMenuItemStyleMainMenu dropdown-toggle study-hub-link" href="#"
+                                data-toggle="dropdown">STUDY HUB</a>
+                            <ul class="level2 dropdown-menu">
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="free-resources.html">Free Study
+                                        Resources</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="https://ndl.iitkgp.ac.in/"
+                                        target="_blank">National Digital Library</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="https://swayam.gov.in/"
+                                        target="_blank">SWAYAM Courses</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="https://diksha.gov.in/"
+                                        target="_blank">DIKSHA Portal</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Competitive Exams -->
+                        <li class="dropdown">
+                            <a class="popout level1 StaticMenuItemStyleMainMenu dropdown-toggle all-students-link"
+                                href="#" data-toggle="dropdown">COMPETITIVE EXAMS</a>
+                            <ul class="level2 dropdown-menu">
+                                <li><a class="level2 StaticMenuItemStyleMainMenu"
+                                        href="free-resources.html#jee-section">JEE Resources</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu"
+                                        href="free-resources.html#neet-section">NEET Resources</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="https://jeemain.nta.nic.in/"
+                                        target="_blank">JEE Main Portal</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="https://neet.nta.nic.in/"
+                                        target="_blank">NEET Portal</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Quick Links -->
+                        <li class="dropdown">
+                            <a class="popout level1 StaticMenuItemStyleMainMenu dropdown-toggle quick-links-link"
+                                href="#" data-toggle="dropdown">QUICK LINKS</a>
+                            <ul class="level2 dropdown-menu">
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="Gallery.html">Gallery</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="contact-us.html">Contact Us</a>
+                                </li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="about.html">About School</a>
+                                </li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="virtual-tour.html">Virtual
+                                        Tour</a></li>
+                                <li><a class="level2 StaticMenuItemStyleMainMenu" href="sitemap.html">Sitemap</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Add new Login Section -->
+                        <li>
+                            <!-- Removed inline style, rely on navbar-dark -->
+                            <a class="popout level1 StaticMenuItemStyleMainMenu dropdown-toggle all-students-link"
+                                href="login.html">LOGIN SECTION</a>
+                        </li>
+
+                        <!-- Dark mode toggle -->
+                        <li><button id="dark-mode-toggle" type="button" aria-label="Toggle Dark Mode"
+                                class="btn btn-outline-light ms-2">🌙</button></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Student Dashboard Content -->
+        <div class="row">
+            <div class="dashboard-container">
+                <div class="welcome-section">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h2>Welcome, <span id="studentName">Student</span></h2>
+                            <p>Class: <span id="studentClass">X</span></p>
+                        </div>
+                        <div class="col-md-4 text-right">
+                            <button class="logout-btn" onclick="logout()">Logout</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="dashboard-card">
+                            <h3 class="card-title">Academic Details</h3>
+                            <ul class="list-unstyled">
+                                <li>Roll Number: <span id="rollNumber">-</span></li>
+                                <li>Section: <span id="section">-</span></li>
+                                <li>Academic Year: 2024-25</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="dashboard-card">
+                            <h3 class="card-title">Quick Links</h3>
+                            <ul class="list-unstyled">
+                                <li><a href="free-resources.html">Study Resources</a></li>
+                                <li><a href="#">Class Schedule</a></li>
+                                <li><a href="#">Exam Timetable</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="dashboard-card">
+                            <h3 class="card-title">Announcements</h3>
+                            <div id="announcements">
+                                <p>No new announcements</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="dashboard-card">
+                            <h3 class="card-title">Recent Activity</h3>
+                            <div id="activity">
+                                <p>No recent activity</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="dashboard-card">
+                            <h3 class="card-title">Profile</h3>
+                            <button class="btn btn-primary" onclick="window.location.href='#'">Edit Profile</button>
+                            <button class="btn btn-secondary" onclick="window.location.href='#'">Change
+                                Password</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="UserMasterPages/js/jquery.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="UserMasterPages/js/bootstrap.min.js"></script>
+    <script src="UserMasterPages/js/accessibility.js"></script>
+
+    <!-- Commenting out potentially conflicting window.onload -->
+    <!--
+    <script>
+    window.onload = function() {
+        // ... (old dark mode logic potentially here) ...
+    };
+    </script>
+    -->
+
+    <!-- Accessibility Floating Button & Panel -->
+    <script>
+        // Load student data on page load
+        window.onload = function () {
+            // Check if student is logged in
+            const studentId = localStorage.getItem('studentId');
+            const studentName = localStorage.getItem('studentName');
+            const studentClass = localStorage.getItem('studentClass');
+
+            if (!studentId) {
+                // Redirect to login if not logged in
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Update student info in the dashboard
+            document.getElementById('studentName').textContent = studentName;
+            document.getElementById('studentClass').textContent = studentClass;
+
+            // Fetch student marks and other details from credentials.txt
+            fetch('credentials.txt')
+                .then(response => response.text())
+                .then(data => {
+                    const lines = data.split('\n');
+                    for (let line of lines) {
+                        if (line.startsWith('#') || !line.trim()) continue;
+                        const [id, pass, name, className] = line.split(':');
+                        if (id === studentId) {
+                            // Found the student, now update the UI
+                            document.getElementById('rollNumber').textContent = id;
+                            document.getElementById('section').textContent = className.split(' ')[1] || 'A';
+
+                            // You can add more student-specific data here
+                            break;
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading student data:', error);
+                });
+
+            /* --- Dark Mode Setup handled by accessibility.js ---
+            const toggle = document.getElementById('dark-mode-toggle');
+            const body = document.body;
+
+            if (toggle) {
+                toggle.onclick = function() {
+                    body.classList.toggle('dark-mode');
+                    this.innerHTML = body.classList.contains('dark-mode') ? '☀️' : '🌙';
+                    localStorage.setItem('darkMode', body.classList.contains('dark-mode'));
+                };
+                
+                if (localStorage.getItem('darkMode') === 'true') {
+                    body.classList.add('dark-mode');
+                    toggle.innerHTML = '☀️';
+                }
+            }
+            */
+        };
+
+        function logout() {
+            // Clear student session data
+            localStorage.removeItem('studentId');
+            localStorage.removeItem('studentName');
+            localStorage.removeItem('studentClass');
+
+            // Redirect to login page
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+
+</html>

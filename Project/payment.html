@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Payment Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="UserMasterPages/css/payment.css">
+    <link rel="icon" href="images/logo2.png" sizes="any" type="image/png">
+    <link href="UserMasterPages/css/responsive-fixes.css" rel="stylesheet" />
+    <script src="UserMasterPages/js/jquery.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Basic style for the dark mode toggle button */
+        #dark-mode-toggle-payment {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1050;
+            /* Ensure it's above other elements */
+            background-color: var(--payment-secondary);
+            color: var(--payment-white);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        #dark-mode-toggle-payment:hover {
+            background-color: var(--payment-primary);
+        }
+
+        html.dark-mode #dark-mode-toggle-payment {
+            background-color: var(--payment-light);
+            color: var(--payment-black);
+        }
+
+        html.dark-mode #dark-mode-toggle-payment:hover {
+            background-color: var(--payment-info);
+        }
+
+        /* Mobile responsive adjustments */
+        @media screen and (max-width: 768px) {
+            .top-branding-bar {
+                height: 100px !important;
+                width: 100% !important;
+            }
+        }
+    </style>
+    <script>
+        // Apply dark mode immediately based on localStorage
+        (function () {
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            if (isDarkMode) {
+                document.documentElement.classList.add('dark-mode');
+            }
+        })();
+    </script>
+</head>
+
+<body>
+
+    <!-- Top Branding Bar -->
+    <div class="top-branding-bar">
+        <div class="container">
+            <a href="Homepage2.html" class="branding-link">
+                <img src="images/Logo.png" alt="Suprapa High Logo" height="10%" width="10%" class="school-logo"> </a>
+            <span class="school-name">Secure Payment</span>
+        </div>
+    </div>
+    <!-- Apply class to ensure content starts below the header -->
+    <main class="container mt-4 mb-5 content-below-simple-header">
+        <div class="payment-container card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h2 class="text-center mb-0 payment-title"><i class="fas fa-shield-alt mr-2"></i>Secure Donation Portal
+                </h2>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info d-flex align-items-center timer-alert" role="alert">
+                    <i class="fas fa-stopwatch mr-2"></i>
+                    <span>Time remaining: <span id="timer">10:00</span></span>
+                </div>
+
+                <fieldset class="form-group border p-3 rounded mb-4">
+                    <legend class="w-auto px-2 h5">Select Payment Method</legend>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="paymentMethod" id="selectCard" value="card"
+                            checked>
+                        <label class="form-check-label" for="selectCard">
+                            <i class="far fa-credit-card mr-1"></i> Credit/Debit Card
+                        </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="paymentMethod" id="selectUpi" value="upi">
+                        <label class="form-check-label" for="selectUpi">
+                            <i class="fas fa-qrcode mr-1"></i> UPI / QR Code
+                        </label>
+                    </div>
+                </fieldset>
+
+                <div id="card-payment-section">
+                    <h4 class="mb-3 section-title">Enter Card Details</h4>
+                    <form id="payment-form" novalidate>
+                        <div class="form-group">
+                            <label for="cardNumber">Card Number</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-credit-card"></i></span>
+                                </div>
+                                <input type="text" class="form-control" id="cardNumber"
+                                    placeholder="•••• •••• •••• ••••" required inputmode="numeric"
+                                    autocomplete="cc-number">
+                                <div class="input-group-append">
+                                    <span class="input-group-text card-type-icon" id="card-type-icon">
+                                        <!-- Card icon will appear here -->
+                                    </span>
+                                </div>
+                            </div>
+                            <small id="card-error" class="form-text text-danger"></small>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="expiryDate">Expiry Date</label>
+                                <input type="text" class="form-control" id="expiryDate" placeholder="MM / YY" required
+                                    inputmode="numeric" autocomplete="cc-exp" maxlength="7">
+                                <small id="expiry-error" class="form-text text-danger"></small>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="cvv">CVV</label>
+                                <input type="text" class="form-control" id="cvv" placeholder="•••" required
+                                    inputmode="numeric" autocomplete="cc-csc" maxlength="4">
+                                <small id="cvv-error" class="form-text text-danger"></small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cardHolder">Cardholder Name</label>
+                            <input type="text" class="form-control" id="cardHolder" placeholder="Name as on card"
+                                required autocomplete="cc-name">
+                            <small id="name-error" class="form-text text-danger"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="amount">Amount (INR)</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">₹</span>
+                                </div>
+                                <input type="text" inputmode="decimal" class="form-control" id="donationAmount"
+                                    placeholder="Enter amount" required min="1" step="any">
+                            </div>
+                            <small id="amount-error" class="form-text text-danger"></small>
+                        </div>
+
+                        <div id="card-message" class="alert mt-3" role="alert" style="display: none;"></div>
+
+                        <button type="submit" class="btn btn-primary btn-lg btn-block mt-4" id="submit-button">
+                            <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"
+                                style="display: none;"></span>
+                            <i class="fas fa-lock mr-2"></i>Pay Securely
+                        </button>
+                    </form>
+                </div>
+
+                <div id="upi-payment-section">
+                    <h4 class="mb-3 text-center section-title">Scan QR or Use UPI ID</h4>
+                    <div class="text-center mb-3 qr-code-wrapper">
+                        <div id="qrcode-container" class="d-inline-block rounded shadow-sm">
+                            <!-- QR code will be generated here -->
+                        </div>
+                        <p id="qr-message" class="mt-3 text-muted small qr-motivation"></p>
+                    </div>
+                    <p class="text-center upi-id-text"><strong>Or pay using UPI ID:</strong> <code
+                            class="user-select-all">suprapahigh.donation@okhdfcbank</code></p>
+                    <p class="text-center text-muted small upi-instruction">Complete the payment using your UPI app.</p>
+                    <div id="upi-message" class="alert mt-3" role="alert" style="display: none;"></div>
+                </div>
+            </div>
+
+            <div id="thank-you-message" class="alert alert-success mt-3 mx-3" role="alert" style="display: none;">
+                Thank you for your generous donation! 🙏 Your support makes a difference.
+            </div>
+            <div id="timeout-message" class="alert alert-warning mt-3 mx-3" role="alert" style="display: none;">
+                Payment session timed out. Please refresh and try again.
+            </div>
+            <div id="processing-message" class="alert alert-info mt-3 mx-3" role="alert" style="display: none;">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Processing payment... Please wait.
+            </div>
+
+            <button id="go-home-button" class="btn btn-secondary btn-lg btn-block mt-3 mx-3 mb-3"
+                style="display: none;">
+                <i class="fas fa-home mr-2"></i>Go to Homepage
+            </button>
+
+            <div class="card-footer text-center text-muted small security-info-footer">
+                <i class="fas fa-shield-alt"></i> Your transaction is encrypted and secure.
+            </div>
+        </div>
+    </main>
+
+    <button id="dark-mode-toggle-payment" title="Toggle Dark/Light Mode">
+        <i class="fas fa-moon"></i> <!-- Default to moon icon -->
+    </button>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="UserMasterPages/js/payment.js"></script>
+    <script src="UserMasterPages/js/qrcode.min.js"></script>
+
+</body>
+
+</html>

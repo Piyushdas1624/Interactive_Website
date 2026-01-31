@@ -1,0 +1,296 @@
+/* responsive-fixes.css */
+
+/* General Mobile Content Fixes (Prevent Cutoff) */
+@media (max-width: 768px) {
+    /* Ensure containers and rows don't cause horizontal scroll */
+    .container, .container-fluid, .row {
+        padding-left: 10px !important;  /* Add slight padding */
+        padding-right: 10px !important; /* Add slight padding */
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        overflow-x: hidden; /* Prevent horizontal overflow */
+        width: 100% !important; /* Ensure full width utilization */
+        max-width: 100% !important; /* Override any fixed max-widths */
+        box-sizing: border-box !important; /* Include padding in width calculation */
+    }
+
+    /* Ensure columns don't cause overflow within rows */
+    .row > [class*='col-'] {
+        padding-left: 5px !important; /* Reduce default Bootstrap padding slightly */
+        padding-right: 5px !important;/* Reduce default Bootstrap padding slightly */
+        width: 100% !important; /* Often columns stack anyway */
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Specific fixes for common content wrappers */
+    .box, .content, #wrapper.wrapper, main.container {
+        padding: 10px !important; /* Adjust padding for smaller screens */
+        margin: 0 !important;
+        overflow-x: hidden; /* Prevent internal content from overflowing */
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Fix for potentially overflowing tables */
+    .table-responsive {
+        border: none; /* Remove border if it adds width */
+        margin: 0 -5px !important; /* Adjust negative margin if needed */
+        padding: 0 !important;
+        overflow-x: auto; /* Allow table scrolling if needed, but prevent page scroll */
+        width: calc(100% + 10px) !important; /* Adjust width considering negative margin */
+        max-width: calc(100% + 10px) !important;
+        box-sizing: border-box !important;
+    }
+
+    table.table {
+        margin-left: auto !important;
+        margin-right: auto !important;
+        width: 100% !important; /* Force table to fit container */
+        max-width: 100% !important;
+        display: block; /* Helps with overflow */
+        overflow-x: auto; /* Allow horizontal scroll within table */
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    }
+
+    table th, table td {
+        white-space: normal !important; /* Allow text wrapping */
+        word-break: break-word; /* Break long words */
+        padding: 8px 5px !important; /* Reduce padding */
+    }
+
+    /* Ensure images don't overflow their containers */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+     iframe {
+        max-width: 100%;
+    }
+}
+
+/* --- Simplified Header Responsive Styles --- */
+@media (max-width: 768px) {
+    .simple-header-container {
+        padding: 8px 10px !important; /* Reduced padding */
+        min-height: 50px; /* Adjust height */
+    }
+    .simple-header {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start; /* Align items to the start */
+        width: 100%;
+        padding: 0 !important; /* Remove internal padding */
+    }
+    .simple-header .simple-branding-link {
+        display: inline-flex; /* Use inline-flex */
+        align-items: center;
+        text-decoration: none;
+        color: inherit; /* Inherit color */
+    }
+    .simple-header .simple-logo {
+        height: 35px; /* Adjust logo size */
+        width: auto;
+        margin-right: 10px; /* Space between logo and title */
+    }
+    .simple-header .simple-page-title {
+        font-size: 1em; /* Adjust title font size */
+        margin-left: 0 !important; /* Remove potential conflicting margin */
+        font-weight: normal; /* Adjust weight */
+        white-space: nowrap; /* Prevent wrapping */
+        overflow: hidden;
+        text-overflow: ellipsis; /* Add ellipsis if title is too long */
+        max-width: calc(100% - 50px); /* Limit width to prevent overflow */
+    }
+    .content-below-simple-header {
+        padding-top: 60px !important; /* Adjust based on simplified header height */
+    }
+    /* Dark mode adjustments for simple header */
+    .dark-mode .simple-header-container {
+        background-color: #222; /* Darker background */
+        border-bottom: 1px solid #444; /* Darker border */
+    }
+    .dark-mode .simple-header .simple-page-title {
+        color: #eee; /* Lighter text */
+    }
+}
+
+
+/* --- Full Split Header Responsive Styles --- */
+@media (max-width: 768px) {
+    /* Top Branding Bar adjustments */
+    .top-branding-bar {
+        padding: 5px 10px !important; /* Reduced padding */
+        min-height: 45px; /* Adjust height */
+        display: flex;
+        align-items: center;
+        justify-content: center; /* Center content */
+        text-align: center;
+    }
+    .top-branding-bar .container { /* Container inside branding bar */
+         padding: 0 !important;
+         display: flex;
+         align-items: center;
+         justify-content: center; /* Center items inside container */
+         width: 100% !important;
+         max-width: 100% !important;
+    }
+    .top-branding-bar .branding-link {
+        display: inline-flex; /* Changed from flex to inline-flex */
+        align-items: center;
+        text-decoration: none;
+        color: inherit;
+    }
+    .top-branding-bar .school-logo {
+        height: 30px; /* Adjust logo size */
+        width: auto;
+        margin-right: 8px;
+    }
+    .top-branding-bar .school-name {
+        font-size: 0.9em; /* Slightly smaller font */
+        font-weight: bold;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: calc(100% - 40px); /* Limit width */
+    }
+     .top-branding-bar .school-affiliation { /* Hide affiliation on small screens */
+         display: none;
+     }
+
+    /* Main Navbar adjustments */
+    .main-navbar {
+        min-height: 50px; /* Ensure space for toggle */
+        margin-bottom: 0 !important; /* Remove margin below navbar */
+        border-top: 1px solid #ddd; /* Add separator */
+    }
+    .dark-mode .main-navbar {
+        border-top: 1px solid #444; /* Dark mode separator */
+    }
+    .main-navbar .navbar-brand {
+        padding: 10px 15px; /* Adjust padding */
+        font-size: 1.2em; /* Adjust size */
+        height: auto; /* Let height adjust */
+    }
+    .main-navbar .navbar-toggle {
+        margin-top: 8px; /* Adjust vertical position */
+        margin-right: 10px; /* Add margin */
+        padding: 8px 9px; /* Adjust padding */
+    }
+    .main-navbar .navbar-collapse {
+        border-top: 1px solid #eee; /* Separator for collapsed menu */
+        margin-top: 0; /* Remove margin */
+        box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 1px 5px rgba(0,0,0,.075);
+    }
+    .dark-mode .main-navbar .navbar-collapse {
+        border-top: 1px solid #444;
+        box-shadow: inset 0 1px 0 rgba(0,0,0,.1), 0 1px 5px rgba(0,0,0,.2);
+    }
+    .main-navbar .navbar-nav {
+        margin: 0 -10px; /* Adjust negative margins */
+    }
+    .main-navbar .navbar-nav > li > a {
+        padding: 12px 15px; /* Adjust padding */
+        line-height: normal; /* Reset line height */
+    }
+    .main-navbar .dropdown-menu {
+        position: static;
+        float: none;
+        width: auto;
+        margin-top: 0;
+        background-color: transparent;
+        border: 0;
+        box-shadow: none;
+    }
+    .main-navbar .dropdown-menu > li > a {
+        padding: 10px 20px; /* Indent dropdown items */
+    }
+
+    /* Ensure content below the full split header has enough space */
+    .content-below-header {
+        /* The padding-top should accommodate both bars */
+        /* Calculated approx: 45px (branding) + 51px (nav) = 96px */
+        /* Add a little extra buffer */
+         padding-top: 100px !important;
+    }
+    /* Remove top padding from direct body content if split header is used */
+    body > .container:not(.content-below-header):not(.simple-header-container) {
+        padding-top: 0 !important;
+    }
+}
+
+/* Responsive Fixes 
+/* -------------------- */
+
+/* 2. fun-learning-games.html Responsiveness (< 768px) */
+@media (max-width: 767.98px) {
+    /* Assuming a grid container class like .game-grid */
+    .game-grid {
+        display: grid;
+        /* Change to 2 columns on small screens */
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px; /* Adjust gap */
+        padding: 15px;
+    }
+
+    /* If using Bootstrap rows/cols, override them */
+    /* Example: If games are in .col-md-4 */
+    .fun-games-section .row > .col-md-4, /* Be specific */
+    .fun-games-section .row > .col-sm-6 {
+        width: 50%; /* Force 2 columns */
+        float: left; /* Ensure they float correctly */
+        padding-left: 7.5px; /* Adjust padding */
+        padding-right: 7.5px;
+        margin-bottom: 15px;
+    }
+
+    /* Clear floats every 2 items */
+     .fun-games-section .row > .col-md-4:nth-child(2n+1),
+     .fun-games-section .row > .col-sm-6:nth-child(2n+1) {
+        clear: left;
+    }
+
+    .game-container {
+        /* Adjust game container styles if needed */
+        height: auto; /* Allow height to adjust */
+        min-height: 200px; /* Example min-height */
+    }
+    .game-container h3 {
+        font-size: 1em; /* Adjust title size */
+    }
+     .game-container .game-description {
+        font-size: 0.85em; /* Adjust description size */
+    }
+    .game-controls button {
+        font-size: 0.8em;
+        padding: 5px 10px;
+    }
+
+     /* Adjust overall page padding/margins if needed */
+     body.fun-games-page .container {
+         padding-left: 10px;
+         padding-right: 10px;
+     }
+
+}
+
+@media (max-width: 480px) {
+    /* Adjust for very small screens - 1 column */
+    .game-grid {
+        grid-template-columns: 1fr; /* Single column */
+    }
+
+    .fun-games-section .row > .col-md-4,
+    .fun-games-section .row > .col-sm-6 {
+        width: 100%; /* Force 1 column */
+        float: none;
+        padding-left: 15px; /* Reset padding if needed */
+        padding-right: 15px;
+    }
+     .fun-games-section .row > .col-md-4:nth-child(2n+1),
+     .fun-games-section .row > .col-sm-6:nth-child(2n+1) {
+        clear: none; /* No need to clear floats */
+    }
+}

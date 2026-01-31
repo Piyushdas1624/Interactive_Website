@@ -1,0 +1,24 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="marsGrad" cx="30%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#ff4d4d" />
+      <stop offset="100%" stop-color="#660000" />
+    </radialGradient>
+    <clipPath id="marsClip">
+      <circle cx="100" cy="100" r="65" />
+    </clipPath>
+  </defs>
+
+  <circle cx="100" cy="100" r="65" fill="url(#marsGrad)" stroke="#330000" stroke-width="1"/>
+
+  <g clip-path="url(#marsClip)">
+    <path d="M50,50 Q80,80 60,110 T90,150 Q120,140 130,100 T100,50 Z" fill="#990000" opacity="0.7"/>
+    <circle cx="140" cy="130" r="10" fill="#800000" opacity="0.6"/>
+    <circle cx="60" cy="140" r="5" fill="#800000" opacity="0.6"/>
+    
+    <path d="M30,80 Q60,60 50,40" fill="none" stroke="#cc0000" stroke-width="3" stroke-linecap="round"/>
+    <path d="M150,80 Q130,100 160,120" fill="none" stroke="#cc0000" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <ellipse cx="70" cy="60" rx="20" ry="10" fill="white" fill-opacity="0.2"/>
+</svg>

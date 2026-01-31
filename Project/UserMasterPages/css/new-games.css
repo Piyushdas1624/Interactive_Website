@@ -1,0 +1,2108 @@
+/* Styles for new games - Consolidated & Responsive */
+
+/* ========================================================= */
+/* 1. GLOBAL LAYOUT & GRID SYSTEM (Strict) */
+/* ========================================================= */
+
+/* --- GLOBAL LAYOUT & GRID SYSTEM (Strict) --- */
+
+/* Fix for constrained parent width issues identified in layout debugging */
+.box,
+.box .col-lg-12,
+.game-section {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+    display: block !important;
+    /* Ensure it's not some weird flex-shrink */
+}
+
+.game-section {
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+/* Light Blue Background for Games Page */
+#games-page-wrapper,
+.games-page-bg,
+body.games-page {
+    background: linear-gradient(135deg, rgba(240, 248, 255, 0.95) 0%, rgba(224, 240, 255, 0.9) 50%, rgba(200, 230, 255, 0.85) 100%) !important;
+    min-height: 100vh;
+}
+
+/* Strict Grid Definition */
+.modern-game-grid {
+    display: grid !important;
+    /* Responsive columns: fit as many 320px columns as possible */
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)) !important;
+    gap: 30px !important;
+    width: 100% !important;
+    padding: 10px;
+    box-sizing: border-box;
+    align-items: start;
+}
+
+/* On Desktop, allow slightly wider columns preference */
+@media (min-width: 992px) {
+    .modern-game-grid {
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)) !important;
+    }
+}
+
+/* Wide Cards (e.g. Battleship) span 2 cols on large screens */
+@media (min-width: 900px) {
+    .modern-game-card-wide {
+        grid-column: span 2;
+    }
+}
+
+/* Standardized Card Container - Enforce Containment */
+.modern-game-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+
+    padding: 20px !important;
+    margin: 0 !important;
+    /* Rely on grid gap */
+
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+
+    /* CRITICAL: Prevent Overflow overlap */
+    overflow: hidden !important;
+    position: relative;
+    min-height: 380px;
+}
+
+/* Internal Alignment */
+.modern-game-card h3,
+.modern-game-card p,
+.game-category,
+.game-controls,
+.achievements {
+    text-align: center;
+    width: 100%;
+}
+
+.game-controls {
+    margin-top: auto;
+    padding-top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+/* ========================================================= */
+/* 2. RESPONSIVE GAME ELEMENTS (Canvas, Boards) */
+/* ========================================================= */
+
+canvas {
+    max-width: 100% !important;
+    height: auto !important;
+    display: block;
+    margin: 10px auto;
+}
+
+/* 2a. Checkers & Legacy Game Fixes (EMERGENCY RESCUE BLOCK) */
+
+/* Checkers Board - FORCE Aspect Ratio */
+.checkers-board {
+    display: grid !important;
+    grid-template-columns: repeat(8, 1fr) !important;
+    gap: 1px !important;
+
+    /* Constraint Fixes */
+    width: 100% !important;
+    max-width: 400px !important;
+    aspect-ratio: 1/1 !important;
+    height: auto !important;
+    margin: 15px auto !important;
+
+    border: 2px solid #333;
+    background: #333;
+}
+
+.checkers-cell {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.checkers-cell.light {
+    background: #f0d9b5;
+}
+
+.checkers-cell.dark {
+    background: #b58863;
+}
+
+.checker {
+    width: 80%;
+    height: 80%;
+    border-radius: 50%;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s;
+}
+
+.checker.red {
+    background: #ff4444;
+    border: 2px solid #c0392b;
+}
+
+.checker.black {
+    background: #333;
+    border: 2px solid #000;
+}
+
+.checker.king::after {
+    content: '👑';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.checkers-cell.selected {
+    box-shadow: inset 0 0 0 3px gold;
+}
+
+
+/* 2b. Othello */
+.othello-board {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    width: 100% !important;
+    max-width: 320px;
+    aspect-ratio: 1;
+    height: auto !important;
+    background-color: #27ae60;
+    padding: 4px;
+    gap: 2px;
+    margin: 15px auto;
+    border: 4px solid #1e824c;
+    box-sizing: border-box;
+}
+
+.othello-cell {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    cursor: pointer;
+}
+
+.disc {
+    width: 80%;
+    height: 80%;
+    border-radius: 50%;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.disc.black {
+    background-color: #2d3436;
+}
+
+.disc.white {
+    background-color: #dfe6e9;
+}
+
+.othello-cell.valid-move::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 25%;
+    height: 25%;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+/* 2c. Connect Four */
+.connect4-board {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    background-color: #0066cc;
+    padding: 10px;
+    border-radius: 10px;
+    width: 100% !important;
+    max-width: 350px;
+    height: auto;
+    aspect-ratio: 7/6;
+    margin: 15px auto;
+}
+
+.c4-cell {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1;
+    background-color: white;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.c4-cell.red {
+    background-color: #ff4757;
+}
+
+.c4-cell.yellow {
+    background-color: #ffa502;
+}
+
+/* 2d. Dots and Boxes (Squeezed Fix) */
+.dots-board {
+    display: grid;
+    grid-template-columns: repeat(11, auto);
+    gap: 0;
+    justify-content: center;
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    /* Responsive sizing */
+    width: 100% !important;
+    max-width: 100%;
+    overflow-x: auto;
+    /* Allow scroll if extremely small screen */
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    background: #000;
+    border-radius: 50%;
+    margin: 6px;
+    z-index: 2;
+}
+
+.h-line {
+    width: 30px;
+    height: 6px;
+    background: #eee;
+    cursor: pointer;
+    margin-top: 7px;
+    z-index: 1;
+}
+
+.v-line {
+    width: 6px;
+    height: 30px;
+    background: #eee;
+    cursor: pointer;
+    margin-left: 7px;
+    z-index: 1;
+}
+
+.h-line:hover,
+.v-line:hover {
+    background: #ccc;
+}
+
+.h-line.p1,
+.v-line.p1 {
+    background: #ff4757;
+}
+
+.h-line.p2,
+.v-line.p2 {
+    background: #3742fa;
+}
+
+.box {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.box.p1::after {
+    content: 'X';
+    color: #ff4757;
+}
+
+.box.p2::after {
+    content: 'O';
+    color: #3742fa;
+}
+
+/* 2e. Battleship (Responsive) */
+.battleship-grids {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+    width: 100%;
+}
+
+.battleship-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    /* Responsive cells */
+    gap: 1px;
+    background-color: #34495e;
+    border: 3px solid #2c3e50;
+    width: 100%;
+    max-width: 300px;
+    /* Limit max size */
+    padding: 3px;
+    aspect-ratio: 1;
+}
+
+.ship-cell {
+    width: 100%;
+    height: 100%;
+    background-color: #ecf0f1;
+    cursor: crosshair;
+}
+
+.ship-cell.ship.p1 {
+    background-color: #3498db;
+}
+
+.ship-cell.hit {
+    background-color: #e74c3c;
+    position: relative;
+}
+
+.ship-cell.hit::after {
+    content: '💥';
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 0.8em;
+    width: 100%;
+    text-align: center;
+}
+
+.ship-cell.miss {
+    background: #fff;
+    position: relative;
+}
+
+.ship-cell.miss::after {
+    content: '•';
+    color: #333;
+    position: absolute;
+    top: -5px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.bs-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* ========================================================= */
+/* 3. EXTRA GAMES (Maze, Hanoi, Crypto, FoodChain) */
+/* ========================================================= */
+
+/* Tower of Hanoi */
+.hanoi-game {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    width: 100%;
+    height: 200px;
+    border-bottom: 5px solid #7f8c8d;
+    padding-bottom: 0;
+    margin-top: 20px;
+}
+
+.rod {
+    width: 10px;
+    height: 100%;
+    background-color: #7f8c8d;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+}
+
+.hanoi-disk {
+    height: 20px;
+    border-radius: 10px;
+    background-color: #e67e22;
+    margin-bottom: 2px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+/* Cryptogram */
+.crypto-container {
+    width: 100%;
+}
+
+.crypto-puzzle {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    font-family: monospace;
+    font-size: 1.2em;
+}
+
+.crypto-char-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.crypto-code {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #2c3e50;
+}
+
+.crypto-input {
+    width: 25px;
+    text-align: center;
+    text-transform: uppercase;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    padding: 2px;
+}
+
+.btn-hint {
+    background: linear-gradient(145deg, #f1c40f, #f39c12) !important;
+    color: #2c3e50 !important;
+}
+
+/* Food Chain */
+.food-chain-area {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    min-height: 100px;
+    border: 2px dashed #95a5a6;
+    border-radius: 10px;
+    overflow-x: auto;
+    align-items: center;
+    width: 100%;
+}
+
+.chain-item {
+    padding: 8px;
+    background: #ecf0f1;
+    border-radius: 8px;
+    cursor: grab;
+    border: 2px solid transparent;
+    white-space: nowrap;
+}
+
+.chain-item.correct {
+    border-color: #27ae60;
+    background: #e8f8f5;
+}
+
+.chain-item.incorrect {
+    border-color: #c0392b;
+    background: #fce4ec;
+}
+
+/* Maze Navigator */
+.maze-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    width: 100%;
+}
+
+.maze-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    /* Responsive cells */
+    gap: 2px;
+    background: #ecf0f1;
+    padding: 5px;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 250px;
+    aspect-ratio: 1;
+}
+
+.maze-cell {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1;
+    background: #fff;
+    border: 1px solid #bdc3c7;
+    position: relative;
+}
+
+.maze-cell.wall {
+    background: #2c3e50;
+}
+
+.maze-cell.start {
+    background: #27ae60;
+}
+
+.maze-cell.goal {
+    background: #e74c3c;
+}
+
+.maze-player {
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    top: 10%;
+    left: 10%;
+    background: #f1c40f;
+    border-radius: 50%;
+}
+
+.coding-area {
+    width: 100%;
+}
+
+.code-blocks {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.program-display {
+    min-height: 40px;
+    border: 1px solid #bdc3c7;
+    padding: 5px;
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    background: #fff;
+}
+
+.program-step {
+    padding: 2px 6px;
+    background: #3498db;
+    color: white;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+/* 15 Puzzle & Other Mini Games */
+.puzzle-board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+    width: 100%;
+    max-width: 300px;
+    aspect-ratio: 1;
+    background: #34495e;
+    padding: 5px;
+    border-radius: 10px;
+    margin: 0 auto;
+}
+
+.puzzle-tile {
+    background: #3498db;
+    color: white;
+    font-size: 1.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.puzzle-tile:not(.empty):hover {
+    transform: scale(0.95);
+}
+
+.puzzle-tile.empty {
+    background: transparent;
+    cursor: default;
+}
+
+/* Hangman */
+.hangman-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+#hangman-drawing {
+    max-width: 200px;
+    height: auto;
+    margin: 0 auto;
+}
+
+.word-display {
+    font-size: 1.5em;
+    letter-spacing: 3px;
+    font-family: monospace;
+    overflow-wrap: break-word;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    /* Added gap between letters */
+}
+
+.keyboard {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    justify-content: center;
+}
+
+.key {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+/* Rock, Paper, Scissors - Specific Fix */
+.rps-buttons {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    gap: 20px !important;
+    margin: 15px 0;
+}
+
+/* Quick Math & Speed Typer - Specific Fixes */
+input.game-input {
+    width: 80%;
+    max-width: 250px;
+    padding: 10px;
+    font-size: 1.2em;
+    text-align: center;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    margin: 10px 0;
+}
+
+.scrambled-word,
+#mathQuestion {
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    margin: 15px 0;
+}
+
+/* General Fix for Crushed Grids (Sudoku, Minesweeper, etc.) */
+.sudoku-board,
+.minesweeper-board,
+.whack-a-mole-grid,
+.game2048-grid,
+.memory-board,
+.game-grid-fixed {
+    display: grid !important;
+    width: auto !important;
+    min-width: 280px;
+    margin: 0 auto;
+    gap: 2px !important;
+}
+
+/* Ensure cells inside strict grids are not flexible */
+.sudoku-cell,
+.minesweeper-cell,
+.mole-hole {
+    width: 40px !important;
+    height: 40px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc;
+    font-weight: bold;
+    flex: none !important;
+    /* Stop flex shrinking */
+}
+
+/* ========================================================= */
+/* PREMIUM GAME UI FIXES - Comprehensive Styling */
+/* ========================================================= */
+
+/* --- 2048 Game --- */
+#game2048-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 10px !important;
+    background: linear-gradient(145deg, #bbada0, #9a8b7c);
+    border-radius: 10px;
+    padding: 15px;
+    width: 100%;
+    max-width: 300px;
+    margin: 15px auto;
+    aspect-ratio: 1 / 1;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.game2048-cell {
+    aspect-ratio: 1;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 1.6em;
+    font-weight: bold;
+    background: #cdc1b4;
+    border-radius: 8px;
+    color: #776e65;
+    transition: all 0.15s ease;
+}
+
+.game2048-cell:not(:empty) {
+    animation: pop 0.15s ease;
+}
+
+@keyframes pop {
+    0% {
+        transform: scale(0.8);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* --- Whack-a-Mole Game --- */
+#whack-a-mole-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 15px !important;
+    max-width: 300px;
+    margin: 15px auto;
+}
+
+.mole-hole {
+    width: 85px !important;
+    height: 85px !important;
+    background: linear-gradient(145deg, #4CAF50, #2E7D32) !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: inset 0 -8px 20px rgba(0, 0, 0, 0.35), 0 4px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    border: 3px solid #1B5E20;
+}
+
+.mole-hole::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 60%;
+    height: 40%;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 50%;
+    transform: translate(-50%, 20%);
+}
+
+.mole {
+    font-size: 45px;
+    transition: transform 0.2s ease;
+    cursor: pointer;
+    z-index: 2;
+    animation: moleAppear 0.3s ease;
+}
+
+.mole::before {
+    content: '🦔';
+}
+
+.mole:hover {
+    transform: scale(1.2);
+}
+
+.mole:active::after {
+    content: '✨';
+    position: absolute;
+    font-size: 24px;
+    animation: sparkle 0.5s ease forwards;
+}
+
+@keyframes moleAppear {
+    0% {
+        transform: translateY(30px) scale(0.5);
+    }
+
+    100% {
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes sparkle {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(2) translateY(-20px);
+    }
+}
+
+/* --- Sudoku Game --- */
+#sudoku-container {
+    width: 100%;
+    max-width: 340px;
+    margin: 0 auto;
+}
+
+#sudoku-board {
+    display: grid !important;
+    grid-template-columns: repeat(9, 1fr) !important;
+    gap: 0 !important;
+    width: 100%;
+    max-width: 315px;
+    margin: 10px auto 10px 0;
+    background: #2c3e50;
+    padding: 3px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+}
+
+.sudoku-cell {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 1 !important;
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: 600;
+    border: 1px solid #bdc3c7;
+    background: #fff;
+    color: #2c3e50;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.sudoku-cell:focus {
+    outline: 3px solid #3498db;
+    background: #e8f4fc;
+    z-index: 10;
+}
+
+.sudoku-cell[readonly] {
+    background: #ecf0f1;
+    color: #2c3e50;
+    font-weight: 700;
+}
+
+/* 3x3 box borders */
+.sudoku-cell:nth-child(3n) {
+    border-right: 3px solid #2c3e50;
+}
+
+.sudoku-cell:nth-child(9n) {
+    border-right: 1px solid #bdc3c7;
+}
+
+.sudoku-cell:nth-child(n+19):nth-child(-n+27) {
+    border-bottom: 3px solid #2c3e50;
+}
+
+.sudoku-cell:nth-child(n+46):nth-child(-n+54) {
+    border-bottom: 3px solid #2c3e50;
+}
+
+.sudoku-timer {
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #667eea;
+    margin-bottom: 10px;
+}
+
+/* --- Minesweeper Game --- */
+#minesweeper-board {
+    display: grid !important;
+    grid-template-columns: repeat(10, 1fr) !important;
+    gap: 2px !important;
+    max-width: 320px;
+    margin: 15px auto;
+    background: #7f8c8d;
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.minesweeper-cell {
+    width: auto !important;
+    height: auto !important;
+    aspect-ratio: 1 !important;
+    background: linear-gradient(145deg, #bdc3c7, #95a5a6);
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.9em;
+    border: 2px outset #ecf0f1;
+    border-radius: 3px;
+    transition: all 0.1s;
+}
+
+.minesweeper-cell:hover {
+    background: #d5dbdb;
+}
+
+.minesweeper-cell.revealed {
+    border: 1px solid #95a5a6;
+    background: #ecf0f1;
+    cursor: default;
+}
+
+.minesweeper-cell.mine {
+    background: #e74c3c !important;
+}
+
+.minesweeper-cell.adjacent-1 {
+    color: #3498db;
+}
+
+.minesweeper-cell.adjacent-2 {
+    color: #27ae60;
+}
+
+.minesweeper-cell.adjacent-3 {
+    color: #e74c3c;
+}
+
+.minesweeper-cell.adjacent-4 {
+    color: #8e44ad;
+}
+
+/* --- Quick Math Game (Premium) --- */
+#question {
+    font-size: 2.2em;
+    font-weight: 800;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    padding: 20px;
+    text-align: center;
+}
+
+#answer {
+    padding: 14px 24px;
+    font-size: 1.4em;
+    border: 3px solid #667eea;
+    border-radius: 12px;
+    width: 140px;
+    text-align: center;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+#answer:focus {
+    border-color: #764ba2;
+    box-shadow: 0 0 15px rgba(102, 126, 234, 0.4);
+}
+
+#mathDifficulty {
+    padding: 12px 18px;
+    border-radius: 10px;
+    border: 2px solid #764ba2;
+    font-size: 1em;
+    background: #fff;
+    cursor: pointer;
+}
+
+#mathScore {
+    font-size: 1.5em;
+    font-weight: 700;
+    color: #667eea;
+}
+
+/* Quick Math Submit Button */
+.btn-check {
+    padding: 14px 28px;
+    font-size: 1.1em;
+    font-weight: 700;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(145deg, #27ae60, #1e8449);
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+    margin-left: 10px;
+}
+
+.btn-check:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
+}
+
+.btn-check:active {
+    transform: scale(0.95);
+}
+
+.math-answer-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+/* --- Speed Typer Game --- */
+#typing-text-display {
+    font-size: 1.25em;
+    line-height: 2.2;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.08), rgba(118, 75, 162, 0.08));
+    border-radius: 12px;
+    margin-bottom: 15px;
+    border: 2px solid rgba(102, 126, 234, 0.2);
+    min-height: 80px;
+}
+
+#typing-text-display span {
+    padding: 2px 1px;
+    border-radius: 3px;
+    transition: all 0.1s;
+}
+
+#typing-text-display span.active {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 2px 4px;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+}
+
+#typing-text-display span.correct {
+    color: #27ae60;
+    background: rgba(39, 174, 96, 0.15);
+}
+
+#typing-text-display span.incorrect {
+    color: #e74c3c;
+    background: rgba(231, 76, 60, 0.15);
+    text-decoration: underline wavy #e74c3c;
+}
+
+#typing-input {
+    width: 100%;
+    padding: 16px;
+    font-size: 1.2em;
+    border: 3px solid #ddd;
+    border-radius: 12px;
+    box-sizing: border-box;
+    transition: all 0.2s;
+}
+
+#typing-input:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 15px rgba(102, 126, 234, 0.3);
+}
+
+.typing-stats {
+    display: flex;
+    gap: 25px;
+    justify-content: center;
+    margin: 15px 0;
+    font-size: 1.1em;
+}
+
+.typing-stats span {
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+/* --- Battleship Game --- */
+.battleship-grids {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.battleship-grid-container {
+    text-align: center;
+}
+
+.battleship-grid-container h4 {
+    margin-bottom: 8px;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+#player-fleet-grid,
+#enemy-fleet-grid,
+.battleship-grid {
+    display: grid !important;
+    grid-template-columns: repeat(10, 1fr) !important;
+    gap: 2px !important;
+    width: 280px;
+    height: 280px;
+    margin: 0 auto;
+    background: #1a5276;
+    padding: 6px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+}
+
+.battleship-cell,
+.bs-cell,
+.ship-cell {
+    aspect-ratio: 1;
+    background: linear-gradient(145deg, #3498db, #2980b9);
+    border: 1px solid #1a5276;
+    cursor: pointer;
+    transition: all 0.15s;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8em;
+}
+
+.battleship-cell:hover,
+.bs-cell:hover,
+.ship-cell:hover {
+    background: #5dade2;
+    transform: scale(1.05);
+}
+
+.battleship-cell.hit,
+.bs-cell.hit,
+.ship-cell.hit {
+    background: #e74c3c !important;
+}
+
+.battleship-cell.hit::after,
+.bs-cell.hit::after,
+.ship-cell.hit::after {
+    content: '💥';
+    font-size: 1em;
+}
+
+.battleship-cell.miss,
+.bs-cell.miss,
+.ship-cell.miss {
+    background: #95a5a6 !important;
+}
+
+.battleship-cell.miss::after,
+.bs-cell.miss::after,
+.ship-cell.miss::after {
+    content: '●';
+    color: #2c3e50;
+    font-size: 6px;
+    line-height: 1;
+    display: block;
+}
+
+.battleship-cell.ship,
+.bs-cell.ship,
+.ship-cell.ship {
+    background: linear-gradient(145deg, #2c3e50, #1a252f) !important;
+}
+
+.battleship-cell.ship::after,
+.bs-cell.ship::after,
+.ship-cell.ship::after {
+    content: '⛵';
+    font-size: 0.9em;
+}
+
+/* --- Checkers Board --- */
+#checkers-board {
+    display: grid !important;
+    grid-template-columns: repeat(8, 35px) !important;
+    gap: 0 !important;
+    width: 280px !important;
+    height: 280px !important;
+    margin: 15px auto;
+    border: 4px solid #5D4037;
+    border-radius: 6px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.checkers-cell {
+    width: 35px !important;
+    height: 35px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.checkers-cell.light {
+    background: linear-gradient(145deg, #FFECB3, #FFE082);
+}
+
+.checkers-cell.dark {
+    background: linear-gradient(145deg, #6D4C41, #5D4037);
+}
+
+.checkers-cell.selected {
+    box-shadow: inset 0 0 0 4px #FFD700;
+}
+
+.checker {
+    width: 80%;
+    height: 80%;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+}
+
+.checker:hover {
+    /* Removed scale to prevent board resizing */
+    cursor: pointer;
+}
+
+.checker.red {
+    background: radial-gradient(circle at 35% 35%, #ff6b6b, #c0392b);
+}
+
+.checker.black {
+    background: radial-gradient(circle at 35% 35%, #555, #1a1a1a);
+}
+
+.checker.king::after {
+    content: '♔';
+    font-size: 1.4em;
+    color: #FFD700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* --- Hangman Letter Buttons --- */
+#letter-buttons {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    justify-content: center !important;
+    max-width: 380px;
+    margin: 15px auto;
+}
+
+.letter-btn {
+    width: 38px !important;
+    height: 38px !important;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(145deg, #667eea, #764ba2);
+    color: white;
+    font-weight: bold;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 3px 8px rgba(102, 126, 234, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    line-height: 1;
+}
+
+.letter-btn:hover {
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 6px 15px rgba(102, 126, 234, 0.5);
+}
+
+.letter-btn.used {
+    background: #95a5a6;
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+#word-display {
+    font-size: 2em;
+    letter-spacing: 8px;
+    font-weight: 700;
+    margin: 20px 0;
+    color: #2c3e50;
+}
+
+/* --- Rock Paper Scissors --- */
+.rps-container {
+    text-align: center;
+}
+
+.rps-choices,
+.rps-buttons {
+    display: flex !important;
+    gap: 20px !important;
+    justify-content: center !important;
+    margin: 25px 0;
+}
+
+.rps-btn,
+.rps-buttons button {
+    width: 45px;
+    height: 45px;
+    font-size: 1.5em;
+    border: none;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #fff, #f0f0f0);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+}
+
+.rps-btn:hover,
+.rps-buttons button:hover {
+    transform: scale(1.2) translateY(-5px);
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+}
+
+.rps-btn:active,
+.rps-buttons button:active {
+    transform: scale(0.95);
+}
+
+#rpsResult {
+    font-size: 1.6em;
+    font-weight: 700;
+    margin: 20px 0;
+    padding: 15px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+}
+
+#playerChoice,
+#computerChoice {
+    font-size: 1.4em;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15));
+    border-radius: 12px;
+    margin: 8px;
+    display: inline-block;
+    font-weight: 600;
+}
+
+/* --- Food Chain Game --- */
+.food-chain-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.food-chain-item {
+    padding: 15px 25px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1.1em;
+    cursor: grab;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.food-chain-item:hover {
+    transform: scale(1.05);
+}
+
+.food-chain-item.dragging {
+    opacity: 0.7;
+    cursor: grabbing;
+}
+
+.food-chain-arrow {
+    font-size: 2em;
+    color: #667eea;
+}
+
+/* --- Option C: Auto-Fit with Min-Height Grid Strategy --- */
+.modern-game-card {
+    min-height: auto;
+}
+
+.modern-game-card.game-board-square {
+    min-height: 420px;
+}
+
+.modern-game-card.game-typing {
+    min-height: 350px;
+}
+
+.modern-game-card.game-canvas {
+    min-height: 450px;
+}
+
+/* ========================================================= */
+/* ENHANCED FOOD CHAIN - Tactile Drag & Drop */
+/* ========================================================= */
+.food-chain-area {
+    display: flex;
+    gap: 12px;
+    padding: 15px;
+    min-height: 120px;
+    border: 3px dashed #667eea;
+    border-radius: 15px;
+    overflow-x: auto;
+    align-items: center;
+    width: 100%;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+    transition: all 0.3s ease;
+}
+
+.food-chain-area:hover {
+    border-color: #764ba2;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+}
+
+.chain-item {
+    padding: 12px 18px;
+    background: linear-gradient(145deg, #fff, #f8f9fa);
+    border-radius: 12px;
+    cursor: grab;
+    border: 2px solid #e0e0e0;
+    white-space: nowrap;
+    font-weight: 600;
+    font-size: 1.1em;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.chain-item:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.25);
+    border-color: #667eea;
+}
+
+.chain-item:active,
+.chain-item.dragging {
+    cursor: grabbing;
+    transform: scale(1.1) rotate(2deg);
+    box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
+    opacity: 0.9;
+    z-index: 100;
+}
+
+.chain-item.correct {
+    border-color: #27ae60;
+    background: linear-gradient(145deg, #e8f8f5, #d4efdf);
+    box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+}
+
+.chain-item.incorrect {
+    border-color: #e74c3c;
+    background: linear-gradient(145deg, #fce4ec, #f8d7da);
+    animation: shake 0.3s ease;
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+/* ========================================================= */
+/* ENHANCED MAZE NAVIGATOR - Premium UI */
+/* ========================================================= */
+.maze-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    width: 100%;
+}
+
+.maze-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 3px;
+    background: linear-gradient(145deg, #2c3e50, #34495e);
+    padding: 10px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 280px;
+    aspect-ratio: 1;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.maze-cell {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1;
+    background: linear-gradient(145deg, #ecf0f1, #dfe6e9);
+    border-radius: 4px;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.maze-cell.wall {
+    background: linear-gradient(145deg, #2c3e50, #1a252f);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.maze-cell.start {
+    background: linear-gradient(145deg, #27ae60, #1e8449);
+    box-shadow: 0 0 10px rgba(39, 174, 96, 0.5);
+}
+
+.maze-cell.goal {
+    background: linear-gradient(145deg, #e74c3c, #c0392b);
+    box-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+    animation: pulse 1.5s ease infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+    }
+
+    50% {
+        box-shadow: 0 0 20px rgba(231, 76, 60, 0.8);
+    }
+}
+
+.maze-player {
+    position: absolute;
+    width: 75%;
+    height: 75%;
+    top: 12.5%;
+    left: 12.5%;
+    background: linear-gradient(145deg, #f1c40f, #f39c12);
+    border-radius: 50%;
+    box-shadow: 0 3px 10px rgba(241, 196, 15, 0.5);
+    transition: all 0.2s ease;
+}
+
+.coding-area {
+    width: 100%;
+    max-width: 300px;
+}
+
+.code-blocks {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.code-blocks button,
+.maze-cmd-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5em;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(145deg, #667eea, #764ba2);
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.code-blocks button:hover,
+.maze-cmd-btn:hover {
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5);
+}
+
+.code-blocks button:active,
+.maze-cmd-btn:active {
+    transform: scale(0.95);
+}
+
+.program-display {
+    min-height: 50px;
+    border: 2px solid #667eea;
+    padding: 10px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    background: rgba(102, 126, 234, 0.05);
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.program-step {
+    padding: 6px 12px;
+    background: linear-gradient(145deg, #667eea, #764ba2);
+    color: white;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 600;
+    box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3);
+}
+
+.maze-controls {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.maze-controls button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(145deg, #27ae60, #1e8449);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+}
+
+.maze-controls button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(39, 174, 96, 0.4);
+}
+
+.maze-controls button.clear-btn {
+    background: linear-gradient(145deg, #e74c3c, #c0392b);
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+}
+
+.maze-controls button.clear-btn:hover {
+    box-shadow: 0 6px 18px rgba(231, 76, 60, 0.4);
+}
+
+/* ========================================
+   NEW EDUCATIONAL GAMES STYLES
+   ======================================== */
+
+/* --- Periodic Table Element Match --- */
+.element-match-container {
+    text-align: center;
+    padding: 15px;
+}
+
+.element-info {
+    background: linear-gradient(145deg, #2c3e50, #34495e);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+.element-symbol {
+    font-size: 3em;
+    font-weight: bold;
+    color: #f1c40f;
+    display: block;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.element-details {
+    color: #ecf0f1;
+    font-size: 0.85em;
+    margin-top: 10px;
+    min-height: 40px;
+}
+
+.element-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.element-options button {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(145deg, #3498db, #2980b9);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.element-options button:hover {
+    transform: scale(1.05);
+    background: linear-gradient(145deg, #2ecc71, #27ae60);
+}
+
+.element-options button.correct {
+    background: linear-gradient(145deg, #2ecc71, #27ae60) !important;
+    animation: pulse 0.3s;
+}
+
+.element-options button.wrong {
+    background: linear-gradient(145deg, #e74c3c, #c0392b) !important;
+}
+
+/* --- Solar System Explorer --- */
+.solar-system-container {
+    text-align: center;
+    padding: 10px;
+}
+
+.sun-icon {
+    font-size: 3em;
+    margin-bottom: 10px;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px #f39c12, 0 0 20px #f39c12;
+    }
+
+    to {
+        text-shadow: 0 0 20px #e74c3c, 0 0 40px #e74c3c;
+    }
+}
+
+.planet-slots {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    flex-wrap: wrap;
+    min-height: 50px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.planet-slot {
+    width: 40px;
+    height: 40px;
+    border: 2px dashed #7f8c8d;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.planet-slot.filled {
+    border-style: solid;
+    border-color: #3498db;
+    background: rgba(52, 152, 219, 0.2);
+}
+
+.planet-bank {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+.planet-item {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #3498db, #2980b9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.planet-item:hover {
+    transform: scale(1.15);
+}
+
+.planet-item.selected {
+    box-shadow: 0 0 15px #f1c40f;
+}
+
+.planet-fact {
+    background: linear-gradient(145deg, #8e44ad, #9b59b6);
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 0.85em;
+    margin: 10px 0;
+    min-height: 30px;
+}
+
+/* --- Eco-Sorter Game --- */
+.eco-sorter-container {
+    text-align: center;
+    padding: 10px;
+    position: relative;
+}
+
+.falling-item {
+    font-size: 3em;
+    padding: 15px;
+    background: linear-gradient(145deg, #ecf0f1, #bdc3c7);
+    border-radius: 15px;
+    display: inline-block;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    animation: bounce 0.5s ease infinite alternate;
+}
+
+@keyframes bounce {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-8px);
+    }
+}
+
+.eco-bins {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 15px 0;
+}
+
+.eco-bin {
+    width: 80px;
+    height: 90px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.eco-bin:hover {
+    transform: scale(1.1) translateY(-5px);
+}
+
+.eco-bin span {
+    font-size: 2em;
+}
+
+.eco-bin small {
+    font-size: 0.7em;
+    font-weight: bold;
+    color: white;
+    margin-top: 5px;
+}
+
+.eco-bin.biodegradable {
+    background: linear-gradient(145deg, #27ae60, #2ecc71);
+}
+
+.eco-bin.recyclable {
+    background: linear-gradient(145deg, #3498db, #2980b9);
+}
+
+.eco-bin.non-biodegradable {
+    background: linear-gradient(145deg, #e74c3c, #c0392b);
+}
+
+.eco-bin.correct {
+    animation: correctPulse 0.3s;
+}
+
+.eco-bin.wrong {
+    animation: shake 0.3s;
+}
+
+@keyframes correctPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-10px);
+    }
+
+    75% {
+        transform: translateX(10px);
+    }
+}
+
+/* --- India Map Master --- */
+.map-master-container {
+    text-align: center;
+    padding: 10px;
+}
+
+.map-question {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #2c3e50;
+    padding: 15px;
+    background: linear-gradient(145deg, #f1c40f, #f39c12);
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 12px rgba(243, 156, 18, 0.3);
+}
+
+.map-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px 0;
+    min-height: 350px;
+}
+
+/* SVG Map Styles - Adjusted to fit screen */
+.map-grid svg {
+    max-width: 390px;
+    height: auto;
+    border-radius: 10px;
+    background: #f8f9fa;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.map-grid svg path {
+    transition: fill 0.3s ease, transform 0.2s ease;
+}
+
+.map-grid svg path:hover {
+    filter: brightness(1.1);
+}
+
+/* Fallback grid mode */
+.map-grid .map-state {
+    padding: 10px 5px;
+    background: linear-gradient(145deg, #3498db, #2980b9);
+    color: white;
+    border-radius: 8px;
+    font-size: 0.75em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.map-state:hover {
+    transform: scale(1.05);
+    background: linear-gradient(145deg, #9b59b6, #8e44ad);
+}
+
+.map-state.correct {
+    background: linear-gradient(145deg, #27ae60, #2ecc71) !important;
+}
+
+.map-state.wrong {
+    background: linear-gradient(145deg, #e74c3c, #c0392b) !important;
+}
+
+.map-state.wb {
+    background: linear-gradient(145deg, #e67e22, #d35400);
+}
+
+.map-fact {
+    background: linear-gradient(145deg, #1abc9c, #16a085);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    font-size: 1.1em;
+    font-weight: 600;
+    margin: 15px 0;
+    min-height: 50px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(26, 188, 156, 0.3);
+    line-height: 1.4;
+}
+
+/* --- Food Chain Wide Layout Fix --- */
+.modern-game-card-wide .food-chain-area {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-width: 400px;
+    max-width: 600px;
+    padding: 15px;
+    overflow-x: auto;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    border: 2px dashed #ccc;
+}
+
+.food-chain-area .chain-item {
+    padding: 12px 18px;
+    background: linear-gradient(145deg, #74b9ff, #0984e3);
+    color: white;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: grab;
+    user-select: none;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.food-chain-area .chain-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.food-chain-area .chain-item.dragging {
+    opacity: 0.7;
+    cursor: grabbing;
+}
+
+/* Solar System Planet Items with SVG */
+.planet-item img,
+.planet-slot img {
+    object-fit: contain;
+    border-radius: 50%;
+}

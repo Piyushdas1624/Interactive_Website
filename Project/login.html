@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Login - SHS (Minimal Test)</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" type="image/png" href="images/logo2.png" />
+
+    <!-- Essential CSS -->
+    <link href="UserMasterPages/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="UserMasterPages/css/Mycss.css" rel="stylesheet" />
+    <link href="UserMasterPages/css/accessibility.css" rel="stylesheet" />
+    <link href="UserMasterPages/css/enhanced-features.css" rel="stylesheet" />
+
+    <!-- Early Dark Mode Application Script -->
+    <script>
+        (function () {
+            try {
+                const isDarkMode = localStorage.getItem('darkMode') === 'true';
+                if (isDarkMode) {
+                    document.documentElement.classList.add('dark-mode');
+                }
+            } catch (e) { console.error('Error applying dark mode early:', e); }
+        })();
+    </script>
+
+    <!-- Minimal Inline Styles -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+            /* Light BG */
+            color: #212529;
+            /* Light Text */
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        html.dark-mode body {
+            background-color: #121212 !important;
+            /* Force Dark BG */
+            color: #ffffff !important;
+            /* Force Dark Text */
+        }
+
+        .login-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            background: #fff;
+            /* Light mode BG */
+            color: #333;
+            /* Light mode text */
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        html.dark-mode .login-container {
+            background: #2d2d2d !important;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4) !important;
+            color: #e0e0e0 !important;
+        }
+
+        /* Minimal Dark Mode Form Control Styles */
+        html.dark-mode .form-control {
+            background-color: #333 !important;
+            color: #fff !important;
+            border-color: #555 !important;
+        }
+
+        html.dark-mode .form-control::placeholder {
+            color: #aaa !important;
+        }
+
+        html.dark-mode .form-control:focus {
+            background-color: #444 !important;
+            border-color: #777 !important;
+            color: #fff !important;
+            box-shadow: none !important;
+        }
+
+        html.dark-mode label {
+            color: #e0e0e0 !important;
+        }
+
+        html.dark-mode .back-home,
+        html.dark-mode .forgot-password a {
+            color: #60a5fa !important;
+        }
+
+        /* Button Styles (copied from previous attempt) */
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .student-btn {
+            background: linear-gradient(45deg, #2563eb, #1d4ed8);
+            color: white;
+        }
+
+        .admin-btn {
+            background: linear-gradient(45deg, #7c3aed, #6d28d9);
+            color: white;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-form {
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .forgot-password {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .back-home {
+            display: inline-block;
+            margin-top: 20px;
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        /* Dark Mode Toggle Button - Fixed Position */
+        #dark-mode-toggle {
+            position: absolute;
+            margin-top: 0%;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #fff;
+            font-size: 18px;
+        }
+
+        html.dark-mode #dark-mode-toggle {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.7);
+            color: #121212;
+        }
+
+        #dark-mode-toggle:hover {
+            transform: scale(1.1);
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        html.dark-mode #dark-mode-toggle:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Simplified Header -->
+    <div class="simple-header-container">
+        <div class="container simple-header">
+            <a href="Homepage2.html" class="simple-branding-link">
+                <img src="images/Logo.png" alt="Suprapa High Logo" class="simple-logo">
+            </a>
+            <span class="simple-page-title" style="margin-left: 15px; font-weight: bold; font-size: 1.1em;">Login
+                Section</span>
+            <div style="float: right; margin-right: 20%;">
+                <button id="dark-mode-toggle" type="button" aria-label="Toggle Dark Mode"
+                    class="btn btn-outline-light">🌙</button>
+            </div>
+        </div>
+    </div>
+    <!-- Login Section -->
+    <div class="row">
+        <div class="login-container">
+            <div class="login-header">
+                <h2>SHS Login</h2>
+                <p>Please select your login type</p>
+            </div>
+
+            <div class="login-form">
+                <button class="login-btn student-btn" onclick="showLoginForm('student')">Student Login</button>
+                <button class="login-btn admin-btn" onclick="showLoginForm('admin')">Admin Login</button>
+
+                <form id="studentLoginForm" style="display: none;">
+                    <div class="form-group">
+                        <label for="studentId">Student ID</label>
+                        <input type="text" class="form-control" id="studentId" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="studentPassword">Password</label>
+                        <input type="password" class="form-control" id="studentPassword" required>
+                    </div>
+                    <button type="submit" class="login-btn student-btn">Login</button>
+                    <div class="forgot-password">
+                        <a href="#" onclick="showResetForm('student')">Forgot Password?</a>
+                    </div>
+                </form>
+
+                <form id="adminLoginForm" style="display: none;">
+                    <div class="form-group">
+                        <label for="adminUsername">Admin ID</label>
+                        <input type="text" class="form-control" id="adminUsername" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="adminPassword">Password</label>
+                        <input type="password" class="form-control" id="adminPassword" required>
+                    </div>
+                    <button type="submit" class="login-btn admin-btn">Login</button>
+                    <div class="forgot-password">
+                        <a href="#" onclick="showResetForm('admin')">Forgot Password?</a>
+                    </div>
+                </form>
+
+                <form id="resetForm" style="display: none;">
+                    <div class="form-group">
+                        <label id="resetLabel" for="resetIdentifier">Reset ID</label>
+                        <input type="text" class="form-control" id="resetIdentifier" required
+                            placeholder="Enter your ID">
+                    </div>
+                    <button type="submit" class="login-btn student-btn">Send Reset Link</button>
+                </form>
+
+                <div class="text-center">
+                    <a href="Homepage2.html" class="back-home">← Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Essential JS -->
+    <script src="UserMasterPages/js/jquery.js"></script>
+    <script src="UserMasterPages/js/bootstrap.min.js"></script>
+    <script src="UserMasterPages/js/accessibility.js"></script>
+
+    <!-- Minimal Page Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // --- Dark Mode Logic Removed - Assuming accessibility.js handles it --- 
+            /* 
+            const toggle = document.getElementById('dark-mode-toggle');
+            const targetElement = document.documentElement; 
+
+            function updateToggleButton(isDarkMode) { ... }
+
+            if (toggle) {
+                toggle.onclick = function() { ... };
+                const initialDarkMode = targetElement.classList.contains('dark-mode');
+                updateToggleButton(initialDarkMode);
+            }
+            */
+
+            // --- Login Form Logic (Keep definitions) ---
+            let resetUserType = null;
+
+            window.showLoginForm = function (type) {
+                document.getElementById('studentLoginForm').style.display = 'none';
+                document.getElementById('adminLoginForm').style.display = 'none';
+                document.getElementById('resetForm').style.display = 'none';
+                if (type === 'student') {
+                    document.getElementById('studentLoginForm').style.display = 'block';
+                } else {
+                    document.getElementById('adminLoginForm').style.display = 'block';
+                }
+            }
+
+            window.showResetForm = function (type) {
+                document.getElementById('studentLoginForm').style.display = 'none';
+                document.getElementById('adminLoginForm').style.display = 'none';
+                document.getElementById('resetForm').style.display = 'block';
+                resetUserType = type;
+                const resetLabel = document.getElementById('resetLabel');
+                const resetButton = document.querySelector('#resetForm button[type="submit"]');
+                const resetInput = document.getElementById('resetIdentifier');
+                if (type === 'student') {
+                    resetLabel.innerHTML = 'Type your Student ID';
+                    resetInput.placeholder = 'Enter your Student ID';
+                    resetButton.className = 'login-btn student-btn';
+                } else {
+                    resetLabel.innerHTML = 'Type your Administrator/Teacher ID';
+                    resetInput.placeholder = 'Enter your Admin/Teacher ID';
+                    resetButton.className = 'login-btn admin-btn';
+                }
+            }
+
+            // --- Form submission handlers can be added back later ---
+            const studentForm = document.getElementById('studentLoginForm');
+            if (studentForm) {
+                studentForm.onsubmit = function (e) {
+                    e.preventDefault();
+                    const studentId = document.getElementById('studentId').value;
+                    const password = document.getElementById('studentPassword').value;
+                    checkCredentials('student', studentId, password);
+                };
+            }
+            const adminForm = document.getElementById('adminLoginForm');
+            if (adminForm) {
+                adminForm.onsubmit = function (e) {
+                    e.preventDefault();
+                    const username = document.getElementById('adminUsername').value;
+                    const password = document.getElementById('adminPassword').value;
+                    checkCredentials('admin', username, password);
+                };
+            }
+            const resetFormElement = document.getElementById('resetForm');
+            if (resetFormElement) {
+                resetFormElement.onsubmit = function (e) {
+                    e.preventDefault();
+                    const identifier = document.getElementById('resetIdentifier').value;
+                    if (!identifier) {
+                        alert('Please enter your ID.');
+                        return;
+                    }
+                    // Generate masked Indian phone number
+                    const startingDigits = ['6', '7', '8', '9'];
+                    const startDigit = startingDigits[Math.floor(Math.random() * startingDigits.length)];
+                    const endDigit = Math.floor(Math.random() * 10); // Random digit 0-9
+                    const maskedNumber = `+91 ${startDigit}xxxxxxx${endDigit}`;
+                    alert(`If an account exists for ID ${identifier}, a reset link has been sent to the registered number starting with ${maskedNumber}`);
+                };
+            }
+            function checkCredentials(type, username, password) {
+                // Use fetch API for credentials.txt
+                fetch('credentials.txt')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        const lines = data.split(/\r?\n/); // Handle different line endings
+                        let currentSection = '';
+                        let found = false;
+                        let redirectUrl = '';
+
+                        for (let line of lines) {
+                            line = line.trim();
+
+                            if (line.startsWith('#')) {
+                                if (line.toLowerCase().includes('student')) currentSection = 'student';
+                                else if (line.toLowerCase().includes('admin')) currentSection = 'admin';
+                                continue; // Skip comment lines
+                            }
+
+                            if (!line || line.startsWith('//')) continue; // Skip empty or JS-style comment lines
+
+                            const parts = line.split(':');
+                            if (parts.length < 2) continue; // Ensure at least ID:Password format
+
+                            const idPart = parts[0].trim();
+                            const passPart = parts[1].trim();
+
+                            if (type === 'student' && currentSection === 'student' && parts.length >= 4) {
+                                if (idPart === username && passPart === password) {
+                                    found = true;
+                                    localStorage.setItem('studentId', idPart);
+                                    localStorage.setItem('studentName', parts[2].trim());
+                                    localStorage.setItem('studentClass', parts[3].trim());
+                                    redirectUrl = 'student-dashboard.html';
+                                    break;
+                                }
+                            } else if (type === 'admin' && currentSection === 'admin' && parts.length >= 3) {
+                                if (idPart === username && passPart === password) {
+                                    found = true;
+                                    localStorage.setItem('adminUsername', idPart);
+                                    localStorage.setItem('adminRole', parts[2].trim().toLowerCase());
+                                    // Assuming name might be part 4 if present
+                                    if (parts.length >= 4) localStorage.setItem('adminName', parts[3].trim());
+                                    redirectUrl = 'admin-dashboard.html';
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (found) {
+                            window.location.href = redirectUrl;
+                        } else {
+                            alert('Invalid credentials. Please try again.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error loading or parsing credentials.txt:', error);
+                        alert('Error checking credentials. Could not load required data. Please try again later.');
+                    });
+            }
+
+        }); // End DOMContentLoaded
+    </script>
+
+</body>
+
+</html>

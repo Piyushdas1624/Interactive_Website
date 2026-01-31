@@ -1,0 +1,712 @@
+/* payment.css */
+
+:root {
+    --payment-primary: #007bff; /* Bootstrap primary */
+    --payment-secondary: #6c757d; /* Bootstrap secondary */
+    --payment-success: #28a745; /* Bootstrap success */
+    --payment-danger: #dc3545; /* Bootstrap danger */
+    --payment-warning: #ffc107; /* Bootstrap warning */
+    --payment-info: #17a2b8; /* Bootstrap info */
+    --payment-light: #f8f9fa; /* Bootstrap light */
+    --payment-dark: #343a40; /* Bootstrap dark */
+    --payment-white: #ffffff;
+    --payment-black: #000000;
+    --payment-body-bg: #f8f9fa;
+    --payment-body-color: #212529;
+    --payment-card-bg: #ffffff;
+    --payment-card-border: rgba(0, 0, 0, 0.125);
+    --payment-input-bg: #ffffff;
+    --payment-input-border: #ced4da;
+    --payment-input-focus-border: #80bdff;
+    --payment-input-placeholder: #6c757d;
+    --payment-link-color: #007bff;
+    --payment-link-hover-color: #0056b3;
+    --payment-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --payment-border-radius: 0.3rem;
+    --payment-shadow-sm: 0 .125rem .25rem rgba(0,0,0,.075);
+    --payment-disabled-opacity: 0.65;
+}
+
+html.dark-mode {
+    --payment-primary: #4dabf7; /* Lighter blue for dark */
+    --payment-secondary: #adb5bd;
+    --payment-success: #40c057;
+    --payment-danger: #ff6b6b;
+    --payment-warning: #ffd43b;
+    --payment-info: #3bc9db;
+    --payment-light: #495057;
+    --payment-dark: #dee2e6;
+    --payment-white: #212529;
+    --payment-black: #f8f9fa;
+    --payment-body-bg: #212529;
+    --payment-body-color: #f8f9fa;
+    --payment-card-bg: #343a40;
+    --payment-card-border: rgba(255, 255, 255, 0.125);
+    --payment-input-bg: #495057;
+    --payment-input-border: #6c757d;
+    --payment-input-focus-border: #4dabf7;
+    --payment-input-placeholder: #adb5bd;
+    --payment-link-color: #4dabf7;
+    --payment-link-hover-color: #74c0fc;
+}
+
+/* Apply base styles to body */
+body {
+    font-family: var(--payment-font-family);
+    background-color: var(--payment-body-bg);
+    color: var(--payment-body-color);
+    line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.payment-container.card {
+    max-width: 650px; /* Slightly wider */
+    margin: 40px auto;
+    background-color: var(--payment-card-bg);
+    border: 1px solid var(--payment-card-border);
+    border-radius: var(--payment-border-radius);
+    box-shadow: var(--payment-shadow-sm);
+    overflow: hidden; /* Ensure child elements respect border-radius */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.payment-container .card-header {
+    background-color: var(--payment-primary);
+    color: var(--payment-white);
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(var(--payment-black), 0.05); /* Subtle border */
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+html.dark-mode .payment-container .card-header {
+     border-bottom: 1px solid rgba(var(--payment-black), 0.2);
+}
+
+.payment-container .payment-title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+.payment-container .card-body {
+    padding: 2rem; /* More padding */
+}
+
+.timer-alert {
+    background-color: rgba(var(--payment-info, 23), var(--payment-info, 162), var(--payment-info, 184), 0.1);
+    color: var(--payment-info);
+    border: 1px solid rgba(var(--payment-info, 23), var(--payment-info, 162), var(--payment-info, 184), 0.2);
+    font-weight: 500;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+}
+
+html.dark-mode .timer-alert {
+    background-color: rgba(var(--payment-info, 59), var(--payment-info, 201), var(--payment-info, 219), 0.15);
+    border-color: rgba(var(--payment-info, 59), var(--payment-info, 201), var(--payment-info, 219), 0.3);
+}
+
+/* Payment Method Selection Fieldset */
+.payment-container fieldset {
+    border: 1px solid var(--payment-input-border);
+    padding: 1rem 1.5rem;
+    border-radius: var(--payment-border-radius);
+    margin-bottom: 1.5rem;
+    transition: border-color 0.3s ease;
+}
+
+.payment-container fieldset legend {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--payment-body-color);
+    padding: 0 0.5rem;
+    margin-bottom: 0.5rem; /* Reduced margin */
+    width: auto;
+}
+
+.payment-container .form-check-inline {
+    margin-right: 1.5rem; /* More space between options */
+}
+
+.payment-container .form-check-label {
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.payment-container .form-check-input {
+    cursor: pointer;
+    margin-top: 0.3rem; /* Align better with label */
+}
+
+.payment-container .form-check-label i {
+    margin-right: 0.4rem;
+    color: var(--payment-secondary);
+    transition: color 0.3s ease;
+    width: 1.2em; /* Ensure consistent icon width */
+    text-align: center;
+}
+
+.payment-container .form-check-input:checked + .form-check-label {
+    color: var(--payment-primary);
+}
+
+.payment-container .form-check-input:checked + .form-check-label i {
+    color: var(--payment-primary);
+}
+
+/* Form Section Styling */
+#card-payment-section,
+#upi-payment-section {
+    /* Display handled by JS */
+    padding-top: 1.5rem;
+    border-top: 1px dashed var(--payment-card-border);
+    margin-top: 1.5rem;
+    transition: opacity 0.3s ease, max-height 0.5s ease-in-out;
+    overflow: hidden;
+    opacity: 1;
+    max-height: 1000px; /* large enough */
+}
+
+#card-payment-section.hidden,
+#upi-payment-section.hidden {
+    opacity: 0;
+    max-height: 0;
+    padding-top: 0;
+    margin-top: 0;
+    border-top: none;
+}
+
+.section-title {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    color: var(--payment-primary);
+    text-align: left;
+}
+
+/* Form Input Styling */
+.form-group label {
+    font-weight: 500;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    color: var(--payment-body-color);
+}
+
+.form-control {
+    background-color: var(--payment-input-bg);
+    border: 1px solid var(--payment-input-border);
+    color: var(--payment-body-color);
+    padding: 0.75rem 1rem;
+    height: auto; /* Let padding define height */
+    border-radius: var(--payment-border-radius);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out, background-color .3s ease, color .3s ease;
+}
+
+.form-control::placeholder {
+    color: var(--payment-input-placeholder);
+    opacity: 1;
+}
+
+.form-control:focus {
+    color: var(--payment-body-color);
+    background-color: var(--payment-input-bg);
+    border-color: var(--payment-input-focus-border);
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(var(--payment-primary, 0), var(--payment-primary, 123), var(--payment-primary, 255), 0.25);
+}
+
+html.dark-mode .form-control:focus {
+     box-shadow: 0 0 0 0.2rem rgba(var(--payment-primary, 77), var(--payment-primary, 171), var(--payment-primary, 247), 0.25);
+}
+
+/* Input Groups */
+.input-group-text {
+    background-color: var(--payment-light);
+    border: 1px solid var(--payment-input-border);
+    color: var(--payment-secondary);
+    padding: 0.75rem 1rem;
+    border-radius: var(--payment-border-radius);
+     transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.input-group-prepend .input-group-text {
+     border-top-right-radius: 0;
+     border-bottom-right-radius: 0;
+}
+.input-group-append .input-group-text {
+     border-top-left-radius: 0;
+     border-bottom-left-radius: 0;
+}
+
+.input-group .form-control:not(:first-child) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.input-group .form-control:not(:last-child) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+/* Card Type Icon Specific */
+.card-type-icon {
+    min-width: 40px; /* Ensure space */
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.85rem;
+    color: var(--payment-secondary);
+    /* Add background/icons via JS/CSS if needed */
+    font-style: normal; /* Ensure it's not italic */
+}
+
+/* Validation Feedback */
+.form-text.text-danger {
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+    min-height: 1em; /* Prevent layout shifts */
+    color: var(--payment-danger) !important;
+    transition: color 0.3s ease;
+}
+
+.form-control.is-invalid {
+    border-color: var(--payment-danger);
+    padding-right: calc(1.5em + .75rem); /* Adjust from Bootstrap defaults if needed */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23dc3545' viewBox='-2 -2 7 7'%3e%3cpath stroke='%23dc3545' d='M0 0l3 3m0-3L0 3'/%3e%3ccircle r='.5'/%3e%3ccircle cx='3' r='.5'/%3e%3ccircle cy='3' r='.5'/%3e%3ccircle cx='3' cy='3' r='.5'/%3e%3c/svg%3E"); /* Bootstrap's default SVG */
+    background-repeat: no-repeat;
+    background-position: right calc(.375em + .1875rem) center;
+    background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+}
+
+html.dark-mode .form-control.is-invalid {
+     border-color: var(--payment-danger);
+     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff6b6b' viewBox='-2 -2 7 7'%3e%3cpath stroke='%23ff6b6b' d='M0 0l3 3m0-3L0 3'/%3e%3ccircle r='.5'/%3e%3ccircle cx='3' r='.5'/%3e%3ccircle cy='3' r='.5'/%3e%3ccircle cx='3' cy='3' r='.5'/%3e%3c/svg%3E");
+}
+
+.form-control.is-invalid:focus {
+    border-color: var(--payment-danger);
+    box-shadow: 0 0 0 0.2rem rgba(var(--payment-danger, 220), var(--payment-danger, 53), var(--payment-danger, 69), 0.25);
+}
+
+html.dark-mode .form-control.is-invalid:focus {
+     box-shadow: 0 0 0 0.2rem rgba(var(--payment-danger, 255), var(--payment-danger, 107), var(--payment-danger, 107), 0.25);
+}
+
+/* Alert Messages */
+.alert {
+    padding: 0.8rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: var(--payment-border-radius);
+    font-size: 0.95rem;
+    display: flex; /* Align icon and text */
+    align-items: center;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.alert i {
+    margin-right: 0.6rem;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+.alert-warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+}
+.alert-info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+}
+
+html.dark-mode .alert-success {
+    color: #c6f0d1;
+    background-color: #2a4a32;
+    border-color: #3a6a47;
+}
+html.dark-mode .alert-danger {
+    color: #f7c6c7;
+    background-color: #582c31;
+    border-color: #8a4a51;
+}
+html.dark-mode .alert-warning {
+    color: #ffeeb7;
+    background-color: #66521b;
+    border-color: #997d2a;
+}
+html.dark-mode .alert-info {
+    color: #bae6f0;
+    background-color: #254e58;
+    border-color: #3a7688;
+}
+
+/* Submit Button */
+#submit-button {
+    background-color: var(--payment-success);
+    border-color: var(--payment-success);
+    color: var(--payment-white);
+    padding: 0.8rem 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: background-color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease, color 0.3s ease;
+}
+
+#submit-button:hover:not(:disabled) {
+    background-color: #218838; /* Darker success */
+    border-color: #1e7e34;
+}
+
+html.dark-mode #submit-button {
+    background-color: var(--payment-success);
+    border-color: var(--payment-success);
+    /* Use black text on lighter green in dark mode for contrast */
+    color: var(--payment-black);
+}
+
+html.dark-mode #submit-button:hover:not(:disabled) {
+    background-color: #52c46b; /* Slightly lighter dark success */
+    border-color: #40c057;
+}
+
+#submit-button:disabled,
+#submit-button.disabled {
+    opacity: var(--payment-disabled-opacity);
+    cursor: not-allowed;
+}
+
+#submit-button .spinner-border {
+    width: 1em;
+    height: 1em;
+    border-width: .2em;
+    vertical-align: -0.125em; /* Align better with text */
+    margin-right: 0.5rem;
+    display: none; /* Handled by JS */
+}
+
+#submit-button.processing .spinner-border {
+    display: inline-block;
+}
+
+/* UPI Section */
+#upi-payment-section .section-title {
+    text-align: center;
+}
+
+.qr-code-wrapper {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+#qrcode-container {
+    width: 160px; /* Adjust size */
+    height: 160px;
+    padding: 8px;
+    background-color: #ffffff; /* QR MUST have white background for scanning */
+    border: 1px solid var(--payment-input-border);
+    border-radius: var(--payment-border-radius);
+    box-shadow: var(--payment-shadow-sm);
+    display: inline-flex; /* Use flex to center */
+    align-items: center;
+    justify-content: center;
+}
+
+#qrcode-container img,
+#qrcode-container canvas {
+    display: block;
+    width: 100% !important; /* Ensure it fills the container */
+    height: 100% !important;
+    max-width: 100%;
+    object-fit: contain; /* Ensure QR is visible within bounds */
+}
+
+.qr-motivation {
+    font-style: italic;
+    opacity: 0.8;
+    margin-top: 1rem;
+    padding: 0 1rem; /* Add padding for longer quotes */
+    font-size: 0.9rem;
+    color: var(--payment-secondary);
+    transition: color 0.3s ease;
+}
+
+.upi-id-text {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.upi-id-text code {
+    background-color: rgba(var(--payment-secondary, 108), var(--payment-secondary, 117), var(--payment-secondary, 125), 0.1);
+    padding: 0.2em 0.6em;
+    border-radius: 0.2rem;
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    color: var(--payment-danger);
+    cursor: copy;
+    border: 1px solid rgba(var(--payment-secondary, 108), var(--payment-secondary, 117), var(--payment-secondary, 125), 0.2);
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+html.dark-mode .upi-id-text code {
+    background-color: rgba(var(--payment-secondary, 173), var(--payment-secondary, 181), var(--payment-secondary, 189), 0.15);
+    color: var(--payment-danger);
+     border-color: rgba(var(--payment-secondary, 173), var(--payment-secondary, 181), var(--payment-secondary, 189), 0.3);
+}
+
+.upi-instruction {
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--payment-secondary);
+}
+
+/* Disabled Sections */
+.disabled-section {
+    opacity: var(--payment-disabled-opacity);
+    pointer-events: none; /* Prevent interaction */
+}
+
+.disabled-section input,
+.disabled-section button {
+    cursor: not-allowed !important;
+}
+
+/* Final Messages & Footer */
+.security-info-footer {
+    background-color: var(--payment-light);
+    border-top: 1px solid var(--payment-card-border);
+    padding: 0.75rem 1.5rem;
+    color: var(--payment-secondary);
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+html.dark-mode .security-info-footer {
+    background-color: rgba(var(--payment-black, 0), var(--payment-black, 0), var(--payment-black, 0), 0.1);
+    border-top-color: var(--payment-card-border);
+}
+
+/* Ensure messages outside card-body also adapt */
+#thank-you-message,
+#timeout-message,
+#processing-message {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    max-width: calc(100% - 2rem); /* Fit within container padding */
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+    .payment-container .card-body {
+        padding: 1.5rem;
+    }
+    .form-row {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .form-row > .col,
+    .form-row > [class*="col-"] {
+        padding-left: 0;
+        padding-right: 0;
+        margin-bottom: 1rem; /* Add space between stacked fields */
+    }
+    .form-row > .col:last-child,
+    .form-row > [class*="col-"]:last-child {
+        margin-bottom: 0;
+    }
+    .payment-container .form-check-inline {
+        display: block; /* Stack radios */
+        margin-right: 0;
+        margin-bottom: 0.75rem;
+    }
+     .payment-container .form-check-inline:last-child {
+         margin-bottom: 0;
+     }
+    .payment-container fieldset legend {
+        font-size: 1rem;
+    }
+    #qrcode-container {
+        width: 140px;
+        height: 140px;
+    }
+     .payment-container .payment-title {
+        font-size: 1.3rem;
+    }
+    .section-title {
+        font-size: 1.15rem;
+    }
+    #submit-button {
+        font-size: 1rem;
+        padding: 0.7rem 1.2rem;
+    }
+    .alert {
+        font-size: 0.9rem;
+    }
+}
+
+/* Remove number input spinners */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* --- Confetti Effect (Improved - using box-shadow) --- */
+@keyframes confetti-fall {
+  0% { transform: translateY(-10vh); opacity: 1; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+body.confetti-active::before {
+  content: '';
+  position: fixed;
+  top: -10vh; /* Start above screen */
+  left: 0;
+  width: 1px; /* Tiny base */
+  height: 1px;
+  pointer-events: none;
+  z-index: 1100;
+  opacity: 0;
+  /* Lots of small box shadows for confetti pieces */
+  /* Format: x-offset y-offset blur spread color */
+  /* Generate multiple shadows with varied colors, sizes (via blur/spread), and initial positions */
+  box-shadow:
+    /* Set 1 */
+    5vw 80vh 1px 1px #ffc107, 10vw 40vh 2px 0px #dc3545, 15vw 70vh 0px 2px #007bff,
+    20vw 30vh 1px 1px #28a745, 25vw 85vh 2px 1px #fd7e14, 30vw 50vh 0px 2px #6f42c1,
+    /* Set 2 */
+    35vw 75vh 1px 0px #e83e8c, 40vw 25vh 2px 2px #20c997, 45vw 90vh 0px 1px #ffc107,
+    50vw 60vh 1px 2px #dc3545, 55vw 35vh 2px 0px #007bff, 60vw 80vh 0px 2px #28a745,
+    /* Set 3 */
+    65vw 45vh 1px 1px #fd7e14, 70vw 70vh 2px 1px #6f42c1, 75vw 20vh 0px 2px #e83e8c,
+    80vw 85vh 1px 0px #20c997, 85vw 55vh 2px 2px #ffc107, 90vw 30vh 0px 1px #dc3545,
+    95vw 65vh 1px 2px #007bff, 5vw 15vh 2px 0px #28a745;
+    /* Add more lines for denser confetti */
+
+  /* Apply animation */
+  animation: confetti-fall 5s linear forwards;
+}
+
+/* You can add ::after with different box-shadow values and animation delays */
+/* body.confetti-active::after { ... } */
+
+/* Define the second layer using ::after */
+body.confetti-active::after {
+  content: '';
+  position: fixed;
+  top: -10vh;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+  z-index: 1099; /* Slightly behind the first layer */
+  opacity: 0;
+  /* A different set of box-shadow values for the second layer */
+  box-shadow:
+    /* Set A */
+    7vw 60vh 1px 1px #17a2b8, 12vw 20vh 2px 1px #e83e8c, 17vw 90vh 0px 2px #6f42c1,
+    22vw 50vh 1px 0px #fd7e14, 27vw 75vh 2px 2px #28a745, 32vw 40vh 0px 1px #007bff,
+    /* Set B */
+    37vw 85vh 1px 2px #ffc107, 42vw 35vh 2px 0px #20c997, 47vw 65vh 0px 2px #dc3545,
+    52vw 15vh 1px 1px #17a2b8, 57vw 80vh 2px 1px #e83e8c, 62vw 55vh 0px 2px #6f42c1,
+    /* Set C */
+    67vw 25vh 1px 0px #fd7e14, 72vw 70vh 2px 2px #28a745, 77vw 45vh 0px 1px #007bff,
+    82vw 95vh 1px 2px #ffc107, 87vw 60vh 2px 0px #20c997, 92vw 20vh 0px 2px #dc3545,
+    97vw 75vh 1px 1px #17a2b8, 2vw 40vh 2px 1px #e83e8c;
+
+  /* Apply the same animation, but with a slight delay */
+  animation: confetti-fall 5s linear 0.2s forwards; /* 0.2s delay */
+}
+
+/* Dark Mode Disabled Styles */
+html.dark-mode .disabled-section input:disabled,
+html.dark-mode fieldset[disabled] input {
+    background-color: rgba(var(--payment-light, 73), var(--payment-light, 80), var(--payment-light, 87), 0.5); /* Darker disabled bg */
+    opacity: var(--payment-disabled-opacity);
+    border-color: rgba(var(--payment-input-border, 108), var(--payment-input-border, 117), var(--payment-input-border, 125), 0.5);
+}
+
+html.dark-mode #submit-button:disabled,
+html.dark-mode #submit-button.disabled {
+     background-color: var(--payment-success);
+     border-color: var(--payment-success);
+     color: var(--payment-black);
+     opacity: 0.5; /* Make it more visibly disabled */
+}
+
+/* --- Receipt Styles --- */
+.receipt-container {
+    text-align: left;
+    padding: 10px;
+}
+
+.receipt-header {
+    text-align: center;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: inherit; /* Inherit color from alert-success */
+}
+
+.receipt-container hr {
+    border-top: 1px dashed currentColor; /* Dashed line using text color */
+    opacity: 0.5;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.receipt-container p {
+    margin-bottom: 5px; /* Tighter spacing */
+    font-size: 0.95em;
+    color: inherit;
+}
+
+.receipt-amount {
+    font-weight: bold;
+    font-size: 1.05em !important; /* Make amount slightly larger */
+    margin-top: 10px;
+}
+
+.receipt-footer {
+    text-align: center;
+    margin-top: 15px;
+    font-style: italic;
+    opacity: 0.9;
+    font-size: 0.9em !important;
+}
+
+/* Dark mode adjustments for receipt text (if needed, usually inherits fine) */
+/* html.dark-mode .receipt-container p { color: #c6f0d1; } */
+/* html.dark-mode .receipt-header { color: #c6f0d1; } */
+
+/* --- High Donation Glow Effect --- */
+@keyframes body-glow-pulse {
+  0%   { box-shadow: inset 0 0 20px 10px rgba(255, 215, 0, 0); } /* Start transparent */
+  50%  { box-shadow: inset 0 0 40px 20px rgba(255, 215, 0, 0.6); } /* Pulse gold */
+  100% { box-shadow: inset 0 0 20px 10px rgba(255, 215, 0, 0); } /* End transparent */
+}
+
+/* Remove the empty placeholder rule */
+/* body.high-donation-glow::before,
+body.high-donation-glow::after {
+   
+} */
+
+/* Remove position relative if not needed */
+/* body.high-donation-glow {
+    position: relative; 
+} */
+
+/* Apply animation directly to the body when the class is present */
+body.high-donation-glow {
+    /* Apply the pulsing glow animation */
+    /* Pulse 3 times over 6 seconds */
+    animation: body-glow-pulse 2s ease-in-out 3; 
+}

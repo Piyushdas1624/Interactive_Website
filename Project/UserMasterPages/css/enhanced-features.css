@@ -1,0 +1,1420 @@
+/* Enhanced Features CSS */
+/* safe because it is for html no accessibility features */
+/* Virtual Tour Section */
+.virtual-tour-section {
+    margin: 40px 0;
+    padding: 30px;
+    background: linear-gradient(135deg, #f8f9fc 0%, #e6eaf2 100%);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.tour-wrapper {
+    padding: 20px;
+}
+
+.tour-intro {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.tour-intro p {
+    font-size: 18px;
+    color: #4a5568;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+.tour-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: center;
+    margin-bottom: 35px;
+}
+
+.tour-location {
+    flex: 1 1 220px;
+    max-width: 280px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+}
+
+.tour-location:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 25px 40px rgba(44, 82, 130, 0.2);
+}
+
+/* Image Container */
+.tour-image-container {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    position: relative;
+}
+
+.tour-image-container::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.8), transparent);
+}
+
+.tour-location img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.tour-location:hover img {
+    transform: scale(1.1);
+}
+
+/* Button/Text Container */
+.tour-button-container {
+    padding: 18px 15px;
+    text-align: center;
+    background: #ffffff;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.tour-location h4 {
+    margin: 0 0 8px 0;
+    color: #2c5282;
+    font-weight: 700;
+    font-size: 1.1em;
+}
+
+.tour-desc {
+    margin: 0;
+    font-size: 0.85em;
+    color: #718096;
+    line-height: 1.4;
+}
+
+.tour-cta {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.tour-cta .btn-primary {
+    background: linear-gradient(135deg, #3a86ff 0%, #4ecdc4 100%);
+    border: none;
+    padding: 14px 32px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(58, 134, 255, 0.3);
+}
+
+.tour-cta .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(58, 134, 255, 0.4);
+}
+
+/* Dark Mode */
+.dark-mode .virtual-tour-section {
+    background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+.dark-mode .tour-intro p {
+    color: #a0aec0;
+}
+
+.dark-mode .tour-location {
+    background-color: #2d3748;
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+.dark-mode .tour-location:hover {
+    box-shadow: 0 25px 40px rgba(0, 0, 0, 0.4);
+}
+
+.dark-mode .tour-image-container::after {
+    background: linear-gradient(to top, rgba(45, 55, 72, 0.9), transparent);
+}
+
+.dark-mode .tour-button-container {
+    background: #2d3748;
+}
+
+.dark-mode .tour-location h4 {
+    color: #63b3ed;
+}
+
+.dark-mode .tour-desc {
+    color: #a0aec0;
+}
+
+/* Clickable Tour Card Links */
+.tour-location-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    flex: 1 1 220px;
+    max-width: 280px;
+}
+
+.tour-location-link:hover,
+.tour-location-link:focus {
+    text-decoration: none;
+    color: inherit;
+}
+
+.tour-location-link .tour-location {
+    height: 100%;
+}
+
+/* Events Section */
+.events-section {
+    margin: 40px 0;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.events-wrapper {
+    padding: 20px;
+}
+
+.events-list {
+    max-width: 800px;
+    margin: 0 auto 30px;
+}
+
+.event-item {
+    display: flex;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.event-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.event-date {
+    background-color: #2c5282;
+    color: white;
+    border-radius: 8px;
+    text-align: center;
+    padding: 10px;
+    min-width: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 20px;
+}
+
+.event-date .day {
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.event-date .month {
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.event-details {
+    flex: 1;
+}
+
+.event-details h4 {
+    margin: 0 0 10px;
+    color: #2c5282;
+    font-size: 18px;
+}
+
+.event-details p {
+    margin: 0 0 10px;
+    color: #4a5568;
+}
+
+.event-time {
+    display: block;
+    font-size: 14px;
+    color: #718096;
+}
+
+.events-cta {
+    text-align: center;
+}
+
+.events-cta .btn-primary {
+    background-color: #2c5282;
+    border: none;
+    padding: 10px 20px;
+}
+
+.events-cta .btn-primary:hover {
+    background-color: #1a365d;
+}
+
+/* Student Achievements Section */
+.achievements-section {
+    margin: 40px 0;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.achievements-carousel {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.achievement-card {
+    padding: 30px;
+    text-align: center;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    max-width: 600px;
+    margin: 0 auto;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.achievement-card img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+    border: 5px solid #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.achievement-card h4 {
+    margin: 0 0 10px;
+    color: #2c5282;
+    font-size: 20px;
+}
+
+.achievement-card p {
+    margin: 0;
+    color: #4a5568;
+    font-size: 16px;
+}
+
+.achievements-cta {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.achievements-cta .btn-primary {
+    background-color: #2c5282;
+    border: none;
+    padding: 10px 20px;
+}
+
+.achievements-cta .btn-primary:hover {
+    background-color: #1a365d;
+}
+
+/* AI Chatbot */
+.chatbot-container {
+    position: fixed;
+    bottom: 90px;
+    left: 20px;
+    /* Changed from right to left */
+    width: 350px;
+    height: 450px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    z-index: 9997;
+    overflow: hidden;
+    display: none;
+}
+
+.chatbot-header {
+    padding: 15px;
+    background-color: #2c5282;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chatbot-header h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.chatbot-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.chatbot-messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+}
+
+.bot-message,
+.user-message {
+    margin-bottom: 15px;
+    display: flex;
+}
+
+.bot-message {
+    justify-content: flex-start;
+}
+
+.user-message {
+    justify-content: flex-end;
+}
+
+.bot-avatar {
+    background-color: #2c5282;
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.message-content {
+    background-color: #f1f5f9;
+    padding: 10px 15px;
+    border-radius: 18px;
+    max-width: 70%;
+    color: #4a5568;
+}
+
+.user-message .message-content {
+    background-color: #2c5282;
+    color: white;
+}
+
+.chatbot-input {
+    padding: 10px;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+}
+
+.chatbot-input input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    outline: none;
+}
+
+.chatbot-input button {
+    background-color: #2c5282;
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    /* Added for emoji */
+}
+
+.chatbot-trigger button:hover {
+    background-color: #1a365d;
+    transform: scale(1.1);
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.chat-label {
+    display: none;
+}
+
+/* Alumni Section */
+.alumni-section {
+    margin: 40px 0;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.alumni-wrapper {
+    padding: 20px;
+}
+
+.alumni-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.alumni-card {
+    flex: 1 1 300px;
+    max-width: 350px;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    text-align: center;
+    transition: all 0.3s;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.alumni-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.alumni-card img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+    border: 4px solid #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.alumni-card h4 {
+    margin: 0 0 10px;
+    color: #2c5282;
+    font-size: 20px;
+}
+
+.alumni-batch {
+    color: #718096;
+    margin-bottom: 5px;
+}
+
+.alumni-profession {
+    color: #4a5568;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.alumni-quote {
+    color: #4a5568;
+    font-style: italic;
+    font-size: 14px;
+}
+
+.alumni-cta {
+    text-align: center;
+}
+
+.alumni-cta .btn-primary {
+    background-color: #2c5282;
+    border: none;
+    padding: 10px 20px;
+}
+
+.alumni-cta .btn-primary:hover {
+    background-color: #1a365d;
+}
+
+/* Newsletter Section */
+.newsletter-section {
+    margin: 40px 0;
+    padding: 20px;
+    background-color: #f1f5f9;
+    border-radius: 10px;
+}
+
+.newsletter-wrapper {
+    padding: 20px;
+    background: linear-gradient(135deg, #2c5282, #1a365d);
+    border-radius: 10px;
+    color: white;
+}
+
+.newsletter-content {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.newsletter-content h3 {
+    margin: 0 0 15px;
+    font-size: 24px;
+    color: white;
+}
+
+.newsletter-content p {
+    margin: 0 0 25px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.newsletter-form {
+    display: flex;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.newsletter-form .form-group {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.newsletter-form input {
+    width: 100%;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+}
+
+.newsletter-form .btn-primary {
+    background-color: #4a90e2;
+    border: none;
+    padding: 10px 20px;
+    white-space: nowrap;
+}
+
+.newsletter-form .btn-primary:hover {
+    background-color: #2a7de1;
+}
+
+.newsletter-privacy {
+    margin-top: 15px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Social Media Section */
+.social-media-section {
+    margin: 40px 0;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    /* Softer, broader shadow */
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.social-media-wrapper {
+    padding: 20px;
+}
+
+.social-media-icons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+    padding: 25px 20px;
+    background: #f8fafc;
+    /* Lighter background */
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    /* Visible border */
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.03);
+}
+
+.social-icon {
+    display: inline-block;
+    width: auto;
+    height: auto;
+    border-radius: 0;
+    color: inherit;
+    font-size: 1.5em;
+    transition: transform 0.3s ease, color 0.3s ease;
+    margin: 0 10px;
+    padding: 5px;
+    vertical-align: middle;
+}
+
+.social-icon:hover {
+    transform: translateY(-3px);
+    filter: brightness(1.1);
+    /* Add slight brightness increase on hover */
+}
+
+/* Platform-specific styles for icons in .social-media-icons */
+.social-media-icons a[aria-label="Facebook"] {
+    background: linear-gradient(135deg, #1877f2, #3b5998);
+    color: white;
+    /* Ensure SVG fill uses this */
+}
+
+.social-media-icons a[aria-label="Twitter"] {
+    /* Twitter uses black/blue now (X) */
+    background: linear-gradient(135deg, #1DA1F2, #000000);
+    color: white;
+}
+
+.social-media-icons a[aria-label="Instagram"] {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    color: white;
+}
+
+.social-media-icons a[aria-label="YouTube"] {
+    background: linear-gradient(135deg, #FF0000, #c4302b);
+    color: white;
+}
+
+/* Ensure SVGs inside styled links inherit color */
+.social-media-icons a svg {
+    fill: currentColor;
+    /* Inherit color from parent <a> */
+    transition: transform 0.3s ease;
+}
+
+/* Add padding and rounded corners to the links */
+.social-media-icons a {
+    display: inline-flex;
+    /* Use flex to center SVG */
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    /* Fixed width */
+    height: 48px;
+    /* Fixed height */
+    border-radius: 50%;
+    /* Circular background */
+    padding: 10px;
+    /* Adjust padding as needed */
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.social-media-icons a:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: scale(1.1) translateY(-2px);
+    /* Combine transforms */
+    filter: none;
+    /* Remove brightness filter on hover if scale is used */
+}
+
+/* Remove redundant platform-specific background:none */
+/* .social-icon.facebook { background: none; } */
+/* .social-icon.twitter { background: none; } */
+/* .social-icon.instagram { background: none; } */
+/* .social-icon.youtube { background: none; } */
+
+.social-feed-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.social-post {
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    /* Add border for definition */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+}
+
+/* Testimonials Section */
+.testimonials-section {
+    margin: 40px 0;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.testimonials-wrapper {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.testimonial-card {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.testimonial-content {
+    position: relative;
+    padding: 20px 0;
+    margin-bottom: 20px;
+}
+
+.testimonial-content:before {
+    content: "“";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    font-size: 60px;
+    color: #2c5282;
+    opacity: 0.3;
+}
+
+.testimonial-content p {
+    font-size: 18px;
+    color: #4a5568;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+}
+
+.social-post.facebook {
+    border-left: 4px solid #3b5998;
+}
+
+.social-post.twitter {
+    border-left: 4px solid #000000;
+}
+
+.social-post.instagram {
+    border-left: 4px solid #e1306c;
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.platform-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    color: white;
+    font-size: 12px;
+}
+
+.platform-icon.facebook {
+    background-color: #3b5998;
+}
+
+.platform-icon.twitter {
+    background-color: #000000;
+}
+
+.platform-icon.instagram {
+    background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+}
+
+.post-date {
+    color: #718096;
+    font-size: 12px;
+}
+
+.post-content {
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #4a5568;
+    line-height: 1.5;
+}
+
+.post-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.post-likes {
+    font-size: 12px;
+    color: #718096;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+}
+
+.testimonial-author img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.author-details h4 {
+    margin: 0 0 5px;
+    color: #2c5282;
+    font-size: 18px;
+}
+
+.author-details p {
+    margin: 0;
+    color: #718096;
+    font-size: 14px;
+}
+
+/* Dark Mode Styles */
+.dark-mode .virtual-tour-section,
+.dark-mode .events-section,
+.dark-mode .achievements-section,
+.dark-mode .alumni-section,
+.dark-mode .social-media-section,
+.dark-mode .testimonials-section {
+    background-color: #1a1a1a;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.dark-mode .tour-location,
+.dark-mode .achievement-card,
+.dark-mode .alumni-card,
+.dark-mode .testimonial-card {
+    background-color: #2d2d2d;
+}
+
+.dark-mode .tour-location h4,
+.dark-mode .achievement-card h4,
+.dark-mode .alumni-card h4 {
+    color: #4ade80;
+}
+
+.dark-mode .event-date {
+    background-color: #1a365d;
+}
+
+.dark-mode .event-details h4 {
+    color: #4ade80;
+}
+
+.dark-mode .event-details p,
+.dark-mode .achievement-card p,
+.dark-mode .testimonial-content p {
+    color: #e2e8f0;
+}
+
+.dark-mode .event-time {
+    color: #a0aec0;
+}
+
+.dark-mode .alumni-batch {
+    color: #a0aec0;
+}
+
+.dark-mode .alumni-profession {
+    color: #e2e8f0;
+}
+
+.dark-mode .alumni-quote {
+    color: #cbd5e0;
+}
+
+.dark-mode .newsletter-section {
+    background-color: #2d2d2d;
+}
+
+.dark-mode .newsletter-wrapper {
+    background: linear-gradient(135deg, #1a365d, #0d2448);
+}
+
+.dark-mode .newsletter-content h3 {
+    color: #e2e8f0;
+}
+
+.dark-mode .newsletter-content p {
+    color: #cbd5e0;
+}
+
+.dark-mode .newsletter-privacy {
+    color: #a0aec0;
+}
+
+.dark-mode .chatbot-container {
+    background-color: #1a1a1a;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .chatbot-header {
+    background-color: #1a365d;
+}
+
+.dark-mode .message-content {
+    background-color: #2d2d2d;
+    color: #e2e8f0;
+}
+
+.dark-mode .user-message .message-content {
+    background-color: #1a365d;
+}
+
+.dark-mode .chatbot-input {
+    border-top-color: #4a5568;
+}
+
+.dark-mode .chatbot-input input {
+    background-color: #2d2d2d;
+    border-color: #4a5568;
+    color: #e2e8f0;
+}
+
+.dark-mode .chatbot-trigger button,
+.dark-mode .chatbot-input button {
+    background-color: #1a365d;
+}
+
+.dark-mode .social-media-icons a {
+    color: #cbd5e0;
+}
+
+.dark-mode .social-media-icons a:hover {
+    color: #4ade80;
+}
+
+/* ADDED Dark mode gradient for social icons */
+.dark-mode .social-media-icons {
+    background: linear-gradient(135deg, #343a40, #495057);
+    box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.05);
+}
+
+/* ADDED Dark mode styles for individual icon links */
+.dark-mode .social-media-icons a {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+.dark-mode .social-media-icons a:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Optional: Adjust specific gradients slightly for dark mode if needed */
+/* Example: Make Facebook a bit darker in dark mode */
+.dark-mode .social-media-icons a[aria-label="Facebook"] {
+    background: linear-gradient(135deg, #125db0, #2a416f);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+
+    .virtual-tour-section,
+    .events-section,
+    .achievements-section,
+    .alumni-section,
+    .social-media-section,
+    .testimonials-section,
+    .newsletter-section {
+        padding: 15px;
+    }
+
+    .tour-wrapper,
+    .events-wrapper,
+    .alumni-wrapper,
+    .social-media-wrapper,
+    .testimonials-wrapper {
+        padding: 15px;
+    }
+
+    .tour-gallery,
+    .alumni-cards {
+        gap: 15px;
+    }
+
+    .event-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .event-date {
+        margin-right: 0;
+        margin-bottom: 15px;
+        flex-direction: row;
+        width: 120px;
+    }
+
+    .event-date .day {
+        margin-right: 5px;
+    }
+
+    .newsletter-form {
+        flex-direction: column;
+    }
+
+    .newsletter-form .form-group {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .chatbot-container {
+        width: 300px;
+        height: 400px;
+        left: 10px;
+        /* Changed from right to left */
+        bottom: 65px;
+
+    }
+
+    .testimonial-content p {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .chat-label {
+        display: none;
+    }
+
+    .chatbot-container {
+        bottom: 55px;
+        left: 10px;
+        /* Changed from right to left */
+        width: calc(100% - 20px);
+        height: 60vh;
+    }
+
+    .social-media-icons {
+        gap: 10px;
+    }
+
+    .social-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+
+    .testimonial-card {
+        padding: 20px 15px;
+    }
+
+    .testimonial-content {
+        padding: 15px 0;
+    }
+
+    .testimonial-author img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .author-details h4 {
+        font-size: 16px;
+    }
+
+    .testimonial-content:before {
+        font-size: 50px;
+    }
+}
+
+/* JavaScript Support Classes */
+.show-chatbot {
+    display: flex !important;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.expand-chat {
+    width: 60px !important;
+    border-radius: 30px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+.dark-mode .social-post {
+    background-color: #2d2d2d;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.expand-chat .chat-label {
+    display: inline-block !important;
+    margin-left: 8px;
+}
+
+.dark-mode .post-content {
+    color: #e2e8f0;
+}
+
+.dark-mode .post-date,
+.dark-mode .post-likes {
+    color: #a0aec0;
+}
+
+.bot-message,
+.user-message {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.bot-message {
+    justify-content: flex-start;
+}
+
+.user-message {
+    justify-content: flex-end;
+}
+
+.bot-avatar {
+    width: 36px;
+    height: 36px;
+    background-color: #3a86ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.message-content {
+    background-color: white;
+    padding: 12px 15px;
+    border-radius: 18px;
+    max-width: 70%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    line-height: 1.4;
+}
+
+.bot-message .message-content {
+    background-color: white;
+    border: 1px solid #e0e5f0;
+    border-top-left-radius: 4px;
+}
+
+.user-message .message-content {
+    background-color: #3a86ff;
+    color: white;
+    border-top-right-radius: 4px;
+}
+
+/* Typing Indicator Animation */
+.typing-indicator {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 12px 18px !important;
+    min-width: 60px;
+}
+
+.typing-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #718096;
+    border-radius: 50%;
+    animation: typingBounce 1.4s infinite ease-in-out both;
+}
+
+.typing-dot:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.typing-dot:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+.typing-dot:nth-child(3) {
+    animation-delay: 0s;
+}
+
+@keyframes typingBounce {
+
+    0%,
+    80%,
+    100% {
+        transform: scale(0.6);
+        opacity: 0.5;
+    }
+
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Dark mode typing indicator */
+.dark-mode .typing-dot {
+    background-color: #a0aec0;
+}
+
+/* Message Action Buttons (TTS, Reactions) */
+.message-actions {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.msg-action-btn {
+    background: transparent;
+    border: none;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    opacity: 0.6;
+}
+
+.msg-action-btn:hover {
+    opacity: 1;
+    background: rgba(58, 134, 255, 0.1);
+    transform: scale(1.1);
+}
+
+.msg-action-btn.active {
+    opacity: 1;
+    background: rgba(58, 134, 255, 0.2);
+}
+
+.msg-action-btn.tts-btn.active {
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+.reaction-btn.active[data-reaction="helpful"] {
+    background: rgba(72, 187, 120, 0.2);
+}
+
+.reaction-btn.active[data-reaction="not-helpful"] {
+    background: rgba(245, 101, 101, 0.2);
+}
+
+/* Chatbot Toast Notification */
+.chatbot-toast {
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: linear-gradient(135deg, #3a86ff, #4ecdc4);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 13px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 9999;
+    white-space: nowrap;
+}
+
+.chatbot-toast.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Dark mode message actions */
+.dark-mode .message-actions {
+    border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .msg-action-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .chatbot-toast {
+    background: linear-gradient(135deg, #2d3748, #4a5568);
+}
+
+/* General Button Primary Styles (Added for better consistency) */
+.btn-primary {
+    background-color: #2c5282;
+    /* Default Blue */
+    color: #ffffff;
+    /* White text */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #1a365d;
+    /* Darker Blue */
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark Mode Button Primary Styles */
+.dark-mode .btn-primary {
+    background-color: #4ade80;
+    /* Bright Green for contrast */
+    color: #1a1a1a;
+    /* Dark text */
+}
+
+.dark-mode .btn-primary:hover {
+    background-color: #38a169;
+    /* Darker Green */
+    color: #000000;
+    /* Black text */
+}
+
+
+/* 4. Cookie Consent / Chatbot Overlap Fix (Mobile < 768px) */
+@media (max-width: 768px) {
+    /* Potential Fix 1: Add margin to chatbot when cookie consent is visible */
+    /* This requires the cookie consent banner to directly precede the chatbot trigger in the HTML, */
+    /* or for JS to add a class to the body/chatbot when the banner is shown. */
+
+    /* Example using a class added by JS: */
+    body.cookie-consent-visible .chatbot-trigger {
+        margin-bottom: 60px;
+        /* Adjust based on cookie banner height */
+        transition: margin-bottom 0.3s ease;
+    }
+
+    body.cookie-consent-visible .chatbot-container.open {
+        /* Adjust if the open container also needs moving */
+        bottom: 80px;
+        /* Example: Move it up more */
+    }
+
+    /* Ensure cookie consent itself is positioned correctly */
+    .chatbot-trigger {
+        position: fixed;
+        bottom: 20px;
+        /* Default position */
+        right: 20px;
+        z-index: 1040;
+        /* Lower than cookie banner */
+        transition: bottom 0.3s ease, margin-bottom 0.3s ease;
+        /* Add transitions */
+    }
+
+    .chatbot-container {
+        position: fixed;
+        bottom: 70px;
+        /* Position above trigger */
+        right: 20px;
+        z-index: 1045;
+        /* Above trigger, below banner */
+        transition: bottom 0.3s ease;
+    }
+
+}

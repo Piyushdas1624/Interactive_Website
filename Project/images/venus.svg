@@ -1,0 +1,23 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="venusGrad" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#ffcc00" />
+      <stop offset="100%" stop-color="#cc6600" />
+    </radialGradient>
+    <clipPath id="venusClip">
+      <circle cx="100" cy="100" r="65" />
+    </clipPath>
+  </defs>
+
+  <circle cx="100" cy="100" r="65" fill="url(#venusGrad)" stroke="#b85c00" stroke-width="1"/>
+
+  <g clip-path="url(#venusClip)">
+    <path d="M20,50 Q80,20 120,50 T180,80" fill="none" stroke="#ffaa00" stroke-width="15" opacity="0.5"/>
+    <path d="M10,100 Q60,140 120,100 T190,120" fill="none" stroke="#994c00" stroke-width="12" opacity="0.4"/>
+    <path d="M50,150 Q100,120 150,150" fill="none" stroke="#ffdb4d" stroke-width="8" opacity="0.4"/>
+    
+    <path d="M120,40 Q150,60 140,90 Q110,100 100,70 Z" fill="#b85c00" opacity="0.2"/>
+  </g>
+
+  <ellipse cx="70" cy="60" rx="20" ry="10" fill="white" fill-opacity="0.3" transform="rotate(-30 70 60)"/>
+</svg>
