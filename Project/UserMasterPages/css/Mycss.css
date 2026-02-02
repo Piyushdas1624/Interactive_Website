@@ -4123,8 +4123,31 @@ body.high-contrast .faculty-section,
 body.high-contrast .courses-section,
 body.high-contrast .location-section,
 body.high-contrast .accessibility-section,
-body.high-contrast .educational-resources {
+body.high-contrast .educational-resources,
+body.high-contrast .aboutschool,
+body.high-contrast .banner-container,
+body.high-contrast .weather-widget-container,
+body.high-contrast header,
+body.high-contrast footer,
+body.high-contrast section,
+body.high-contrast article,
+body.high-contrast aside,
+body.high-contrast div[class*="wrapper"],
+body.high-contrast div[class*="section"],
+body.high-contrast .panel,
+body.high-contrast .event-date,
+body.high-contrast .social-media-icons,
+body.high-contrast .social-post,
+body.high-contrast .top-branding-bar,
+body.high-contrast .ff-form,
+body.high-contrast .ff-compose,
+body.high-contrast .modern-contact-form,
+body.high-contrast .chatbot-input,
+body.high-contrast .suggestion-button,
+body.high-contrast .card {
+
     background-color: #000000 !important;
+    background-image: none !important;
     color: #ffffff !important;
 }
 
@@ -4147,7 +4170,21 @@ body.high-contrast .feature-column,
 body.high-contrast .dropdown-menu,
 body.high-contrast .navbar-default {
     background-color: #000000 !important;
+    background-image: none !important;
     border: 1px solid #ffffff;
+}
+
+/* Fix navigation buttons in high contrast */
+body.high-contrast .StaticMenuItemStyleMainMenu,
+body.high-contrast .popout,
+body.high-contrast [class*="level1"],
+body.high-contrast [class*="level2"],
+body.high-contrast .nav>li>a,
+body.high-contrast .navbar-nav>li>a {
+    background-color: #000000 !important;
+    background-image: none !important;
+    color: #ffff00 !important;
+    border: 1px solid #ffffff !important;
 }
 
 body.high-contrast .dropdown-menu>li>a {
@@ -4156,6 +4193,191 @@ body.high-contrast .dropdown-menu>li>a {
 
 body.high-contrast .dropdown-menu>li>a:hover {
     background-color: #333333 !important;
+}
+
+/* ============================================
+   COMPREHENSIVE HIGH CONTRAST MODE FIXES
+   Ensures ALL elements respond to contrast mode
+   ============================================ */
+
+/* Body background override - CRITICAL */
+body.high-contrast {
+    background-image: none !important;
+}
+
+/* Tour gallery, achievements, alumni, testimonials, social sections */
+body.high-contrast .tour-gallery,
+body.high-contrast .achievements-carousel,
+body.high-contrast .achievement-card,
+body.high-contrast .alumni-card,
+body.high-contrast .testimonials-wrapper,
+body.high-contrast .social-media-wrapper,
+body.high-contrast .social-icons,
+body.high-contrast .chatbot-suggestions,
+body.high-contrast .message-content,
+body.high-contrast .chatbot-container,
+body.high-contrast .chatbot-messages,
+body.high-contrast .chatbot-input-container,
+body.high-contrast .chat-message,
+body.high-contrast .bot-message,
+body.high-contrast .user-message,
+body.high-contrast .carousel-item,
+body.high-contrast .carousel-caption,
+body.high-contrast .slider-container,
+body.high-contrast .gallery-item,
+body.high-contrast .gallery-wrapper,
+body.high-contrast .photo-gallery,
+body.high-contrast .image-gallery,
+body.high-contrast .testimonial-card,
+body.high-contrast .alumni-section,
+body.high-contrast .achievement-section,
+body.high-contrast .footer-section,
+body.high-contrast .newsletter-section,
+body.high-contrast .marquee-container,
+body.high-contrast .train-marquee,
+body.high-contrast .announcement-bar,
+body.high-contrast .news-section,
+body.high-contrast .news-card,
+body.high-contrast .event-card,
+body.high-contrast .modal-content,
+body.high-contrast .modal-header,
+body.high-contrast .modal-body,
+body.high-contrast .modal-footer,
+body.high-contrast .popup,
+body.high-contrast .tooltip,
+body.high-contrast .dropdown,
+body.high-contrast .tab-content,
+body.high-contrast .nav-tabs,
+body.high-contrast .breadcrumb,
+body.high-contrast .pagination,
+body.high-contrast .alert,
+body.high-contrast .badge,
+body.high-contrast .label,
+body.high-contrast .well,
+body.high-contrast .jumbotron,
+body.high-contrast table,
+body.high-contrast thead,
+body.high-contrast tbody,
+body.high-contrast tr,
+body.high-contrast td,
+body.high-contrast th,
+body.high-contrast form,
+body.high-contrast fieldset,
+body.high-contrast legend,
+body.high-contrast .form-group,
+body.high-contrast .form-control,
+body.high-contrast .input-group,
+body.high-contrast .btn,
+body.high-contrast .btn-group,
+body.high-contrast nav,
+body.high-contrast main,
+body.high-contrast [class*="box"],
+body.high-contrast [class*="card"],
+body.high-contrast [class*="item"],
+body.high-contrast [class*="content"],
+body.high-contrast [class*="container"],
+body.high-contrast [class*="panel"],
+body.high-contrast [class*="block"],
+body.high-contrast [class*="module"],
+body.high-contrast [class*="widget"],
+body.high-contrast [class*="area"],
+body.high-contrast [class*="region"],
+body.high-contrast [class*="zone"],
+body.high-contrast [class*="sidebar"],
+body.high-contrast [class*="header"],
+body.high-contrast [class*="footer"],
+body.high-contrast [class*="main"],
+body.high-contrast [class*="body"],
+body.high-contrast [class*="list"],
+body.high-contrast [class*="grid"],
+body.high-contrast [class*="row"],
+body.high-contrast [class*="col-"] {
+    background-color: #000000 !important;
+    background-image: none !important;
+    color: #ffffff !important;
+    border-color: #ffffff !important;
+}
+
+/* Event date spans and similar inline elements */
+body.high-contrast .event-date,
+body.high-contrast .date,
+body.high-contrast .time,
+body.high-contrast .timestamp,
+body.high-contrast span[class*="date"],
+body.high-contrast span[class*="time"],
+body.high-contrast .meta,
+body.high-contrast .info,
+body.high-contrast .caption,
+body.high-contrast .subtitle,
+body.high-contrast .excerpt,
+body.high-contrast .description,
+body.high-contrast p,
+body.high-contrast span,
+body.high-contrast li,
+body.high-contrast label,
+body.high-contrast small,
+body.high-contrast strong,
+body.high-contrast em,
+body.high-contrast i:not(.fa):not([class*="icon"]) {
+    color: #ffffff !important;
+}
+
+/* Ensure links and interactive elements stay yellow */
+body.high-contrast a,
+body.high-contrast button:not(.toggle-slider):not([class*="toggle"]),
+body.high-contrast .link,
+body.high-contrast [role="button"],
+body.high-contrast [role="link"],
+body.high-contrast .nav-link,
+body.high-contrast .menu-item a,
+body.high-contrast .clickable,
+body.high-contrast .cta,
+body.high-contrast h1,
+body.high-contrast h2,
+body.high-contrast h3,
+body.high-contrast h4,
+body.high-contrast h5,
+body.high-contrast h6,
+body.high-contrast .title,
+body.high-contrast .heading,
+body.high-contrast [class*="title"],
+body.high-contrast [class*="heading"] {
+    color: #ffff00 !important;
+}
+
+/* Input fields and forms */
+body.high-contrast input,
+body.high-contrast textarea,
+body.high-contrast select,
+body.high-contrast option {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    border: 2px solid #ffffff !important;
+}
+
+body.high-contrast input::placeholder,
+body.high-contrast textarea::placeholder {
+    color: #aaaaaa !important;
+}
+
+/* Ensure sliders in accessibility panel don't get affected too much */
+body.high-contrast .accessibility-panel input[type="range"] {
+    background: #333 !important;
+}
+
+/* Chatbot specific styling */
+body.high-contrast .chatbot-toggle,
+body.high-contrast .chatbot-header {
+    background-color: #000000 !important;
+    background-image: none !important;
+    border: 2px solid #ffff00 !important;
+}
+
+body.high-contrast .suggestion-chip,
+body.high-contrast .chat-suggestion {
+    background-color: #333333 !important;
+    color: #ffff00 !important;
+    border: 1px solid #ffff00 !important;
 }
 
 /* Focus Highlight */

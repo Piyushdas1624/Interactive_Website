@@ -158,11 +158,8 @@ window.accessibilityState = {
 
     // Function to apply saved settings
     function applySavedAccessibilitySettings() {
-        if (!window.accessibilityState.enhancedFeaturesInitialized) {
-            console.log("Enhanced features not initialized yet, deferring settings application...");
-            return;
-        }
-
+        // CRITICAL FIX: Removed the enhancedFeaturesInitialized guard
+        // Settings must be applied immediately on page load, not after panel opens
         console.log("Applying saved accessibility settings...");
 
         try {
@@ -188,7 +185,8 @@ window.accessibilityState = {
             }
             // --- END UPDATED ---
 
-            // Apply other accessibility settings
+            // Apply ALL other accessibility settings directly
+            // Call the global function that applies font size, spacing, etc.
             if (typeof window.applyFullAccessibilitySettings === 'function') {
                 window.applyFullAccessibilitySettings();
             }
@@ -569,16 +567,134 @@ function applyFullAccessibilitySettings() {
 
 // Ensure large cursor persists on page load - This part CAN run early
 // Check localStorage and apply cursor class if needed.
+// BUG FIX: Only apply cursor if largeCursorEnabled is explicitly 'true'
+// ENHANCED: Also apply other critical visual settings early
 (function () { // IIFE to avoid polluting global scope immediately
+    const body = document.body;
+    const html = document.documentElement;
+
+    // --- CURSOR SETTINGS ---
+    const isLargeCursorEnabled = localStorage.getItem('largeCursorEnabled') === 'true';
     const savedCursorSize = localStorage.getItem('cursorSize');
-    if (savedCursorSize && ['small', 'medium', 'large'].includes(savedCursorSize)) {
-        document.body.classList.add(`cursor-${savedCursorSize}`);
-        document.documentElement.classList.add(`cursor-${savedCursorSize}`);
+
+    // CRITICAL FIX: Only apply cursor styles if the feature is ENABLED
+    if (isLargeCursorEnabled && savedCursorSize && ['small', 'medium', 'large'].includes(savedCursorSize)) {
+        body.classList.add(`cursor-${savedCursorSize}`);
+        html.classList.add(`cursor-${savedCursorSize}`);
+        console.log('Early init: Applied cursor size:', savedCursorSize);
+    } else {
+        // Ensure cursor classes are removed if feature is disabled
+        body.classList.remove('cursor-small', 'cursor-medium', 'cursor-large');
+        html.classList.remove('cursor-small', 'cursor-medium', 'cursor-large');
     }
+
+    // Only apply cursor color if feature is enabled
     const savedCursorColor = localStorage.getItem('cursorColor');
-    if (savedCursorColor) {
-        document.documentElement.style.setProperty('--cursor-color', savedCursorColor);
+    if (isLargeCursorEnabled && savedCursorColor) {
+        html.style.setProperty('--cursor-color', savedCursorColor);
     }
+
+    // --- EARLY APPLICATION OF OTHER VISUAL SETTINGS ---
+    // These are applied immediately to prevent flash of unstyled content
+
+    // Font Size
+    const savedFontSize = localStorage.getItem('fontSize');
+    if (savedFontSize && savedFontSize !== '100') {
+        body.style.fontSize = savedFontSize + '%';
+        console.log('Early init: Applied font size:', savedFontSize + '%');
+    }
+
+    // Word Spacing
+    const savedWordSpacing = localStorage.getItem('wordSpacing');
+    if (savedWordSpacing && savedWordSpacing !== '0') {
+        body.style.wordSpacing = savedWordSpacing + 'em';
+        console.log('Early init: Applied word spacing:', savedWordSpacing + 'em');
+    }
+
+    // Letter Spacing
+    const savedLetterSpacing = localStorage.getItem('letterSpacing');
+    if (savedLetterSpacing && savedLetterSpacing !== '0') {
+        body.style.letterSpacing = savedLetterSpacing + 'px';
+        console.log('Early init: Applied letter spacing:', savedLetterSpacing + 'px');
+    }
+
+    // Line Height
+    const savedLineHeight = localStorage.getItem('lineHeight');
+    if (savedLineHeight && savedLineHeight !== '1.5') {
+        body.style.lineHeight = savedLineHeight;
+        console.log('Early init: Applied line height:', savedLineHeight);
+    }
+
+    // Dark Mode (apply early to prevent flash)
+    const savedDarkMode = localStorage.getItem('darkMode');
+    if (savedDarkMode === 'true') {
+        html.classList.add('dark-mode');
+        console.log('Early init: Applied dark mode');
+    }
+
+    // High Contrast - Apply BOTH class AND custom colors for immediate effect
+    const highContrastEnabled = localStorage.getItem('highContrastEnabled') === 'true';
+    const savedTheme = localStorage.getItem('contrastTheme') || 'black-white';
+    if (highContrastEnabled) {
+        body.classList.add('high-contrast', `theme-${savedTheme}`);
+        console.log('Early init: Applied high contrast:', savedTheme);
+
+        // CRITICAL: Apply custom colors immediately if custom theme is selected
+        if (savedTheme === 'custom') {
+            const bgColor = localStorage.getItem('contrastBgColor') || '#000000';
+            const textColor = localStorage.getItem('contrastTextColor') || '#FFFFFF';
+            const linkColor = localStorage.getItem('contrastLinkColor') || '#FFFF00';
+
+            html.style.setProperty('--contrast-bg', bgColor);
+            html.style.setProperty('--contrast-text', textColor);
+            html.style.setProperty('--contrast-link', linkColor);
+            html.style.setProperty('--contrast-hover', '#444444');
+
+            // Also inject inline style for immediate effect
+            let earlyContrastStyle = document.getElementById('early-contrast-style');
+            if (!earlyContrastStyle) {
+                earlyContrastStyle = document.createElement('style');
+                earlyContrastStyle.id = 'early-contrast-style';
+                earlyContrastStyle.textContent = `
+                    body.high-contrast.theme-custom,
+                    body.high-contrast.theme-custom * {
+                        background-color: ${bgColor} !important;
+                        background-image: none !important;
+                        color: ${textColor} !important;
+                    }
+                    body.high-contrast.theme-custom a,
+                    body.high-contrast.theme-custom button,
+                    body.high-contrast.theme-custom h1, body.high-contrast.theme-custom h2,
+                    body.high-contrast.theme-custom h3, body.high-contrast.theme-custom h4,
+                    body.high-contrast.theme-custom h5, body.high-contrast.theme-custom h6 {
+                        color: ${linkColor} !important;
+                    }
+                `;
+                document.head.appendChild(earlyContrastStyle);
+            }
+            console.log('Early init: Applied custom contrast colors:', bgColor, textColor, linkColor);
+        }
+    }
+
+    // Focus Highlight
+    if (localStorage.getItem('focusHighlightEnabled') === 'true') {
+        body.classList.add('focus-highlight');
+        console.log('Early init: Applied focus highlight');
+    }
+
+    // Links Underline
+    if (localStorage.getItem('linksUnderlined') === 'true') {
+        body.classList.add('links-underlined');
+        console.log('Early init: Applied links underline');
+    }
+
+    // Dyslexia Font
+    if (localStorage.getItem('dyslexiaFont') === 'true') {
+        body.classList.add('dyslexia-font');
+        console.log('Early init: Applied dyslexia font');
+    }
+
+    console.log('Early init: Finished applying saved accessibility settings');
 })(); // End IIFE
 
 let mainInitializationDone = false; // Run once flag
@@ -839,29 +955,30 @@ function initEnhancedAccessibility() {
     // --- Populate Panel Content if it's empty --- 
     if (panelContent.innerHTML.trim() === '') {
         console.log("Panel content is empty, populating with default HTML...");
-        // (Keep the existing innerHTML content here from your file)
+        // Enhanced panel content with ARIA labels for accessibility
         panelContent.innerHTML = `
             <!-- Text Size -->
-            <div class="accessibility-option text-size">
-                <h4>Text Size</h4>
+            <div class="accessibility-option text-size" role="group" aria-labelledby="textSizeLabel">
+                <h4 id="textSizeLabel"><span class="sr-only">Adjust </span>𝐓 Text Size</h4>
                 <div class="slider-container">
                     <div class="slider-wrapper">
-                        <input type="range" id="fontSizeSlider" min="70" max="150" step="5" value="100">
-                        <span class="slider-value" id="fontSizeValue">100%</span>
+                        <input type="range" id="fontSizeSlider" min="70" max="150" step="5" value="100" 
+                               aria-label="Text size percentage" aria-valuemin="70" aria-valuemax="150" aria-valuenow="100">
+                        <span class="slider-value" id="fontSizeValue" aria-live="polite">100%</span>
                     </div>
-                    <button class="reset-button" id="resetFontSize">Reset</button>
+                    <button class="reset-button" id="resetFontSize" aria-label="Reset text size to 100%">Reset</button>
                 </div>
             </div>
             
             <!-- Contrast Mode -->
-            <div class="accessibility-option contrast">
-                <h4>Contrast Mode <span class="info-icon" data-tooltip="High contrast mode makes text more visible with dark background and bright text">ⓘ</span></h4>
+            <div class="accessibility-option contrast" role="group" aria-labelledby="contrastLabel">
+                <h4 id="contrastLabel">⊝ Contrast Mode <span class="info-icon" data-tooltip="High contrast mode makes text more visible with dark background and bright text" role="img" aria-label="Information about contrast mode" tabindex="0">ⓘ</span></h4>
                 <div class="toggle-container">
                     <label for="highContrastToggle">High Contrast</label>
-                    <div style="width: 60px;">
+                    <div class="toggle-switch-container">
                         <label class="toggle-switch">
-                            <input type="checkbox" id="highContrastToggle">
-                            <span class="toggle-slider"></span>
+                            <input type="checkbox" id="highContrastToggle" role="switch" aria-checked="false">
+                            <span class="toggle-slider" aria-hidden="true"></span>
                         </label>
                     </div>
                 </div>
@@ -869,120 +986,120 @@ function initEnhancedAccessibility() {
             </div>
             
             <!-- Reading Guide -->
-            <div class="accessibility-option reading">
-                <h4>Reading Guide <span class="info-icon" data-tooltip="Reading guide helps track text with a colored bar that follows your cursor">ⓘ</span></h4>
+            <div class="accessibility-option reading" role="group" aria-labelledby="readingGuideLabel">
+                <h4 id="readingGuideLabel">📖 Reading Guide <span class="info-icon" data-tooltip="Reading guide helps track text with a colored bar that follows your cursor" role="img" aria-label="Information about reading guide" tabindex="0">ⓘ</span></h4>
                 <div class="toggle-container">
                     <label for="readingGuideToggle">Enable Reading Guide</label>
-                    <div style="width: 60px;">
+                    <div class="toggle-switch-container">
                         <label class="toggle-switch">
-                            <input type="checkbox" id="readingGuideToggle">
-                            <span class="toggle-slider"></span>
+                            <input type="checkbox" id="readingGuideToggle" role="switch" aria-checked="false">
+                            <span class="toggle-slider" aria-hidden="true"></span>
                         </label>
                     </div>
                 </div>
                 <div class="color-picker-container" style="margin-top: 10px;">
-                    <div class="color-picker-label">Guide Color:</div>
+                    <div class="color-picker-label" id="guideColorLabel">Guide Color:</div>
                     <div class="color-picker-wrapper">
-                        <input type="color" id="readingGuideColor" class="color-picker" value="#FFFF96">
-                        <span class="color-value" id="readingGuideColorValue">#FFFF96</span>
+                        <input type="color" id="readingGuideColor" class="color-picker" value="#FFFF96" aria-labelledby="guideColorLabel">
+                        <span class="color-value" id="readingGuideColorValue" aria-live="polite">#FFFF96</span>
                     </div>
                 </div>
                 <div class="slider-container">
-                    <label for="readingGuideHeightSlider">Guide Height: <span id="readingGuideHeightValue">14px</span></label>
+                    <label for="readingGuideHeightSlider">Guide Height: <span id="readingGuideHeightValue" aria-live="polite">14px</span></label>
                     <div class="slider-wrapper">
-                        <input type="range" id="readingGuideHeightSlider" min="6" max="30" step="1" value="14">
+                        <input type="range" id="readingGuideHeightSlider" min="6" max="30" step="1" value="14" aria-label="Reading guide height in pixels">
                     </div>
                 </div>
                  <!-- Opacity/Border options will be added by enhanceReadingGuideOptions -->
             </div>
             
             <!-- Focus Highlight -->
-            <div class="accessibility-option focus">
-                <h4>Focus Highlight <span class="info-icon" data-tooltip="Highlights focused elements when navigating with keyboard Tab key">ⓘ</span></h4>
+            <div class="accessibility-option focus" role="group" aria-labelledby="focusHighlightLabel">
+                <h4 id="focusHighlightLabel">🎯 Focus Highlight <span class="info-icon" data-tooltip="Highlights focused elements when navigating with keyboard Tab key" role="img" aria-label="Information about focus highlight" tabindex="0">ⓘ</span></h4>
                 <div class="toggle-container">
                     <label for="focusHighlightToggle">Highlight Focused Elements</label>
-                    <div style="width: 60px;">
+                    <div class="toggle-switch-container">
                         <label class="toggle-switch">
-                            <input type="checkbox" id="focusHighlightToggle">
-                            <span class="toggle-slider"></span>
+                            <input type="checkbox" id="focusHighlightToggle" role="switch" aria-checked="false">
+                            <span class="toggle-slider" aria-hidden="true"></span>
                         </label>
                     </div>
                 </div>
             </div>
             
             <!-- Links Underline -->
-            <div class="accessibility-option links">
-                <h4>Links Underline <span class="info-icon" data-tooltip="Makes all links underlined and colored for better visibility">ⓘ</span></h4>
+            <div class="accessibility-option links" role="group" aria-labelledby="linksUnderlineLabel">
+                <h4 id="linksUnderlineLabel">🔗 Links Underline <span class="info-icon" data-tooltip="Makes all links underlined and colored for better visibility" role="img" aria-label="Information about links underline" tabindex="0">ⓘ</span></h4>
                 <div class="toggle-container">
                     <label for="linksUnderlineToggle">Underline All Links</label>
-                    <div style="width: 60px;">
+                    <div class="toggle-switch-container">
                         <label class="toggle-switch">
-                            <input type="checkbox" id="linksUnderlineToggle">
-                            <span class="toggle-slider"></span>
+                            <input type="checkbox" id="linksUnderlineToggle" role="switch" aria-checked="false">
+                            <span class="toggle-slider" aria-hidden="true"></span>
                         </label>
                     </div>
                 </div>
             </div>
             
             <!-- Text Spacing -->
-            <div class="accessibility-option spacing">
-                <h4>Text Spacing <span class="info-icon" data-tooltip="Increases space between words for easier reading">ⓘ</span></h4>
+            <div class="accessibility-option spacing" role="group" aria-labelledby="textSpacingLabel">
+                <h4 id="textSpacingLabel">↔️ Text Spacing <span class="info-icon" data-tooltip="Increases space between words for easier reading" role="img" aria-label="Information about word spacing" tabindex="0">ⓘ</span></h4>
                 <div class="slider-container">
                     <div class="slider-wrapper">
-                        <input type="range" id="wordSpacingSlider" min="0" max="2" step="0.1" value="0">
-                        <span class="slider-value" id="wordSpacingValue">0em</span>
+                        <input type="range" id="wordSpacingSlider" min="0" max="2" step="0.1" value="0" aria-label="Word spacing in em units">
+                        <span class="slider-value" id="wordSpacingValue" aria-live="polite">0em</span>
                     </div>
-                    <button class="reset-button" id="resetWordSpacing">Reset</button>
+                    <button class="reset-button" id="resetWordSpacing" aria-label="Reset word spacing to 0">Reset</button>
                 </div>
             </div>
             
             <!-- Dyslexia-Friendly Font -->
-            <div class="accessibility-option dyslexia">
-                <h4>Dyslexia-Friendly Font <span class="info-icon" data-tooltip="Special font designed to help people with dyslexia read more easily">ⓘ</span></h4>
+            <div class="accessibility-option dyslexia" role="group" aria-labelledby="dyslexiaFontLabel">
+                <h4 id="dyslexiaFontLabel">🔤 Dyslexia-Friendly Font <span class="info-icon" data-tooltip="Special font designed to help people with dyslexia read more easily" role="img" aria-label="Information about dyslexia font" tabindex="0">ⓘ</span></h4>
                 <div class="toggle-container">
                     <label for="dyslexiaFontToggle">Enable Dyslexia Font</label>
-                    <div style="width: 60px;">
+                    <div class="toggle-switch-container">
                         <label class="toggle-switch">
-                            <input type="checkbox" id="dyslexiaFontToggle">
-                            <span class="toggle-slider"></span>
+                            <input type="checkbox" id="dyslexiaFontToggle" role="switch" aria-checked="false">
+                            <span class="toggle-slider" aria-hidden="true"></span>
                         </label>
                     </div>
                 </div>
             </div>
             
             <!-- Letter Spacing -->
-            <div class="accessibility-option letter-spacing">
-                <h4>Letter Spacing <span class="info-icon" data-tooltip="Adds space between letters for improved readability">ⓘ</span></h4>
+            <div class="accessibility-option letter-spacing" role="group" aria-labelledby="letterSpacingLabel">
+                <h4 id="letterSpacingLabel">A↔B Letter Spacing <span class="info-icon" data-tooltip="Adds space between letters for improved readability" role="img" aria-label="Information about letter spacing" tabindex="0">ⓘ</span></h4>
                 <div class="slider-container">
                     <div class="slider-wrapper">
-                        <input type="range" id="letterSpacingSlider" min="0" max="5" step="0.5" value="0">
-                        <span class="slider-value" id="letterSpacingValue">0px</span>
+                        <input type="range" id="letterSpacingSlider" min="0" max="5" step="0.5" value="0" aria-label="Letter spacing in pixels">
+                        <span class="slider-value" id="letterSpacingValue" aria-live="polite">0px</span>
                     </div>
-                    <button class="reset-button" id="resetLetterSpacing">Reset</button>
+                    <button class="reset-button" id="resetLetterSpacing" aria-label="Reset letter spacing to 0">Reset</button>
                 </div>
             </div>
             
             <!-- Line Height -->
-            <div class="accessibility-option line-height">
-                <h4>Line Height <span class="info-icon" data-tooltip="Increases space between lines of text for better readability">ⓘ</span></h4>
+            <div class="accessibility-option line-height" role="group" aria-labelledby="lineHeightLabel">
+                <h4 id="lineHeightLabel">≡ Line Height <span class="info-icon" data-tooltip="Increases space between lines of text for better readability" role="img" aria-label="Information about line height" tabindex="0">ⓘ</span></h4>
                 <div class="slider-container">
                     <div class="slider-wrapper">
-                        <input type="range" id="lineHeightSlider" min="1" max="2.5" step="0.1" value="1.5">
-                        <span class="slider-value" id="lineHeightValue">1.5</span>
+                        <input type="range" id="lineHeightSlider" min="1" max="2.5" step="0.1" value="1.5" aria-label="Line height multiplier">
+                        <span class="slider-value" id="lineHeightValue" aria-live="polite">1.5</span>
                     </div>
-                    <button class="reset-button" id="resetLineHeight">Reset</button>
+                    <button class="reset-button" id="resetLineHeight" aria-label="Reset line height to 1.5">Reset</button>
                 </div>
             </div>
             
             <!-- Custom Cursor -->
-            <div class="accessibility-option cursor">
-                <h4>Custom Cursor <span class="info-icon" data-tooltip="Makes your mouse cursor larger for easier tracking">ⓘ</span></h4>
+            <div class="accessibility-option cursor" role="group" aria-labelledby="customCursorLabel">
+                <h4 id="customCursorLabel">👆 Custom Cursor <span class="info-icon" data-tooltip="Makes your mouse cursor larger for easier tracking" role="img" aria-label="Information about custom cursor" tabindex="0">ⓘ</span></h4>
                 <div class="toggle-container">
                     <label for="largeCursorToggle">Large Cursor</label>
-                    <div style="width: 60px;">
+                    <div class="toggle-switch-container">
                         <label class="toggle-switch">
-                            <input type="checkbox" id="largeCursorToggle">
-                            <span class="toggle-slider"></span>
+                            <input type="checkbox" id="largeCursorToggle" role="switch" aria-checked="false">
+                            <span class="toggle-slider" aria-hidden="true"></span>
                         </label>
                     </div>
                 </div>
@@ -990,15 +1107,15 @@ function initEnhancedAccessibility() {
             </div>
             
             <!-- Screen Reader -->
-            <div class="accessibility-option screen-reader">
-                <h4>Screen Reader</h4>
+            <div class="accessibility-option screen-reader" role="group" aria-labelledby="screenReaderLabel">
+                <h4 id="screenReaderLabel">🔊 Screen Reader</h4>
                 <p>Screen reader compatibility is enabled by default.</p>
                 <p><small>Use your preferred screen reader software.</small></p>
             </div>
 
              <!-- Reset Button -->
              <div class="accessibility-option reset-all">
-                 <button id="resetAllSettings" class="reset-button" style="width: 100%; margin-top: 15px;">Reset All Settings</button>
+                 <button id="resetAllSettings" class="reset-button" style="width: 100%; margin-top: 15px;" aria-label="Reset all accessibility settings to defaults">🔄 Reset All Settings</button>
              </div>
         `;
     } else {
@@ -1291,12 +1408,33 @@ window.initEnhancedAccessibility = initEnhancedAccessibility;
 
 // --- NEW HELPER FUNCTIONS ---
 
+// Visual feedback helper - adds "applied" animation to container
+function showAppliedFeedback(element) {
+    if (!element) return;
+    const container = element.closest('.toggle-container') || element.closest('.slider-container');
+    if (container) {
+        container.classList.add('applied');
+        setTimeout(() => container.classList.remove('applied'), 400);
+    }
+}
+
+// Sync ARIA checked state for screen readers
+function syncAriaChecked(checkbox) {
+    if (checkbox) {
+        checkbox.setAttribute('aria-checked', checkbox.checked ? 'true' : 'false');
+    }
+}
+
 // Function to handle focus highlight toggle
 function handleFocusHighlightToggle(isEnabled) {
+    const toggle = document.getElementById('focusHighlightToggle');
+    syncAriaChecked(toggle);
+    showAppliedFeedback(toggle);
+
     if (isEnabled) {
         document.body.classList.add('focus-highlight');
         localStorage.setItem('focusHighlightEnabled', 'true');
-        showTooltip('Focus Highlight Enabled', 2000);
+        showTooltip('Focus Highlight Enabled ✓', 2000);
     } else {
         document.body.classList.remove('focus-highlight');
         localStorage.setItem('focusHighlightEnabled', 'false');
@@ -1306,14 +1444,35 @@ function handleFocusHighlightToggle(isEnabled) {
 
 // Function to handle links underline toggle
 function handleLinksUnderlineToggle(isEnabled) {
+    const toggle = document.getElementById('linksUnderlineToggle');
+    syncAriaChecked(toggle);
+    showAppliedFeedback(toggle);
+
     if (isEnabled) {
         document.body.classList.add('links-underlined');
         localStorage.setItem('linksUnderlined', 'true');
-        showTooltip('Links Underlined Enabled', 2000);
+        showTooltip('Links Underlined Enabled ✓', 2000);
     } else {
         document.body.classList.remove('links-underlined');
         localStorage.setItem('linksUnderlined', 'false');
         showTooltip('Links Underlined Disabled', 2000);
+    }
+}
+
+// Function to handle dyslexia font toggle
+function handleDyslexiaFontToggle(isEnabled) {
+    const toggle = document.getElementById('dyslexiaFontToggle');
+    syncAriaChecked(toggle);
+    showAppliedFeedback(toggle);
+
+    if (isEnabled) {
+        document.body.classList.add('dyslexia-font');
+        localStorage.setItem('dyslexiaFont', 'true');
+        showTooltip('Dyslexia Font Enabled ✓', 2000);
+    } else {
+        document.body.classList.remove('dyslexia-font');
+        localStorage.setItem('dyslexiaFont', 'false');
+        showTooltip('Dyslexia Font Disabled', 2000);
     }
 }
 
@@ -1492,6 +1651,10 @@ function enhanceLargeCursorOptions() {
     // --- MODIFIED: Null check before attaching listener --- 
     if (largeCursorToggle && !largeCursorToggle.dataset.listenerAttached) {
         largeCursorToggle.addEventListener('change', function () {
+            // Sync ARIA and show visual feedback
+            syncAriaChecked(this);
+            showAppliedFeedback(this);
+
             localStorage.setItem('largeCursorEnabled', this.checked); // Save state first
             if (this.checked) {
                 const currentSize = localStorage.getItem('cursorSize') || 'medium';
@@ -1501,7 +1664,7 @@ function enhanceLargeCursorOptions() {
                 } else {
                     console.warn("setCursorSize function not found.");
                 }
-                showTooltip(`Custom cursor enabled (Size: ${currentSize})`, 2000);
+                showTooltip(`Custom cursor enabled ✓ (Size: ${currentSize})`, 2000);
                 // Ensure button active state is correct
                 const sizeButtons = cursorOption.querySelectorAll('.cursor-size-btn');
                 // --- ADDED: Null check --- 
@@ -1534,11 +1697,11 @@ function enhanceLargeCursorOptions() {
     console.log("enhanceLargeCursorOptions finished.");
 }
 
-// Function to remove cursor styles
+// Function to remove cursor styles - ENHANCED for complete cleanup
 function removeCursorStyles() {
-    // Remove cursor classes from document and body
-    document.documentElement.classList.remove('cursor-small', 'cursor-medium', 'cursor-large');
-    document.body.classList.remove('cursor-small', 'cursor-medium', 'cursor-large');
+    // Remove all cursor classes from document and body
+    document.documentElement.classList.remove('cursor-small', 'cursor-medium', 'cursor-large', 'large-cursor');
+    document.body.classList.remove('cursor-small', 'cursor-medium', 'cursor-large', 'large-cursor');
 
     // Remove custom cursor style tag if it exists
     const styleTag = document.getElementById('custom-cursor-style');
@@ -1546,7 +1709,10 @@ function removeCursorStyles() {
         styleTag.textContent = '';
     }
 
-    console.log('Enhanced accessibility: Custom cursor disabled');
+    // Reset cursor color to default
+    document.documentElement.style.removeProperty('--cursor-color');
+
+    console.log('Enhanced accessibility: Custom cursor disabled and styles removed');
 }
 
 // Helper function to set cursor size
@@ -1800,14 +1966,20 @@ function enhanceReadingGuideOptions() {
 
         readingGuideColorPicker.addEventListener('input', function () {
             const newColor = this.value;
-            // --- ADDED: Null check --- 
             if (readingGuideColorValue) readingGuideColorValue.textContent = newColor;
-            localStorage.setItem('readingGuideColor', newColor); // Save color preference
-            // --- ADDED: Check function exists --- 
-            if (typeof applyReadingGuideColor === 'function') {
-                applyReadingGuideColor(newColor); // Apply color (respects current opacity)
-            } else {
-                console.warn("applyReadingGuideColor function not found.");
+            localStorage.setItem('readingGuideColor', newColor);
+
+            // INLINE: Apply color directly to reading guide
+            const guide = document.getElementById('readingGuide');
+            if (guide) {
+                const savedOpacity = parseInt(localStorage.getItem('readingGuideOpacity') || '70', 10);
+                const opacityValue = savedOpacity / 100;
+                // Convert hex to RGB for rgba
+                const r = parseInt(newColor.slice(1, 3), 16);
+                const g = parseInt(newColor.slice(3, 5), 16);
+                const b = parseInt(newColor.slice(5, 7), 16);
+                guide.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${opacityValue})`;
+                console.log(`Reading guide color set to ${newColor} with opacity ${savedOpacity}%`);
             }
         });
         readingGuideColorPicker.dataset.listenerAttached = 'true';
@@ -1850,14 +2022,22 @@ function enhanceReadingGuideOptions() {
         opacityValue.textContent = savedOpacity + '%';
 
         opacitySlider.addEventListener('input', function () {
-            const value = this.value;
-            // --- ADDED: Null check --- 
+            const value = parseInt(this.value, 10);
             if (opacityValue) opacityValue.textContent = `${value}%`;
-            // --- ADDED: Check function exists --- 
-            if (typeof setReadingGuideOpacity === 'function') {
-                setReadingGuideOpacity(value); // Saves opacity to localStorage & applies style
-            } else {
-                console.warn("setReadingGuideOpacity function not found.");
+            localStorage.setItem('readingGuideOpacity', value);
+
+            // INLINE: Apply opacity directly to reading guide
+            const guide = document.getElementById('readingGuide');
+            if (guide) {
+                const opacityDecimal = value / 100;
+                // Get saved color or default
+                const savedColor = localStorage.getItem('readingGuideColor') || '#FFFF96';
+                // Convert hex to RGB
+                const r = parseInt(savedColor.slice(1, 3), 16);
+                const g = parseInt(savedColor.slice(3, 5), 16);
+                const b = parseInt(savedColor.slice(5, 7), 16);
+                guide.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${opacityDecimal})`;
+                console.log(`Reading guide opacity set to ${value}%`);
             }
         });
         opacitySlider.dataset.listenerAttached = 'true';
@@ -1869,22 +2049,30 @@ function enhanceReadingGuideOptions() {
     // BORDER STYLE Listener
     if (borderStyleButtons.length > 0 && !borderStyleButtons[0].dataset.listenerAttached) {
         borderStyleButtons.forEach(button => {
-            // --- MODIFIED: Check button exists before adding listener --- 
             if (button) {
                 button.addEventListener('click', function () {
                     borderStyleButtons.forEach(btn => btn.classList.remove('active'));
                     this.classList.add('active');
                     const style = this.getAttribute('data-style');
-                    localStorage.setItem('readingGuideBorderStyle', style); // Save style preference
-                    // --- ADDED: Check function exists --- 
-                    if (typeof setReadingGuideBorder === 'function') {
-                        setReadingGuideBorder(style); // Apply style
-                    } else {
-                        console.warn("setReadingGuideBorder function not found.");
+                    localStorage.setItem('readingGuideBorderStyle', style);
+
+                    // INLINE: Apply border style directly to reading guide
+                    const guide = document.getElementById('readingGuide');
+                    if (guide) {
+                        guide.style.borderTopStyle = style;
+                        guide.style.borderBottomStyle = style;
+                        // Ensure there's a visible border width and color
+                        if (style !== 'none') {
+                            guide.style.borderTopWidth = '2px';
+                            guide.style.borderBottomWidth = '2px';
+                            guide.style.borderTopColor = '#333';
+                            guide.style.borderBottomColor = '#333';
+                        }
+                        console.log(`Reading guide border set to ${style}`);
                     }
                     showTooltip(`Reading guide border set to ${style}`);
                 });
-                button.dataset.listenerAttached = 'true'; // Mark as attached
+                button.dataset.listenerAttached = 'true';
             } else {
                 console.warn("Null button found in borderStyleButtons list.");
             }
@@ -4601,7 +4789,7 @@ function applySavedReadingGuideSettings() {
     }
 
     const savedGuideEnabled = localStorage.getItem('readingGuide') === 'true';
-    const savedOpacity = localStorage.getItem('readingGuideOpacity') || '70'; // Consistent default
+    const savedOpacity = parseInt(localStorage.getItem('readingGuideOpacity') || '70', 10);
     const savedBorderStyle = localStorage.getItem('readingGuideBorderStyle') || 'solid';
     const savedGuideHeight = localStorage.getItem('readingGuideHeight') || '14';
     const savedGuideColor = localStorage.getItem('readingGuideColor') || '#FFFF96';
@@ -4612,36 +4800,40 @@ function applySavedReadingGuideSettings() {
         readingGuide.style.display = 'block';
         readingGuide.style.height = savedGuideHeight + 'px';
 
-        // --- ADDED: Check function existence before calling helpers --- 
-        if (typeof applyReadingGuideColor === 'function') {
-            applyReadingGuideColor(savedGuideColor); // Apply color (handles opacity)
-        } else { console.warn("applyReadingGuideColor function not found."); }
+        // INLINE: Apply color with opacity
+        const opacityDecimal = savedOpacity / 100;
+        // Convert hex to RGB
+        const r = parseInt(savedGuideColor.slice(1, 3), 16);
+        const g = parseInt(savedGuideColor.slice(3, 5), 16);
+        const b = parseInt(savedGuideColor.slice(5, 7), 16);
+        readingGuide.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${opacityDecimal})`;
 
-        if (typeof setReadingGuideBorder === 'function') {
-            setReadingGuideBorder(savedBorderStyle); // Apply border
-        } else { console.warn("setReadingGuideBorder function not found."); }
-        // --- END ADDED --- 
+        // INLINE: Apply border style
+        readingGuide.style.borderTopStyle = savedBorderStyle;
+        readingGuide.style.borderBottomStyle = savedBorderStyle;
+        if (savedBorderStyle !== 'none') {
+            readingGuide.style.borderTopWidth = '2px';
+            readingGuide.style.borderBottomWidth = '2px';
+            readingGuide.style.borderTopColor = '#333';
+            readingGuide.style.borderBottomColor = '#333';
+        }
 
-        // --- MODIFIED: Call setup function to manage listener state --- 
-        // Ensure tracking is active by calling the setup function
+        // Ensure tracking is active
         if (typeof setupReadingGuideTracking === 'function') {
             setupReadingGuideTracking();
         } else {
             console.warn("setupReadingGuideTracking function not found when enabling guide.");
         }
-        // --- END MODIFIED --- 
 
     } else {
         readingGuide.style.display = 'none';
 
-        // --- MODIFIED: Call setup function to manage listener state --- 
-        // Ensure tracking is inactive by calling the setup function
+        // Ensure tracking is inactive
         if (typeof setupReadingGuideTracking === 'function') {
             setupReadingGuideTracking();
         } else {
             console.warn("setupReadingGuideTracking function not found when disabling guide.");
         }
-        // --- END MODIFIED --- 
     }
 }
 // --- END ADDED ---
@@ -4653,526 +4845,526 @@ const readingGuide = document.getElementById('readingGuide');
 
 if (!readingGuideToggle || !readingGuideOptions || !readingGuide) {
     console.warn("Reading guide elements not found. Skipping enhancement.");
-}
-
-// Initial state based on localStorage (if available)
-const isEnabled = localStorage.getItem('readingGuide') === 'true';
-readingGuideToggle.checked = isEnabled;
-readingGuideOptions.style.display = isEnabled ? 'block' : 'none';
-if (isEnabled) {
-    if (readingGuide) readingGuide.style.display = 'block';
-    // --- ADDED: Apply saved opacity/border immediately on enable ---
-    applySavedReadingGuideSettings();
-    // --- END ADDED ---
-    if (typeof setupReadingGuideTracking === 'function') {
-        console.log("Setting up reading guide tracking on initial enable.");
-        setupReadingGuideTracking();
-    }
 } else {
-    if (readingGuide) readingGuide.style.display = 'none';
-}
-
-
-readingGuideToggle.addEventListener('change', function () {
-    const enabled = this.checked;
-    readingGuideOptions.style.display = enabled ? 'block' : 'none';
-    if (readingGuide) readingGuide.style.display = enabled ? 'block' : 'none';
-    localStorage.setItem('readingGuide', enabled); // Save state
-    console.log(`Reading guide ${enabled ? 'enabled' : 'disabled'} and state saved.`);
-
-    if (enabled) {
-        // --- ADDED: Apply saved/default settings when toggled on ---
+    // Initial state based on localStorage (if available)
+    const isEnabled = localStorage.getItem('readingGuide') === 'true';
+    readingGuideToggle.checked = isEnabled;
+    readingGuideOptions.style.display = isEnabled ? 'block' : 'none';
+    if (isEnabled) {
+        if (readingGuide) readingGuide.style.display = 'block';
+        // --- ADDED: Apply saved opacity/border immediately on enable ---
         applySavedReadingGuideSettings();
         // --- END ADDED ---
         if (typeof setupReadingGuideTracking === 'function') {
-            console.log("Setting up reading guide tracking on toggle enable.");
+            console.log("Setting up reading guide tracking on initial enable.");
             setupReadingGuideTracking();
-        } else {
-            console.warn("setupReadingGuideTracking function not found.");
         }
     } else {
-        // Optional: Deactivate tracking if needed when disabled
-        console.log("Reading guide disabled. Tracking might be implicitly stopped.");
+        if (readingGuide) readingGuide.style.display = 'none';
     }
-    showTooltip(`Reading guide ${enabled ? 'enabled' : 'disabled'}`);
-});
 
-// Opacity Slider
-// ... existing code ...
-const opacitySlider = document.getElementById('readingGuideOpacity');
-const opacityValueSpan = document.getElementById('readingGuideOpacityValue');
 
-if (opacitySlider && opacityValueSpan) {
-    // --- ADDED: Set initial slider value from localStorage ---
-    const savedOpacity = localStorage.getItem('readingGuideOpacity') || '50';
-    opacitySlider.value = savedOpacity;
-    opacityValueSpan.textContent = `${savedOpacity}%`;
-    // Apply initial opacity (already done by applySavedReadingGuideSettings)
-    // --- END ADDED ---
+    readingGuideToggle.addEventListener('change', function () {
+        const enabled = this.checked;
+        readingGuideOptions.style.display = enabled ? 'block' : 'none';
+        if (readingGuide) readingGuide.style.display = enabled ? 'block' : 'none';
+        localStorage.setItem('readingGuide', enabled); // Save state
+        console.log(`Reading guide ${enabled ? 'enabled' : 'disabled'} and state saved.`);
 
-    opacitySlider.addEventListener('input', function () {
-        const opacityPercent = parseInt(this.value, 10);
-        opacityValueSpan.textContent = `${opacityPercent}%`;
-        setReadingGuideOpacity(opacityPercent);
-        localStorage.setItem('readingGuideOpacity', opacityPercent); // Save opacity
-        console.log(`Reading guide opacity set to ${opacityPercent}% and saved.`);
-        showTooltip(`Reading guide opacity: ${opacityPercent}%`);
-    });
-} else {
-    console.warn("Reading guide opacity controls not found.");
-}
-
-// Border Style Select
-const borderStyleSelect = document.getElementById('readingGuideBorderStyle');
-
-if (borderStyleSelect) {
-    // --- ADDED: Set initial select value from localStorage ---
-    const savedBorderStyle = localStorage.getItem('readingGuideBorderStyle') || 'solid';
-    borderStyleSelect.value = savedBorderStyle;
-    // Apply initial border style (already done by applySavedReadingGuideSettings)
-    // --- END ADDED ---
-
-    borderStyleSelect.addEventListener('change', function () {
-        const borderStyle = this.value;
-        setReadingGuideBorder(borderStyle);
-        localStorage.setItem('readingGuideBorderStyle', borderStyle); // Save border style
-        console.log(`Reading guide border style set to ${borderStyle} and saved.`);
-        showTooltip(`Reading guide border: ${borderStyle}`);
-    });
-} else {
-    console.warn("Reading guide border style select not found.");
-}
-
-// Function to set reading guide opacity
-function setReadingGuideOpacity(opacityPercent) {
-    const readingGuide = document.getElementById('readingGuide');
-    if (readingGuide) {
-        const opacityValue = opacityPercent / 100;
-        // Use background-color with alpha for better compatibility
-        // Assuming the guide uses background-color for its appearance
-        // Get current background color (or default) and apply new alpha
-        let currentColor = window.getComputedStyle(readingGuide).backgroundColor;
-        if (!currentColor || currentColor === 'rgba(0, 0, 0, 0)' || currentColor === 'transparent') {
-            // Default color if none is set or it's transparent
-            // Let's try getting the color from localStorage if custom color is implemented
-            const savedColor = localStorage.getItem('readingGuideColor') || 'rgba(100, 100, 255, 0.5)'; // Default blueish guide color
-            currentColor = savedColor; // Use saved or default
-        }
-
-        // Parse the color and apply new alpha
-        try {
-            // Basic RGBA parsing (improve if handling hex, hsl etc.)
-            let parts = currentColor.match(/(\d+(\.\d+)?)/g);
-            if (parts && parts.length >= 3) {
-                readingGuide.style.backgroundColor = `rgba(${parts[0]}, ${parts[1]}, ${parts[2]}, ${opacityValue})`;
+        if (enabled) {
+            // --- ADDED: Apply saved/default settings when toggled on ---
+            applySavedReadingGuideSettings();
+            // --- END ADDED ---
+            if (typeof setupReadingGuideTracking === 'function') {
+                console.log("Setting up reading guide tracking on toggle enable.");
+                setupReadingGuideTracking();
             } else {
-                // Fallback if parsing fails - apply default color with new opacity
-                readingGuide.style.backgroundColor = `rgba(100, 100, 255, ${opacityValue})`;
-                console.warn("Could not parse existing reading guide color, applied default with new opacity.");
+                console.warn("setupReadingGuideTracking function not found.");
             }
-        } catch (e) {
-            console.error("Error setting reading guide background color with opacity:", e);
-            // Fallback
-            readingGuide.style.backgroundColor = `rgba(100, 100, 255, ${opacityValue})`;
+        } else {
+            // Optional: Deactivate tracking if needed when disabled
+            console.log("Reading guide disabled. Tracking might be implicitly stopped.");
         }
-
-        // Also save the opacity setting itself for persistence
-        localStorage.setItem('readingGuideOpacity', opacityPercent);
-        console.log(`Enhanced accessibility: Set reading guide opacity to ${opacityPercent}%`);
-    } else {
-        console.warn("Enhanced accessibility: Reading guide element not found for opacity change.");
-    }
-}
-
-// Function to set reading guide border style
-function setReadingGuideBorder(style) {
-    const readingGuide = document.getElementById('readingGuide');
-    if (readingGuide) {
-        // Assuming border style applies to top/bottom borders primarily
-        readingGuide.style.borderTopStyle = style;
-        readingGuide.style.borderBottomStyle = style;
-        // Example: Ensure there's a default border width and color if setting style
-        if (style !== 'none') {
-            if (!readingGuide.style.borderTopWidth || readingGuide.style.borderTopWidth === '0px') {
-                readingGuide.style.borderTopWidth = '2px'; // Default width
-            }
-            if (!readingGuide.style.borderBottomWidth || readingGuide.style.borderBottomWidth === '0px') {
-                readingGuide.style.borderBottomWidth = '2px'; // Default width
-            }
-            if (!readingGuide.style.borderTopColor || readingGuide.style.borderTopColor === 'transparent') {
-                readingGuide.style.borderTopColor = 'blue'; // Default color
-            }
-            if (!readingGuide.style.borderBottomColor || readingGuide.style.borderBottomColor === 'transparent') {
-                readingGuide.style.borderBottomColor = 'blue'; // Default color
-            }
-        }
-        localStorage.setItem('readingGuideBorderStyle', style); // Save style
-        console.log(`Enhanced accessibility: Set reading guide border style to ${style}`);
-    } else {
-        console.warn("Enhanced accessibility: Reading guide element not found for border style change.");
-    }
-}
-
-// --- ADDED: Reading Guide Color Picker Logic ---
-function enhanceReadingGuideColorPicker() {
-    const colorPicker = document.getElementById('readingGuideColorPicker');
-    const readingGuide = document.getElementById('readingGuide');
-
-    if (!colorPicker || !readingGuide) {
-        console.warn("Reading guide color picker or guide element not found. Skipping enhancement.");
-        return;
-    }
-
-    // Load saved color or default
-    const savedColor = localStorage.getItem('readingGuideColor') || '#6464FF'; // Default blueish color matching opacity function
-    colorPicker.value = savedColor;
-    // Apply initial color (respecting saved opacity)
-    applyReadingGuideColor(savedColor);
-
-    colorPicker.addEventListener('input', function () {
-        const newColor = this.value;
-        applyReadingGuideColor(newColor);
-        localStorage.setItem('readingGuideColor', newColor); // Save color
-        console.log(`Reading guide color set to ${newColor} and saved.`);
-        showTooltip(`Reading guide color changed`);
+        showTooltip(`Reading guide ${enabled ? 'enabled' : 'disabled'}`);
     });
-}
 
-function applyReadingGuideColor(hexColor) {
-    const readingGuide = document.getElementById('readingGuide');
-    if (!readingGuide) return;
+    // Opacity Slider
+    // ... existing code ...
+    const opacitySlider = document.getElementById('readingGuideOpacity');
+    const opacityValueSpan = document.getElementById('readingGuideOpacityValue');
 
-    const savedOpacityPercent = parseInt(localStorage.getItem('readingGuideOpacity') || '50', 10);
-    const opacityValue = savedOpacityPercent / 100;
+    if (opacitySlider && opacityValueSpan) {
+        // --- ADDED: Set initial slider value from localStorage ---
+        const savedOpacity = localStorage.getItem('readingGuideOpacity') || '50';
+        opacitySlider.value = savedOpacity;
+        opacityValueSpan.textContent = `${savedOpacity}%`;
+        // Apply initial opacity (already done by applySavedReadingGuideSettings)
+        // --- END ADDED ---
 
-    // Convert hex to rgba
-    let r = 0, g = 0, b = 0;
-    if (hexColor.length === 7) {
-        r = parseInt(hexColor.substring(1, 3), 16);
-        g = parseInt(hexColor.substring(3, 5), 16);
-        b = parseInt(hexColor.substring(5, 7), 16);
-    } else if (hexColor.length === 4) { // Handle shorthand hex
-        r = parseInt(hexColor.substring(1, 2) + hexColor.substring(1, 2), 16);
-        g = parseInt(hexColor.substring(2, 3) + hexColor.substring(2, 3), 16);
-        b = parseInt(hexColor.substring(3, 4) + hexColor.substring(3, 4), 16);
-    } else {
-        console.warn("Invalid hex color format for reading guide:", hexColor);
-        // Optionally revert to default or do nothing
-        return;
-    }
-
-    readingGuide.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${opacityValue})`;
-}
-
-// Function to update panel controls based on localStorage
-function updatePanelControlsFromStorage() {
-    console.log("Updating panel controls from localStorage...");
-    const panel = document.getElementById('accessibilityPanel');
-    if (!panel) {
-        console.warn("Accessibility panel not found. Cannot update controls.");
-        return;
-    }
-    const panelContent = panel.querySelector('.accessibility-panel-content');
-    if (!panelContent) {
-        console.warn("Accessibility panel content not found. Cannot update controls.");
-        return;
-    }
-
-    try {
-        // Font Size
-        const fontSizeSlider = panelContent.querySelector('#fontSizeSlider');
-        const fontSizeValue = panelContent.querySelector('#fontSizeValue');
-        if (fontSizeSlider && fontSizeValue) {
-            const savedFontSize = localStorage.getItem('fontSize') || '100';
-            fontSizeSlider.value = savedFontSize;
-            fontSizeValue.textContent = `${savedFontSize}%`;
-        }
-
-        // High Contrast & Theme
-        const highContrastToggle = panelContent.querySelector('#highContrastToggle');
-        const contrastThemeButtons = panelContent.querySelectorAll('.contrast-theme-btn');
-        if (highContrastToggle) {
-            highContrastToggle.checked = localStorage.getItem('highContrastEnabled') === 'true';
-        }
-        if (contrastThemeButtons.length > 0) {
-            const savedContrastTheme = localStorage.getItem('contrastTheme') || 'black-white';
-            const customColorsDiv = panelContent.querySelector('.custom-contrast-colors');
-            contrastThemeButtons.forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.dataset.theme === savedContrastTheme) {
-                    btn.classList.add('active');
-                }
-            });
-            if (customColorsDiv) {
-                customColorsDiv.style.display = savedContrastTheme === 'custom' ? 'block' : 'none';
-            }
-            // Update custom color picker values
-            const bgColorPicker = panelContent.querySelector('#contrastBgColorPicker');
-            const bgColorValue = panelContent.querySelector('#contrastBgColorValue');
-            const textColorPicker = panelContent.querySelector('#contrastTextColorPicker');
-            const textColorValue = panelContent.querySelector('#contrastTextColorValue');
-            const linkColorPicker = panelContent.querySelector('#contrastLinkColorPicker');
-            const linkColorValue = panelContent.querySelector('#contrastLinkColorValue');
-            if (bgColorPicker && bgColorValue) {
-                bgColorPicker.value = localStorage.getItem('contrastBgColor') || '#000000';
-                bgColorValue.textContent = bgColorPicker.value;
-            }
-            if (textColorPicker && textColorValue) {
-                textColorPicker.value = localStorage.getItem('contrastTextColor') || '#FFFFFF';
-                textColorValue.textContent = textColorPicker.value;
-            }
-            if (linkColorPicker && linkColorValue) {
-                linkColorPicker.value = localStorage.getItem('contrastLinkColor') || '#FFFF00';
-                linkColorValue.textContent = linkColorPicker.value;
-            }
-        }
-
-
-        // Reading Guide
-        const readingGuideToggle = panelContent.querySelector('#readingGuideToggle');
-        const opacitySlider = panelContent.querySelector('#readingGuideOpacitySlider');
-        const opacityValueSpan = panelContent.querySelector('#readingGuideOpacityValue');
-        const borderButtons = panelContent.querySelectorAll('.border-style-btn');
-        const colorPicker = panelContent.querySelector('#readingGuideColor');
-        const colorValueSpan = panelContent.querySelector('#readingGuideColorValue');
-        const heightSlider = panelContent.querySelector('#readingGuideHeightSlider');
-        const heightValueSpan = panelContent.querySelector('#readingGuideHeightValue');
-
-        if (readingGuideToggle) readingGuideToggle.checked = localStorage.getItem('readingGuide') === 'true';
-
-        if (opacitySlider && opacityValueSpan) {
-            const savedOpacity = localStorage.getItem('readingGuideOpacity') || '70';
-            opacitySlider.value = savedOpacity;
-            opacityValueSpan.textContent = `${savedOpacity}%`;
-        }
-
-        if (borderButtons.length > 0) {
-            const savedBorderStyle = localStorage.getItem('readingGuideBorderStyle') || 'solid';
-            borderButtons.forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.dataset.style === savedBorderStyle) {
-                    btn.classList.add('active');
-                }
-            });
-        }
-
-        if (colorPicker && colorValueSpan) {
-            const savedColor = localStorage.getItem('readingGuideColor') || '#FFFF96';
-            colorPicker.value = savedColor;
-            colorValueSpan.textContent = savedColor;
-        }
-        if (heightSlider && heightValueSpan) {
-            const savedHeight = localStorage.getItem('readingGuideHeight') || '14';
-            heightSlider.value = savedHeight;
-            heightValueSpan.textContent = `${savedHeight}px`;
-        }
-
-        // Large Cursor
-        const largeCursorToggle = panelContent.querySelector('#largeCursorToggle');
-        const cursorSizeButtons = panelContent.querySelectorAll('.cursor-size-btn');
-        const cursorColorPicker = panelContent.querySelector('#cursorColorPicker');
-        const cursorColorValue = panelContent.querySelector('#cursorColorValue');
-
-        if (largeCursorToggle) largeCursorToggle.checked = localStorage.getItem('largeCursorEnabled') === 'true';
-
-        if (cursorSizeButtons.length > 0) {
-            const savedCursorSize = localStorage.getItem('cursorSize') || 'medium';
-            cursorSizeButtons.forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.dataset.size === savedCursorSize) {
-                    btn.classList.add('active');
-                }
-            });
-        }
-        if (cursorColorPicker && cursorColorValue) {
-            const savedCursorColor = localStorage.getItem('cursorColor') || '#85C0FF'; // Default blue
-            cursorColorPicker.value = savedCursorColor;
-            cursorColorValue.textContent = savedCursorColor;
-        }
-
-        // Other toggles
-        const focusHighlightToggle = panelContent.querySelector('#focusHighlightToggle');
-        if (focusHighlightToggle) focusHighlightToggle.checked = localStorage.getItem('focusHighlightEnabled') === 'true';
-
-        const linksUnderlineToggle = panelContent.querySelector('#linksUnderlineToggle');
-        if (linksUnderlineToggle) linksUnderlineToggle.checked = localStorage.getItem('linksUnderlined') === 'true';
-
-        const dyslexiaFontToggle = panelContent.querySelector('#dyslexiaFontToggle');
-        if (dyslexiaFontToggle) dyslexiaFontToggle.checked = localStorage.getItem('dyslexiaFont') === 'true';
-
-        console.log("Panel controls updated from storage.");
-    } catch (e) {
-        console.error("Error updating panel controls from storage:", e);
-    }
-}
-document.addEventListener('DOMContentLoaded', function () {
-    const navbar = document.querySelector('.main-navbar'); // Adjust selector if needed
-    if (!navbar) {
-        console.warn("Main navbar not found for dropdown handling.");
-        return;
-    }
-
-    const dropdownToggles = navbar.querySelectorAll('.dropdown > a.dropdown-toggle');
-    const dropdownMenus = navbar.querySelectorAll('.dropdown-menu');
-    let currentlyOpenDropdown = null;
-    let hoverTimeout = null;
-
-    function closeAllDropdowns(exceptThisOne = null) {
-        navbar.querySelectorAll('.dropdown.open').forEach(openDropdown => {
-            if (openDropdown !== exceptThisOne) {
-                openDropdown.classList.remove('open');
-                // Ensure related attributes are reset if Bootstrap is managing them
-                const toggle = openDropdown.querySelector('.dropdown-toggle');
-                if (toggle) {
-                    toggle.setAttribute('aria-expanded', 'false');
-                }
-            }
+        opacitySlider.addEventListener('input', function () {
+            const opacityPercent = parseInt(this.value, 10);
+            opacityValueSpan.textContent = `${opacityPercent}%`;
+            setReadingGuideOpacity(opacityPercent);
+            localStorage.setItem('readingGuideOpacity', opacityPercent); // Save opacity
+            console.log(`Reading guide opacity set to ${opacityPercent}% and saved.`);
+            showTooltip(`Reading guide opacity: ${opacityPercent}%`);
         });
-        currentlyOpenDropdown = exceptThisOne ? exceptThisOne.closest('.dropdown') : null;
+    } else {
+        console.warn("Reading guide opacity controls not found.");
     }
 
-    // Function to handle opening/closing logic
-    function toggleDropdown(dropdownElement, forceOpen = false, forceClose = false) {
-        if (!dropdownElement) return;
+    // Border Style Select
+    const borderStyleSelect = document.getElementById('readingGuideBorderStyle');
 
-        const isOpen = dropdownElement.classList.contains('open');
+    if (borderStyleSelect) {
+        // --- ADDED: Set initial select value from localStorage ---
+        const savedBorderStyle = localStorage.getItem('readingGuideBorderStyle') || 'solid';
+        borderStyleSelect.value = savedBorderStyle;
+        // Apply initial border style (already done by applySavedReadingGuideSettings)
+        // --- END ADDED ---
 
-        if (forceClose) {
+        borderStyleSelect.addEventListener('change', function () {
+            const borderStyle = this.value;
+            setReadingGuideBorder(borderStyle);
+            localStorage.setItem('readingGuideBorderStyle', borderStyle); // Save border style
+            console.log(`Reading guide border style set to ${borderStyle} and saved.`);
+            showTooltip(`Reading guide border: ${borderStyle}`);
+        });
+    } else {
+        console.warn("Reading guide border style select not found.");
+    }
+
+    // Function to set reading guide opacity
+    function setReadingGuideOpacity(opacityPercent) {
+        const readingGuide = document.getElementById('readingGuide');
+        if (readingGuide) {
+            const opacityValue = opacityPercent / 100;
+            // Use background-color with alpha for better compatibility
+            // Assuming the guide uses background-color for its appearance
+            // Get current background color (or default) and apply new alpha
+            let currentColor = window.getComputedStyle(readingGuide).backgroundColor;
+            if (!currentColor || currentColor === 'rgba(0, 0, 0, 0)' || currentColor === 'transparent') {
+                // Default color if none is set or it's transparent
+                // Let's try getting the color from localStorage if custom color is implemented
+                const savedColor = localStorage.getItem('readingGuideColor') || 'rgba(100, 100, 255, 0.5)'; // Default blueish guide color
+                currentColor = savedColor; // Use saved or default
+            }
+
+            // Parse the color and apply new alpha
+            try {
+                // Basic RGBA parsing (improve if handling hex, hsl etc.)
+                let parts = currentColor.match(/(\d+(\.\d+)?)/g);
+                if (parts && parts.length >= 3) {
+                    readingGuide.style.backgroundColor = `rgba(${parts[0]}, ${parts[1]}, ${parts[2]}, ${opacityValue})`;
+                } else {
+                    // Fallback if parsing fails - apply default color with new opacity
+                    readingGuide.style.backgroundColor = `rgba(100, 100, 255, ${opacityValue})`;
+                    console.warn("Could not parse existing reading guide color, applied default with new opacity.");
+                }
+            } catch (e) {
+                console.error("Error setting reading guide background color with opacity:", e);
+                // Fallback
+                readingGuide.style.backgroundColor = `rgba(100, 100, 255, ${opacityValue})`;
+            }
+
+            // Also save the opacity setting itself for persistence
+            localStorage.setItem('readingGuideOpacity', opacityPercent);
+            console.log(`Enhanced accessibility: Set reading guide opacity to ${opacityPercent}%`);
+        } else {
+            console.warn("Enhanced accessibility: Reading guide element not found for opacity change.");
+        }
+    }
+
+    // Function to set reading guide border style
+    function setReadingGuideBorder(style) {
+        const readingGuide = document.getElementById('readingGuide');
+        if (readingGuide) {
+            // Assuming border style applies to top/bottom borders primarily
+            readingGuide.style.borderTopStyle = style;
+            readingGuide.style.borderBottomStyle = style;
+            // Example: Ensure there's a default border width and color if setting style
+            if (style !== 'none') {
+                if (!readingGuide.style.borderTopWidth || readingGuide.style.borderTopWidth === '0px') {
+                    readingGuide.style.borderTopWidth = '2px'; // Default width
+                }
+                if (!readingGuide.style.borderBottomWidth || readingGuide.style.borderBottomWidth === '0px') {
+                    readingGuide.style.borderBottomWidth = '2px'; // Default width
+                }
+                if (!readingGuide.style.borderTopColor || readingGuide.style.borderTopColor === 'transparent') {
+                    readingGuide.style.borderTopColor = 'blue'; // Default color
+                }
+                if (!readingGuide.style.borderBottomColor || readingGuide.style.borderBottomColor === 'transparent') {
+                    readingGuide.style.borderBottomColor = 'blue'; // Default color
+                }
+            }
+            localStorage.setItem('readingGuideBorderStyle', style); // Save style
+            console.log(`Enhanced accessibility: Set reading guide border style to ${style}`);
+        } else {
+            console.warn("Enhanced accessibility: Reading guide element not found for border style change.");
+        }
+    }
+
+    // --- ADDED: Reading Guide Color Picker Logic ---
+    function enhanceReadingGuideColorPicker() {
+        const colorPicker = document.getElementById('readingGuideColorPicker');
+        const readingGuide = document.getElementById('readingGuide');
+
+        if (!colorPicker || !readingGuide) {
+            console.warn("Reading guide color picker or guide element not found. Skipping enhancement.");
+            return;
+        }
+
+        // Load saved color or default
+        const savedColor = localStorage.getItem('readingGuideColor') || '#6464FF'; // Default blueish color matching opacity function
+        colorPicker.value = savedColor;
+        // Apply initial color (respecting saved opacity)
+        applyReadingGuideColor(savedColor);
+
+        colorPicker.addEventListener('input', function () {
+            const newColor = this.value;
+            applyReadingGuideColor(newColor);
+            localStorage.setItem('readingGuideColor', newColor); // Save color
+            console.log(`Reading guide color set to ${newColor} and saved.`);
+            showTooltip(`Reading guide color changed`);
+        });
+    }
+
+    function applyReadingGuideColor(hexColor) {
+        const readingGuide = document.getElementById('readingGuide');
+        if (!readingGuide) return;
+
+        const savedOpacityPercent = parseInt(localStorage.getItem('readingGuideOpacity') || '50', 10);
+        const opacityValue = savedOpacityPercent / 100;
+
+        // Convert hex to rgba
+        let r = 0, g = 0, b = 0;
+        if (hexColor.length === 7) {
+            r = parseInt(hexColor.substring(1, 3), 16);
+            g = parseInt(hexColor.substring(3, 5), 16);
+            b = parseInt(hexColor.substring(5, 7), 16);
+        } else if (hexColor.length === 4) { // Handle shorthand hex
+            r = parseInt(hexColor.substring(1, 2) + hexColor.substring(1, 2), 16);
+            g = parseInt(hexColor.substring(2, 3) + hexColor.substring(2, 3), 16);
+            b = parseInt(hexColor.substring(3, 4) + hexColor.substring(3, 4), 16);
+        } else {
+            console.warn("Invalid hex color format for reading guide:", hexColor);
+            // Optionally revert to default or do nothing
+            return;
+        }
+
+        readingGuide.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${opacityValue})`;
+    }
+
+    // Function to update panel controls based on localStorage
+    function updatePanelControlsFromStorage() {
+        console.log("Updating panel controls from localStorage...");
+        const panel = document.getElementById('accessibilityPanel');
+        if (!panel) {
+            console.warn("Accessibility panel not found. Cannot update controls.");
+            return;
+        }
+        const panelContent = panel.querySelector('.accessibility-panel-content');
+        if (!panelContent) {
+            console.warn("Accessibility panel content not found. Cannot update controls.");
+            return;
+        }
+
+        try {
+            // Font Size
+            const fontSizeSlider = panelContent.querySelector('#fontSizeSlider');
+            const fontSizeValue = panelContent.querySelector('#fontSizeValue');
+            if (fontSizeSlider && fontSizeValue) {
+                const savedFontSize = localStorage.getItem('fontSize') || '100';
+                fontSizeSlider.value = savedFontSize;
+                fontSizeValue.textContent = `${savedFontSize}%`;
+            }
+
+            // High Contrast & Theme
+            const highContrastToggle = panelContent.querySelector('#highContrastToggle');
+            const contrastThemeButtons = panelContent.querySelectorAll('.contrast-theme-btn');
+            if (highContrastToggle) {
+                highContrastToggle.checked = localStorage.getItem('highContrastEnabled') === 'true';
+            }
+            if (contrastThemeButtons.length > 0) {
+                const savedContrastTheme = localStorage.getItem('contrastTheme') || 'black-white';
+                const customColorsDiv = panelContent.querySelector('.custom-contrast-colors');
+                contrastThemeButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.dataset.theme === savedContrastTheme) {
+                        btn.classList.add('active');
+                    }
+                });
+                if (customColorsDiv) {
+                    customColorsDiv.style.display = savedContrastTheme === 'custom' ? 'block' : 'none';
+                }
+                // Update custom color picker values
+                const bgColorPicker = panelContent.querySelector('#contrastBgColorPicker');
+                const bgColorValue = panelContent.querySelector('#contrastBgColorValue');
+                const textColorPicker = panelContent.querySelector('#contrastTextColorPicker');
+                const textColorValue = panelContent.querySelector('#contrastTextColorValue');
+                const linkColorPicker = panelContent.querySelector('#contrastLinkColorPicker');
+                const linkColorValue = panelContent.querySelector('#contrastLinkColorValue');
+                if (bgColorPicker && bgColorValue) {
+                    bgColorPicker.value = localStorage.getItem('contrastBgColor') || '#000000';
+                    bgColorValue.textContent = bgColorPicker.value;
+                }
+                if (textColorPicker && textColorValue) {
+                    textColorPicker.value = localStorage.getItem('contrastTextColor') || '#FFFFFF';
+                    textColorValue.textContent = textColorPicker.value;
+                }
+                if (linkColorPicker && linkColorValue) {
+                    linkColorPicker.value = localStorage.getItem('contrastLinkColor') || '#FFFF00';
+                    linkColorValue.textContent = linkColorPicker.value;
+                }
+            }
+
+
+            // Reading Guide
+            const readingGuideToggle = panelContent.querySelector('#readingGuideToggle');
+            const opacitySlider = panelContent.querySelector('#readingGuideOpacitySlider');
+            const opacityValueSpan = panelContent.querySelector('#readingGuideOpacityValue');
+            const borderButtons = panelContent.querySelectorAll('.border-style-btn');
+            const colorPicker = panelContent.querySelector('#readingGuideColor');
+            const colorValueSpan = panelContent.querySelector('#readingGuideColorValue');
+            const heightSlider = panelContent.querySelector('#readingGuideHeightSlider');
+            const heightValueSpan = panelContent.querySelector('#readingGuideHeightValue');
+
+            if (readingGuideToggle) readingGuideToggle.checked = localStorage.getItem('readingGuide') === 'true';
+
+            if (opacitySlider && opacityValueSpan) {
+                const savedOpacity = localStorage.getItem('readingGuideOpacity') || '70';
+                opacitySlider.value = savedOpacity;
+                opacityValueSpan.textContent = `${savedOpacity}%`;
+            }
+
+            if (borderButtons.length > 0) {
+                const savedBorderStyle = localStorage.getItem('readingGuideBorderStyle') || 'solid';
+                borderButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.dataset.style === savedBorderStyle) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+
+            if (colorPicker && colorValueSpan) {
+                const savedColor = localStorage.getItem('readingGuideColor') || '#FFFF96';
+                colorPicker.value = savedColor;
+                colorValueSpan.textContent = savedColor;
+            }
+            if (heightSlider && heightValueSpan) {
+                const savedHeight = localStorage.getItem('readingGuideHeight') || '14';
+                heightSlider.value = savedHeight;
+                heightValueSpan.textContent = `${savedHeight}px`;
+            }
+
+            // Large Cursor
+            const largeCursorToggle = panelContent.querySelector('#largeCursorToggle');
+            const cursorSizeButtons = panelContent.querySelectorAll('.cursor-size-btn');
+            const cursorColorPicker = panelContent.querySelector('#cursorColorPicker');
+            const cursorColorValue = panelContent.querySelector('#cursorColorValue');
+
+            if (largeCursorToggle) largeCursorToggle.checked = localStorage.getItem('largeCursorEnabled') === 'true';
+
+            if (cursorSizeButtons.length > 0) {
+                const savedCursorSize = localStorage.getItem('cursorSize') || 'medium';
+                cursorSizeButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.dataset.size === savedCursorSize) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+            if (cursorColorPicker && cursorColorValue) {
+                const savedCursorColor = localStorage.getItem('cursorColor') || '#85C0FF'; // Default blue
+                cursorColorPicker.value = savedCursorColor;
+                cursorColorValue.textContent = savedCursorColor;
+            }
+
+            // Other toggles
+            const focusHighlightToggle = panelContent.querySelector('#focusHighlightToggle');
+            if (focusHighlightToggle) focusHighlightToggle.checked = localStorage.getItem('focusHighlightEnabled') === 'true';
+
+            const linksUnderlineToggle = panelContent.querySelector('#linksUnderlineToggle');
+            if (linksUnderlineToggle) linksUnderlineToggle.checked = localStorage.getItem('linksUnderlined') === 'true';
+
+            const dyslexiaFontToggle = panelContent.querySelector('#dyslexiaFontToggle');
+            if (dyslexiaFontToggle) dyslexiaFontToggle.checked = localStorage.getItem('dyslexiaFont') === 'true';
+
+            console.log("Panel controls updated from storage.");
+        } catch (e) {
+            console.error("Error updating panel controls from storage:", e);
+        }
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+        const navbar = document.querySelector('.main-navbar'); // Adjust selector if needed
+        if (!navbar) {
+            console.warn("Main navbar not found for dropdown handling.");
+            return;
+        }
+
+        const dropdownToggles = navbar.querySelectorAll('.dropdown > a.dropdown-toggle');
+        const dropdownMenus = navbar.querySelectorAll('.dropdown-menu');
+        let currentlyOpenDropdown = null;
+        let hoverTimeout = null;
+
+        function closeAllDropdowns(exceptThisOne = null) {
+            navbar.querySelectorAll('.dropdown.open').forEach(openDropdown => {
+                if (openDropdown !== exceptThisOne) {
+                    openDropdown.classList.remove('open');
+                    // Ensure related attributes are reset if Bootstrap is managing them
+                    const toggle = openDropdown.querySelector('.dropdown-toggle');
+                    if (toggle) {
+                        toggle.setAttribute('aria-expanded', 'false');
+                    }
+                }
+            });
+            currentlyOpenDropdown = exceptThisOne ? exceptThisOne.closest('.dropdown') : null;
+        }
+
+        // Function to handle opening/closing logic
+        function toggleDropdown(dropdownElement, forceOpen = false, forceClose = false) {
+            if (!dropdownElement) return;
+
+            const isOpen = dropdownElement.classList.contains('open');
+
+            if (forceClose) {
+                if (isOpen) {
+                    dropdownElement.classList.remove('open');
+                    currentlyOpenDropdown = null;
+                    const toggle = dropdownElement.querySelector('.dropdown-toggle');
+                    if (toggle) toggle.setAttribute('aria-expanded', 'false');
+                }
+                return; // Stop here if forced close
+            }
+
+            if (forceOpen) {
+                if (!isOpen) {
+                    closeAllDropdowns(dropdownElement); // Close others first
+                    dropdownElement.classList.add('open');
+                    currentlyOpenDropdown = dropdownElement;
+                    const toggle = dropdownElement.querySelector('.dropdown-toggle');
+                    if (toggle) toggle.setAttribute('aria-expanded', 'true');
+                }
+                return; // Stop here if forced open
+            }
+
+            // Default toggle behavior
             if (isOpen) {
                 dropdownElement.classList.remove('open');
                 currentlyOpenDropdown = null;
                 const toggle = dropdownElement.querySelector('.dropdown-toggle');
                 if (toggle) toggle.setAttribute('aria-expanded', 'false');
-            }
-            return; // Stop here if forced close
-        }
-
-        if (forceOpen) {
-            if (!isOpen) {
+            } else {
                 closeAllDropdowns(dropdownElement); // Close others first
                 dropdownElement.classList.add('open');
                 currentlyOpenDropdown = dropdownElement;
                 const toggle = dropdownElement.querySelector('.dropdown-toggle');
                 if (toggle) toggle.setAttribute('aria-expanded', 'true');
             }
-            return; // Stop here if forced open
         }
 
-        // Default toggle behavior
-        if (isOpen) {
-            dropdownElement.classList.remove('open');
-            currentlyOpenDropdown = null;
-            const toggle = dropdownElement.querySelector('.dropdown-toggle');
-            if (toggle) toggle.setAttribute('aria-expanded', 'false');
-        } else {
-            closeAllDropdowns(dropdownElement); // Close others first
-            dropdownElement.classList.add('open');
-            currentlyOpenDropdown = dropdownElement;
-            const toggle = dropdownElement.querySelector('.dropdown-toggle');
-            if (toggle) toggle.setAttribute('aria-expanded', 'true');
-        }
-    }
+        // --- Event Listeners ---
+        dropdownToggles.forEach(toggle => {
+            const dropdownLi = toggle.closest('.dropdown');
+            if (!dropdownLi) return;
 
-    // --- Event Listeners ---
-    dropdownToggles.forEach(toggle => {
-        const dropdownLi = toggle.closest('.dropdown');
-        if (!dropdownLi) return;
+            // --- Click Behavior (Mobile & Desktop) ---
+            toggle.addEventListener('click', function (event) {
+                event.preventDefault(); // Prevent default link behavior
+                event.stopPropagation(); // Prevent event bubbling
 
-        // --- Click Behavior (Mobile & Desktop) ---
-        toggle.addEventListener('click', function (event) {
-            event.preventDefault(); // Prevent default link behavior
-            event.stopPropagation(); // Prevent event bubbling
+                console.log("Dropdown toggle clicked:", this.textContent);
 
-            console.log("Dropdown toggle clicked:", this.textContent);
-
-            // Simple toggle on click for both mobile and desktop based on user request
-            toggleDropdown(dropdownLi);
-
-            /* // Old logic differentiating click behavior:
-            if (window.innerWidth < 768) {
-                // Mobile: Simple toggle
+                // Simple toggle on click for both mobile and desktop based on user request
                 toggleDropdown(dropdownLi);
-            } else {
-                // Desktop: Click makes it stay open, second click closes
-                // If it's already open (likely from hover or previous click), close it.
-                // Otherwise, force it open (and close others).
-                if (dropdownLi.classList.contains('open')) {
-                     toggleDropdown(dropdownLi, false, true); // Force close
+
+                /* // Old logic differentiating click behavior:
+                if (window.innerWidth < 768) {
+                    // Mobile: Simple toggle
+                    toggleDropdown(dropdownLi);
                 } else {
-                    toggleDropdown(dropdownLi, true); // Force open
+                    // Desktop: Click makes it stay open, second click closes
+                    // If it's already open (likely from hover or previous click), close it.
+                    // Otherwise, force it open (and close others).
+                    if (dropdownLi.classList.contains('open')) {
+                         toggleDropdown(dropdownLi, false, true); // Force close
+                    } else {
+                        toggleDropdown(dropdownLi, true); // Force open
+                    }
                 }
+                */
+            });
+
+            // --- Hover Behavior (Desktop Only) --- DISABLED
+            /*
+            if (window.innerWidth >= 768) {
+                dropdownLi.addEventListener('mouseenter', function() {
+                     clearTimeout(hoverTimeout); // Clear any pending close timeout
+                     // Temporarily add 'open' for hover effect (Bootstrap CSS might handle this visually)
+                     // Do not use toggleDropdown here as it manages the persistent 'click' state.
+                     // Instead, rely on CSS :hover or add a temporary class if needed.
+                     // For Bootstrap v3, adding 'open' might be necessary for hover visibility.
+                     // Let's try adding 'open' directly but ensure click logic overrides correctly.
+     
+                     // Option 1: Rely purely on CSS :hover (if theme supports it) - Preferred if possible
+                     // No JS action needed here for visibility if CSS handles it.
+     
+                     // Option 2: Add 'open' class temporarily on hover, but be careful with clicks
+                     // closeAllDropdowns(dropdownLi); // Close others if needed on hover
+                     // if (!dropdownLi.classList.contains('open')) { // Only add if not already open via click
+                     //    dropdownLi.classList.add('open');
+                     // }
+     
+                     // Option 3: Refined - Add a distinct hover class
+                     closeAllDropdowns(dropdownLi); // Close others first
+                     if (!dropdownLi.classList.contains('open')) { // Only add hover class if not permanently open
+                        dropdownLi.classList.add('hover-open');
+                     }
+                });
+     
+                dropdownLi.addEventListener('mouseleave', function() {
+                     // Option 1: No action if CSS handles hover state removal.
+     
+                     // Option 2: Remove 'open' if it was added ONLY for hover
+                     // hoverTimeout = setTimeout(() => {
+                     //    // Only remove 'open' if it wasn't the result of a persistent click
+                     //    // This requires more complex state tracking (e.g., a data attribute)
+                     //    // For simplicity with Bootstrap 3, clicking might be the primary mechanism
+                     //    if (currentlyOpenDropdown !== dropdownLi) { // Basic check: don't close if it's the 'clicked open' one
+                     //       dropdownLi.classList.remove('open');
+                     //    }
+                     // }, 100); // Small delay
+     
+                      // Option 3: Remove the distinct hover class
+                     hoverTimeout = setTimeout(() => {
+                        dropdownLi.classList.remove('hover-open');
+                     }, 100); // Small delay
+                });
             }
             */
         });
 
-        // --- Hover Behavior (Desktop Only) --- DISABLED
-        /*
-        if (window.innerWidth >= 768) {
-            dropdownLi.addEventListener('mouseenter', function() {
-                 clearTimeout(hoverTimeout); // Clear any pending close timeout
-                 // Temporarily add 'open' for hover effect (Bootstrap CSS might handle this visually)
-                 // Do not use toggleDropdown here as it manages the persistent 'click' state.
-                 // Instead, rely on CSS :hover or add a temporary class if needed.
-                 // For Bootstrap v3, adding 'open' might be necessary for hover visibility.
-                 // Let's try adding 'open' directly but ensure click logic overrides correctly.
- 
-                 // Option 1: Rely purely on CSS :hover (if theme supports it) - Preferred if possible
-                 // No JS action needed here for visibility if CSS handles it.
- 
-                 // Option 2: Add 'open' class temporarily on hover, but be careful with clicks
-                 // closeAllDropdowns(dropdownLi); // Close others if needed on hover
-                 // if (!dropdownLi.classList.contains('open')) { // Only add if not already open via click
-                 //    dropdownLi.classList.add('open');
-                 // }
- 
-                 // Option 3: Refined - Add a distinct hover class
-                 closeAllDropdowns(dropdownLi); // Close others first
-                 if (!dropdownLi.classList.contains('open')) { // Only add hover class if not permanently open
-                    dropdownLi.classList.add('hover-open');
-                 }
-            });
- 
-            dropdownLi.addEventListener('mouseleave', function() {
-                 // Option 1: No action if CSS handles hover state removal.
- 
-                 // Option 2: Remove 'open' if it was added ONLY for hover
-                 // hoverTimeout = setTimeout(() => {
-                 //    // Only remove 'open' if it wasn't the result of a persistent click
-                 //    // This requires more complex state tracking (e.g., a data attribute)
-                 //    // For simplicity with Bootstrap 3, clicking might be the primary mechanism
-                 //    if (currentlyOpenDropdown !== dropdownLi) { // Basic check: don't close if it's the 'clicked open' one
-                 //       dropdownLi.classList.remove('open');
-                 //    }
-                 // }, 100); // Small delay
- 
-                  // Option 3: Remove the distinct hover class
-                 hoverTimeout = setTimeout(() => {
-                    dropdownLi.classList.remove('hover-open');
-                 }, 100); // Small delay
-            });
-        }
-        */
-    });
+        // Close dropdowns if clicking outside the navbar
+        document.addEventListener('click', function (event) {
+            if (!navbar.contains(event.target)) {
+                closeAllDropdowns();
+            }
+        });
 
-    // Close dropdowns if clicking outside the navbar
-    document.addEventListener('click', function (event) {
-        if (!navbar.contains(event.target)) {
-            closeAllDropdowns();
-        }
-    });
+        // Close dropdowns on Escape key
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') {
+                closeAllDropdowns();
+            }
+        });
 
-    // Close dropdowns on Escape key
-    document.addEventListener('keydown', function (event) {
-        if (event.key === 'Escape') {
-            closeAllDropdowns();
-        }
+        // Re-apply listeners on resize potentially (or adjust logic based on current size)
+        // Basic resize check (could be improved with debouncing)
+        window.addEventListener('resize', () => {
+            // This is tricky. Re-adding listeners might cause duplicates.
+            // Better to check window.innerWidth inside the handlers if behavior needs to change dynamically.
+            // For now, the initial check on load determines hover behavior setup.
+        });
     });
-
-    // Re-apply listeners on resize potentially (or adjust logic based on current size)
-    // Basic resize check (could be improved with debouncing)
-    window.addEventListener('resize', () => {
-        // This is tricky. Re-adding listeners might cause duplicates.
-        // Better to check window.innerWidth inside the handlers if behavior needs to change dynamically.
-        // For now, the initial check on load determines hover behavior setup.
-    });
-}); 
+} // End of reading guide else block
